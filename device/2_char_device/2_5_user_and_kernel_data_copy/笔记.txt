@@ -1,0 +1,3 @@
+linux驱动在系统中的位置应用层（app）										逻辑 0-3G（虚拟内存）		open read write close		/dev/chardev  设备节点和设备号唯一绑定————————————————————————————————内核层（kernel）                                		机制 3-4G（虚拟内存）向上提供接口 向下控制硬件		driver		设备号和驱动唯一绑定		my_open		my_read		my_write		my_close————————————————————————————————硬件层（hal）				led lcd mouse ......内核空间数据和用户空间数据拷贝apistatic inline int copy_to_user(void __user volatile *to, const void *from, unsigned long n)
+功能：拷贝数据到用户空间参数：		to 用户空间地址		from 内核空间地址		n 数据大小（字节）返回值： 成功返回0 失败返回未拷贝的字节数static inline int copy_from_user(void *to, const void __user volatile *from, unsigned long n)
+功能：拷贝数据到内核空间参数：		to 内核空间地址		from 用户空间地址		n 数据大小（字节）返回值： 成功返回0 失败返回未拷贝的字节数

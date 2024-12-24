@@ -1,0 +1,1 @@
+#include <stdio.h>#include <sys/types.h>#include <sys/stat.h>#include <fcntl.h>#include <unistd.h>int main(){	int fd = open("/dev/myled0",O_RDWR);	if(fd == -1)	{		printf("open failed");		return -1;	}	while(1)	{		write(fd,"1",1);		sleep(1);		write(fd,"0",1);		sleep(1);	}	close(fd);	return 0;}

@@ -1,0 +1,1 @@
+#include <stdio.h>#include <sys/types.h>#include <sys/stat.h>#include <fcntl.h>#include <unistd.h>int main(){	char cmd = '1';	int fd = open("/dev/test",O_RDWR);	if(fd == -1)	{		printf("open failed");		return -1;	}	write(fd,&cmd,1);	close(fd);	return 0;}

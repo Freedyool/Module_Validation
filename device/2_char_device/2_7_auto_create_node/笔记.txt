@@ -1,0 +1,7 @@
+mdev 只是一个应用程序          udev轻量化版本  负责帮助驱动创建设备节点user	hotplug 回去检测 /sys/class/这个目录下有没有变化  也就对应的是 有没有硬件卸载或者安装	当检测到硬件变化 会通知mdev/udev mdev会通过libsysfs读取sys文件系统                     从而去拿到硬件信息	mdev 会fork一个新的进程去创建设备节点ker	驱动 提交目录信息		（/sys/class/[name]）		 设备信息      设备号#define class_create(owner, name)		\
+({						\
+	static struct lock_class_key __key;	\
+	__class_create(owner, name, &__key);	\
+})功能：提交目录信息参数：owner 		THIS_MODULE     （struct module 结构体的首地址  这个结构体存放了驱动的出口入口）	  name  目录名/sys/class/返回值：成功返回结构体首地址		失败返回错误码指针		IS_ERR(cls); //判断是否为错误码指针		PTR_ERR(cls);//将错误码指针转换成错误码struct class * cls;void class_destroy(struct class *cls);功能：注销目录信息参数：cls 结构体首地址返回值：无struct device *device_create(struct class *cls, struct device *parent,
+			     dev_t devt, void *drvdata,
+			     const char *fmt, ...);功能：提交设备信息参数：cls  结构体首地址	  parent NULL	  devt 设备号		  		MKDEV(ma,mi)//计算设备号	  		MAJOR(dev)//主设备号	  		MINOR(dev)//子设备号	  drvdata NULL	  fmt 节点名 对应/dev/节点名	  返回值：成功返回结构体首地址		失败返回错误码指针		IS_ERR(cls); //判断是否为错误码指针		PTR_ERR(cls);//将错误码指针转换成错误码struct device *dev;void device_destroy(struct class *cls, dev_t devt);功能：注销设备信息参数：cls  结构体首地址	  devt 设备号返回值：无

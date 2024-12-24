@@ -1,0 +1,41 @@
+
+
+ * Standard types are:
+ *	byte, short, ushort, int, uint, long, ulong
+ *	charp: a character pointer
+ *	bool: a bool, values 0/1, y/n, Y/N.
+ *	invbool: the above, only sense-reversed (N = true).
+ */
+#define module_param(name, type, perm)				\
+	module_param_named(name, name, type, perm)
+功能: 获取加载驱动时给内核传递的参数
+参数: name 变量的名字 内核会以这个名字创建一个文件
+      type 变量的类型 byte类型在传输char时使用 在传参时要以ascii码传递
+      perm 文件权限 最大0664
+
+#define module_param_array(name, type, nump, perm)		\
+	module_param_array_named(name, name, type, nump, perm)
+功能:获取加载驱动时给内核传递的数组
+参数：name  变量名
+	  type 类型
+	  nump 接收数组的长度 注意需要传递的是一个指针
+	  perm 权限
+
+#define MODULE_PARM_DESC(_parm, desc) \
+	__MODULE_INFO(parm, _parm, #_parm ":" desc)
+功能:对变量进行描述
+参数: _parm 变量名
+	  desc 描述信息的字串
+
+
+内核模块传参方式
+echo 999 > led_level
+sudo insmod demo.ko led_level=255 arr=11,22,33,44,55
+
+
+//从C99标准开始才支持如下这样定义变量i 内核模块编译通常是C89或C90不支持这样声明变量
+for(int i = 0;i < len;i++)
+{
+	printk("arr[%d] = %d \n",i,arr[i]);
+}
+

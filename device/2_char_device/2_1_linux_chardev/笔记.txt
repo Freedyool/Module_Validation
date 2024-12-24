@@ -1,0 +1,43 @@
+
+
+
+
+设备号：
+ 在linux中    主设备号 + 子设备号 组成的一个32位无符号整数
+ 				高12位   低20位   
+ 			主设备号 代表哪一类设备
+ 			子设备号 代表哪一个设备
+
+
+字符设备相关API
+
+static inline int register_chrdev(unsigned int major, const char *name,
+				  const struct file_operations *fops)
+功能：注册字符设备
+参数：major 主设备号      major>0 静态指定设备号 （要注意设备号是否被占用）
+					major=0 系统分配设备号
+	  name  设备名字
+	  fops  文件操作结构体
+	  	int (*open) (struct inode *, struct file *);
+		ssize_t (*read) (struct file *, char __user *, size_t, loff_t *);
+		ssize_t (*write) (struct file *, const char __user *, size_t, loff_t *);
+		int (*release) (struct inode *, struct file *);
+返回值：major > 0  成功返回 0 失败返回错误码
+		major = 0  成功返回设备号 ,    失败返回错误码
+
+
+ static inline void unregister_chrdev(unsigned int major, const char *name)
+ 功能：注销字符设备
+ 参数：major 主设备号
+       name 设备名
+ 返回值：无
+
+
+//驱动作者信息描述函数
+ MODULE_AUTHOR("LiSir LiSir@qq.com");
+
+ 查看设备号命令
+ cat /proc/devices
+
+ 生成设备节点的命令
+ sudo mknod /dev/设备名 c 主设备号 0    注意：要修改生成节点的文件属性  sudo chmod 777 /dev/设备名
