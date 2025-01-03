@@ -8,7 +8,7 @@ Module List here:
 
 Demo Board List here:
 1. TaiShan Pi from lckfb
-2. zzz
+2. Pandora Iot Board from ALIENTEK
 
 Contents included:
 1. module validation records (key steps or some details)
