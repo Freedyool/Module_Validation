@@ -5,8 +5,8 @@
 PWD ?= $(shell pwd)
 
 #内核源码路径
-KERNELDIR:=/home/ubuntu/work/linux/kernel
-CROSS_COMPILE ?= /home/ubuntu/work/linux/prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+KERNELDIR:=/home/yool/dev/tspi_linux_sdk_repo/kernel
+CROSS_COMPILE ?= /home/yool/dev/tspi_linux_sdk_repo/prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
 
 obj-m += demo.o
 

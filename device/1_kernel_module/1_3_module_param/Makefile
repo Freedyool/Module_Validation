@@ -5,7 +5,7 @@
 PWD ?= $(shell pwd)
 
 #内核源码路径
-KERNELDIR:=/home/ubuntu/work/linux/tspi_linux_sdk_20230916/Release/kernel
+KERNELDIR:=/home/yool/dev/tspi_linux_sdk_repo/kernel
 
 obj-m += demo.o
 
