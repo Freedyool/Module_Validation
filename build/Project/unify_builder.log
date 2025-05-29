@@ -1,0 +1,49 @@
+[2025-05-29 21:58:22]	[info] incremental build: 27 source files changed
+These source files will be recompiled
+---
+'d:\dev\EE_PROJECTs\Module_Validation\APP\main.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\APP\startup_cw32f030.s': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\BSP\uart\bsp_uart.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Board\board.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_adc.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_atim.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_awt.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_btim.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_crc.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_debug.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_digitalsign.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_dma.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_flash.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_gpio.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_gtim.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_iwdt.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_lvd.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_pwr.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_ram.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_rcc.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_rtc.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_spi.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_systick.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_uart.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_vc.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\cw32f030_wwdt.c': object (.o) file not exist
+'d:\dev\EE_PROJECTs\Module_Validation\Libraries\src\system_cw32f030.c': object (.o) file not exist
+
+[2025-05-29 21:58:25]	[done]
+	build successfully !
+
+[2025-05-29 22:13:34]	[done]
+	build successfully !
+
+[2025-05-29 22:37:48]	[done]
+	build successfully !
+
+[2025-05-29 22:37:55]	[done]
+	build successfully !
+
+[2025-05-29 22:42:12]	[done]
+	build successfully !
+
+[2025-05-29 22:42:34]	[done]
+	build successfully !
+
