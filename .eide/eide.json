@@ -33,6 +33,9 @@
         "files": [
           {
             "path": "BSP/uart/bsp_uart.c"
+          },
+          {
+            "path": "BSP/i2c/bsp_i2c.c"
           }
         ],
         "folders": []
@@ -121,7 +124,29 @@
       {
         "name": "MODULE",
         "files": [],
-        "folders": []
+        "folders": [
+          {
+            "name": "ina226",
+            "files": [
+              {
+                "path": "Module/ina226/example/driver_ina226_basic.c"
+              },
+              {
+                "path": "Module/ina226/driver_ina226.c"
+              },
+              {
+                "path": "Module/ina226/example/driver_ina226_alert.c"
+              },
+              {
+                "path": "Module/ina226/example/driver_ina226_shot.c"
+              },
+              {
+                "path": "Module/ina226/driver_ina226_interface.c"
+              }
+            ],
+            "folders": []
+          }
+        ]
       },
       {
         "name": "DOC",
@@ -147,7 +172,9 @@
   },
   "targets": {
     "Project": {
-      "excludeList": [],
+      "excludeList": [
+        "<virtual_root>/BSP/driver_ina226_interface.c"
+      ],
       "toolchain": "AC5",
       "compileConfig": {
         "cpuType": "Cortex-M0+",
@@ -297,7 +324,10 @@
           "Module",
           "BSP/uart",
           ".cmsis/include",
-          "Project/MDK/RTE/_Project"
+          "Project/MDK/RTE/_Project",
+          "Module/ina226",
+          "BSP/i2c",
+          "Module/ina226/example"
         ],
         "libList": [],
         "defineList": []

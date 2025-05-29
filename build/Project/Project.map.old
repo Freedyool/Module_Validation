@@ -4,18 +4,49 @@ Component: ARM Compiler 5.06 update 7 (build 960) Tool: armlink [4d3601]
 
 Section Cross References
 
+    main.o(i.ina226_poll) refers to driver_ina226_shot.o(i.ina226_shot_read) for ina226_shot_read
+    main.o(i.ina226_poll) refers to driver_ina226_basic.o(i.ina226_basic_deinit) for ina226_basic_deinit
+    main.o(i.ina226_poll) refers to driver_ina226_interface.o(i.ina226_interface_debug_print) for ina226_interface_debug_print
+    main.o(i.ina226_poll) refers to f2d.o(.text) for __aeabi_f2d
+    main.o(i.ina226_poll) refers to driver_ina226_interface.o(i.ina226_interface_delay_ms) for ina226_interface_delay_ms
     main.o(i.main) refers to board.o(i.board_init) for board_init
     main.o(i.main) refers to bsp_uart.o(i.uart1_init) for uart1_init
     main.o(i.main) refers to cw32f030_gpio.o(i.GPIO_Init) for GPIO_Init
-    main.o(i.main) refers to cw32f030_gpio.o(i.GPIO_WritePin) for GPIO_WritePin
-    main.o(i.main) refers to printfb.o(i.__0printf$bare) for __2printf
+    main.o(i.main) refers to driver_ina226_shot.o(i.ina226_shot_init) for ina226_shot_init
     main.o(i.main) refers to board.o(i.delay_ms) for delay_ms
+    main.o(i.main) refers to cw32f030_gpio.o(i.GPIO_WritePin) for GPIO_WritePin
+    main.o(i.main) refers to main.o(i.ina226_poll) for ina226_poll
+    main.o(i.main) refers to printfa.o(i.__0printf) for __2printf
     startup_cw32f030.o(RESET) refers to startup_cw32f030.o(STACK) for __initial_sp
     startup_cw32f030.o(RESET) refers to startup_cw32f030.o(.text) for Reset_Handler
     startup_cw32f030.o(RESET) refers to cw32f030_systick.o(i.SysTick_Handler) for SysTick_Handler
     startup_cw32f030.o(RESET) refers to bsp_uart.o(i.UART1_IRQHandler) for UART1_IRQHandler
     startup_cw32f030.o(.text) refers to system_cw32f030.o(i.SystemInit) for SystemInit
     startup_cw32f030.o(.text) refers to entry.o(.ARM.Collect$$$$00000000) for __main
+    bsp_i2c.o(i.I2C_GPIO_DEINIT) refers to cw32f030_gpio.o(i.GPIO_DeInit) for GPIO_DeInit
+    bsp_i2c.o(i.I2C_GPIO_INIT) refers to cw32f030_gpio.o(i.GPIO_Init) for GPIO_Init
+    bsp_i2c.o(i.I2C_GPIO_INIT) refers to cw32f030_gpio.o(i.GPIO_WritePin) for GPIO_WritePin
+    bsp_i2c.o(i.IIC_Read) refers to cw32f030_gpio.o(i.GPIO_Init) for GPIO_Init
+    bsp_i2c.o(i.IIC_Read) refers to cw32f030_gpio.o(i.GPIO_WritePin) for GPIO_WritePin
+    bsp_i2c.o(i.IIC_Read) refers to board.o(i.delay_us) for delay_us
+    bsp_i2c.o(i.IIC_Read) refers to cw32f030_gpio.o(i.GPIO_ReadPin) for GPIO_ReadPin
+    bsp_i2c.o(i.IIC_Send_Ack) refers to cw32f030_gpio.o(i.GPIO_WritePin) for GPIO_WritePin
+    bsp_i2c.o(i.IIC_Send_Ack) refers to cw32f030_gpio.o(i.GPIO_Init) for GPIO_Init
+    bsp_i2c.o(i.IIC_Send_Ack) refers to board.o(i.delay_us) for delay_us
+    bsp_i2c.o(i.IIC_Start) refers to cw32f030_gpio.o(i.GPIO_Init) for GPIO_Init
+    bsp_i2c.o(i.IIC_Start) refers to cw32f030_gpio.o(i.GPIO_WritePin) for GPIO_WritePin
+    bsp_i2c.o(i.IIC_Start) refers to board.o(i.delay_us) for delay_us
+    bsp_i2c.o(i.IIC_Stop) refers to cw32f030_gpio.o(i.GPIO_Init) for GPIO_Init
+    bsp_i2c.o(i.IIC_Stop) refers to cw32f030_gpio.o(i.GPIO_WritePin) for GPIO_WritePin
+    bsp_i2c.o(i.IIC_Stop) refers to board.o(i.delay_us) for delay_us
+    bsp_i2c.o(i.IIC_Wait_Ack) refers to cw32f030_gpio.o(i.GPIO_Init) for GPIO_Init
+    bsp_i2c.o(i.IIC_Wait_Ack) refers to cw32f030_gpio.o(i.GPIO_WritePin) for GPIO_WritePin
+    bsp_i2c.o(i.IIC_Wait_Ack) refers to board.o(i.delay_us) for delay_us
+    bsp_i2c.o(i.IIC_Wait_Ack) refers to bsp_i2c.o(i.IIC_Stop) for IIC_Stop
+    bsp_i2c.o(i.IIC_Wait_Ack) refers to cw32f030_gpio.o(i.GPIO_ReadPin) for GPIO_ReadPin
+    bsp_i2c.o(i.IIC_Write) refers to cw32f030_gpio.o(i.GPIO_Init) for GPIO_Init
+    bsp_i2c.o(i.IIC_Write) refers to cw32f030_gpio.o(i.GPIO_WritePin) for GPIO_WritePin
+    bsp_i2c.o(i.IIC_Write) refers to board.o(i.delay_us) for delay_us
     bsp_uart.o(i.UART1_IRQHandler) refers to cw32f030_uart.o(i.USART_GetITStatus) for USART_GetITStatus
     bsp_uart.o(i.UART1_IRQHandler) refers to cw32f030_uart.o(i.USART_ReceiveData_8bit) for USART_ReceiveData_8bit
     bsp_uart.o(i.UART1_IRQHandler) refers to cw32f030_uart.o(i.USART_SendData_8bit) for USART_SendData_8bit
@@ -376,6 +407,220 @@ Section Cross References
     system_cw32f030.o(i.delay10us) refers to system_cw32f030.o(.data) for SystemCoreClock
     system_cw32f030.o(i.delay1ms) refers to uidiv.o(.text) for __aeabi_uidivmod
     system_cw32f030.o(i.delay1ms) refers to system_cw32f030.o(.data) for SystemCoreClock
+    driver_ina226.o(i.ina226_bus_voltage_convert_to_data) refers to ffltui.o(.text) for __aeabi_ui2f
+    driver_ina226.o(i.ina226_bus_voltage_convert_to_data) refers to fmul.o(.text) for __aeabi_fmul
+    driver_ina226.o(i.ina226_bus_voltage_convert_to_register) refers to fdiv.o(.text) for __aeabi_fdiv
+    driver_ina226.o(i.ina226_bus_voltage_convert_to_register) refers to ffixui.o(.text) for __aeabi_f2uiz
+    driver_ina226.o(i.ina226_calculate_calibration) refers to cdrcmple.o(.text) for __aeabi_cdrcmple
+    driver_ina226.o(i.ina226_calculate_calibration) refers to cdcmple.o(.text) for __aeabi_cdcmple
+    driver_ina226.o(i.ina226_calculate_calibration) refers to pow.o(i.pow) for pow
+    driver_ina226.o(i.ina226_calculate_calibration) refers to ddiv.o(.text) for __aeabi_ddiv
+    driver_ina226.o(i.ina226_calculate_calibration) refers to dfixui.o(.text) for __aeabi_d2uiz
+    driver_ina226.o(i.ina226_deinit) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_deinit) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_get_alert_latch) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_get_alert_limit) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_get_alert_polarity_pin) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_get_average_mode) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_get_bus_voltage_conversion_time) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_get_calibration) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_get_conversion_ready_alert_pin) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_get_die_id) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_get_mask) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_get_mode) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_get_reg) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_get_shunt_voltage_conversion_time) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_info) refers to memseta.o(.text) for __aeabi_memclr4
+    driver_ina226.o(i.ina226_info) refers to strncpy.o(.text) for strncpy
+    driver_ina226.o(i.ina226_init) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_init) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_irq_handler) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_power_convert_to_data) refers to dfltui.o(.text) for __aeabi_ui2d
+    driver_ina226.o(i.ina226_power_convert_to_data) refers to dmul.o(.text) for __aeabi_dmul
+    driver_ina226.o(i.ina226_power_convert_to_data) refers to d2f.o(.text) for __aeabi_d2f
+    driver_ina226.o(i.ina226_power_convert_to_register) refers to dmul.o(.text) for __aeabi_dmul
+    driver_ina226.o(i.ina226_power_convert_to_register) refers to f2d.o(.text) for __aeabi_f2d
+    driver_ina226.o(i.ina226_power_convert_to_register) refers to ddiv.o(.text) for __aeabi_ddiv
+    driver_ina226.o(i.ina226_power_convert_to_register) refers to dfixui.o(.text) for __aeabi_d2uiz
+    driver_ina226.o(i.ina226_read_bus_voltage) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_read_bus_voltage) refers to ffltui.o(.text) for __aeabi_ui2f
+    driver_ina226.o(i.ina226_read_bus_voltage) refers to fmul.o(.text) for __aeabi_fmul
+    driver_ina226.o(i.ina226_read_current) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_read_current) refers to dflti.o(.text) for __aeabi_i2d
+    driver_ina226.o(i.ina226_read_current) refers to dmul.o(.text) for __aeabi_dmul
+    driver_ina226.o(i.ina226_read_current) refers to d2f.o(.text) for __aeabi_d2f
+    driver_ina226.o(i.ina226_read_power) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_read_power) refers to dfltui.o(.text) for __aeabi_ui2d
+    driver_ina226.o(i.ina226_read_power) refers to dmul.o(.text) for __aeabi_dmul
+    driver_ina226.o(i.ina226_read_power) refers to d2f.o(.text) for __aeabi_d2f
+    driver_ina226.o(i.ina226_read_shunt_voltage) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_read_shunt_voltage) refers to fflti.o(.text) for __aeabi_i2f
+    driver_ina226.o(i.ina226_read_shunt_voltage) refers to fdiv.o(.text) for __aeabi_fdiv
+    driver_ina226.o(i.ina226_set_alert_latch) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_set_alert_latch) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_set_alert_limit) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_set_alert_polarity_pin) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_set_alert_polarity_pin) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_set_average_mode) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_set_average_mode) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_set_bus_voltage_conversion_time) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_set_bus_voltage_conversion_time) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_set_calibration) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_set_conversion_ready_alert_pin) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_set_conversion_ready_alert_pin) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_set_mask) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_set_mask) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_set_mode) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_set_mode) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_set_reg) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_set_shunt_voltage_conversion_time) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_set_shunt_voltage_conversion_time) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226.o(i.ina226_shunt_voltage_convert_to_data) refers to ffltui.o(.text) for __aeabi_ui2f
+    driver_ina226.o(i.ina226_shunt_voltage_convert_to_data) refers to fdiv.o(.text) for __aeabi_fdiv
+    driver_ina226.o(i.ina226_shunt_voltage_convert_to_register) refers to fmul.o(.text) for __aeabi_fmul
+    driver_ina226.o(i.ina226_shunt_voltage_convert_to_register) refers to ffixui.o(.text) for __aeabi_f2uiz
+    driver_ina226.o(i.ina226_soft_reset) refers to driver_ina226.o(i.a_ina226_iic_read) for a_ina226_iic_read
+    driver_ina226.o(i.ina226_soft_reset) refers to driver_ina226.o(i.a_ina226_iic_write) for a_ina226_iic_write
+    driver_ina226_interface.o(i.ina226_interface_debug_print) refers to memseta.o(.text) for __aeabi_memclr4
+    driver_ina226_interface.o(i.ina226_interface_debug_print) refers to printfa.o(i.__0vsnprintf) for vsnprintf
+    driver_ina226_interface.o(i.ina226_interface_debug_print) refers to printfa.o(i.__0printf) for __2printf
+    driver_ina226_interface.o(i.ina226_interface_delay_ms) refers to board.o(i.delay_ms) for delay_ms
+    driver_ina226_interface.o(i.ina226_interface_iic_deinit) refers to bsp_i2c.o(i.I2C_GPIO_DEINIT) for I2C_GPIO_DEINIT
+    driver_ina226_interface.o(i.ina226_interface_iic_init) refers to bsp_i2c.o(i.I2C_GPIO_INIT) for I2C_GPIO_INIT
+    driver_ina226_interface.o(i.ina226_interface_iic_read) refers to bsp_i2c.o(i.IIC_Start) for IIC_Start
+    driver_ina226_interface.o(i.ina226_interface_iic_read) refers to bsp_i2c.o(i.IIC_Write) for IIC_Write
+    driver_ina226_interface.o(i.ina226_interface_iic_read) refers to bsp_i2c.o(i.IIC_Wait_Ack) for IIC_Wait_Ack
+    driver_ina226_interface.o(i.ina226_interface_iic_read) refers to bsp_i2c.o(i.IIC_Stop) for IIC_Stop
+    driver_ina226_interface.o(i.ina226_interface_iic_read) refers to bsp_i2c.o(i.IIC_Read) for IIC_Read
+    driver_ina226_interface.o(i.ina226_interface_iic_read) refers to bsp_i2c.o(i.IIC_Send_Ack) for IIC_Send_Ack
+    driver_ina226_interface.o(i.ina226_interface_iic_write) refers to bsp_i2c.o(i.IIC_Start) for IIC_Start
+    driver_ina226_interface.o(i.ina226_interface_iic_write) refers to bsp_i2c.o(i.IIC_Write) for IIC_Write
+    driver_ina226_interface.o(i.ina226_interface_iic_write) refers to bsp_i2c.o(i.IIC_Wait_Ack) for IIC_Wait_Ack
+    driver_ina226_interface.o(i.ina226_interface_iic_write) refers to bsp_i2c.o(i.IIC_Stop) for IIC_Stop
+    driver_ina226_interface.o(i.ina226_interface_receive_callback) refers to cw32f030_rcc.o(i.__ARM_common_switch8) for __ARM_common_switch8
+    driver_ina226_interface.o(i.ina226_interface_receive_callback) refers to driver_ina226_interface.o(i.ina226_interface_debug_print) for ina226_interface_debug_print
+    driver_ina226_alert.o(i.ina226_alert_deinit) refers to driver_ina226.o(i.ina226_deinit) for ina226_deinit
+    driver_ina226_alert.o(i.ina226_alert_deinit) refers to driver_ina226_alert.o(.bss) for gs_handle
+    driver_ina226_alert.o(i.ina226_alert_init) refers to memseta.o(.text) for __aeabi_memclr4
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_addr_pin) for ina226_set_addr_pin
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226_interface.o(i.ina226_interface_debug_print) for ina226_interface_debug_print
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_resistance) for ina226_set_resistance
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_init) for ina226_init
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_average_mode) for ina226_set_average_mode
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_deinit) for ina226_deinit
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_bus_voltage_conversion_time) for ina226_set_bus_voltage_conversion_time
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_shunt_voltage_conversion_time) for ina226_set_shunt_voltage_conversion_time
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_calculate_calibration) for ina226_calculate_calibration
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_calibration) for ina226_set_calibration
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_conversion_ready_alert_pin) for ina226_set_conversion_ready_alert_pin
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_alert_polarity_pin) for ina226_set_alert_polarity_pin
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_alert_latch) for ina226_set_alert_latch
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_mode) for ina226_set_mode
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_shunt_voltage_convert_to_register) for ina226_shunt_voltage_convert_to_register
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_alert_limit) for ina226_set_alert_limit
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_set_mask) for ina226_set_mask
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_bus_voltage_convert_to_register) for ina226_bus_voltage_convert_to_register
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226_alert.o(.bss) for gs_handle
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_init) for ina226_interface_iic_init
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_deinit) for ina226_interface_iic_deinit
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_read) for ina226_interface_iic_read
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_write) for ina226_interface_iic_write
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226_interface.o(i.ina226_interface_delay_ms) for ina226_interface_delay_ms
+    driver_ina226_alert.o(i.ina226_alert_init) refers to driver_ina226.o(i.ina226_power_convert_to_register) for ina226_power_convert_to_register
+    driver_ina226_alert.o(i.ina226_alert_irq_handler) refers to driver_ina226.o(i.ina226_irq_handler) for ina226_irq_handler
+    driver_ina226_alert.o(i.ina226_alert_irq_handler) refers to driver_ina226_alert.o(.bss) for gs_handle
+    driver_ina226_alert.o(i.ina226_alert_read) refers to driver_ina226.o(i.ina226_read_bus_voltage) for ina226_read_bus_voltage
+    driver_ina226_alert.o(i.ina226_alert_read) refers to driver_ina226.o(i.ina226_read_current) for ina226_read_current
+    driver_ina226_alert.o(i.ina226_alert_read) refers to driver_ina226.o(i.ina226_read_power) for ina226_read_power
+    driver_ina226_alert.o(i.ina226_alert_read) refers to driver_ina226_alert.o(.bss) for gs_handle
+    driver_ina226_basic.o(i.ina226_basic_deinit) refers to driver_ina226.o(i.ina226_deinit) for ina226_deinit
+    driver_ina226_basic.o(i.ina226_basic_deinit) refers to driver_ina226_basic.o(.bss) for gs_handle
+    driver_ina226_basic.o(i.ina226_basic_init) refers to memseta.o(.text) for __aeabi_memclr4
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226.o(i.ina226_set_addr_pin) for ina226_set_addr_pin
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226_interface.o(i.ina226_interface_debug_print) for ina226_interface_debug_print
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226.o(i.ina226_set_resistance) for ina226_set_resistance
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226.o(i.ina226_init) for ina226_init
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226.o(i.ina226_set_average_mode) for ina226_set_average_mode
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226.o(i.ina226_deinit) for ina226_deinit
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226.o(i.ina226_set_bus_voltage_conversion_time) for ina226_set_bus_voltage_conversion_time
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226.o(i.ina226_set_shunt_voltage_conversion_time) for ina226_set_shunt_voltage_conversion_time
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226.o(i.ina226_calculate_calibration) for ina226_calculate_calibration
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226.o(i.ina226_set_calibration) for ina226_set_calibration
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226.o(i.ina226_set_mode) for ina226_set_mode
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226_basic.o(.bss) for gs_handle
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_init) for ina226_interface_iic_init
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_deinit) for ina226_interface_iic_deinit
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_read) for ina226_interface_iic_read
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_write) for ina226_interface_iic_write
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226_interface.o(i.ina226_interface_delay_ms) for ina226_interface_delay_ms
+    driver_ina226_basic.o(i.ina226_basic_init) refers to driver_ina226_interface.o(i.ina226_interface_receive_callback) for ina226_interface_receive_callback
+    driver_ina226_basic.o(i.ina226_basic_read) refers to driver_ina226.o(i.ina226_read_bus_voltage) for ina226_read_bus_voltage
+    driver_ina226_basic.o(i.ina226_basic_read) refers to driver_ina226.o(i.ina226_read_current) for ina226_read_current
+    driver_ina226_basic.o(i.ina226_basic_read) refers to driver_ina226.o(i.ina226_read_power) for ina226_read_power
+    driver_ina226_basic.o(i.ina226_basic_read) refers to driver_ina226_basic.o(.bss) for gs_handle
+    driver_ina226_shot.o(i.ina226_shot_deinit) refers to driver_ina226.o(i.ina226_deinit) for ina226_deinit
+    driver_ina226_shot.o(i.ina226_shot_deinit) refers to driver_ina226_shot.o(.bss) for gs_handle
+    driver_ina226_shot.o(i.ina226_shot_init) refers to memseta.o(.text) for __aeabi_memclr4
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226.o(i.ina226_set_addr_pin) for ina226_set_addr_pin
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226_interface.o(i.ina226_interface_debug_print) for ina226_interface_debug_print
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226.o(i.ina226_set_resistance) for ina226_set_resistance
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226.o(i.ina226_init) for ina226_init
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226.o(i.ina226_set_average_mode) for ina226_set_average_mode
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226.o(i.ina226_deinit) for ina226_deinit
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226.o(i.ina226_set_bus_voltage_conversion_time) for ina226_set_bus_voltage_conversion_time
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226.o(i.ina226_set_shunt_voltage_conversion_time) for ina226_set_shunt_voltage_conversion_time
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226.o(i.ina226_calculate_calibration) for ina226_calculate_calibration
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226.o(i.ina226_set_calibration) for ina226_set_calibration
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226.o(i.ina226_set_mode) for ina226_set_mode
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226_shot.o(.bss) for gs_handle
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_init) for ina226_interface_iic_init
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_deinit) for ina226_interface_iic_deinit
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_read) for ina226_interface_iic_read
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226_interface.o(i.ina226_interface_iic_write) for ina226_interface_iic_write
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226_interface.o(i.ina226_interface_delay_ms) for ina226_interface_delay_ms
+    driver_ina226_shot.o(i.ina226_shot_init) refers to driver_ina226_interface.o(i.ina226_interface_receive_callback) for ina226_interface_receive_callback
+    driver_ina226_shot.o(i.ina226_shot_read) refers to driver_ina226.o(i.ina226_set_mode) for ina226_set_mode
+    driver_ina226_shot.o(i.ina226_shot_read) refers to driver_ina226.o(i.ina226_read_bus_voltage) for ina226_read_bus_voltage
+    driver_ina226_shot.o(i.ina226_shot_read) refers to driver_ina226.o(i.ina226_read_current) for ina226_read_current
+    driver_ina226_shot.o(i.ina226_shot_read) refers to driver_ina226.o(i.ina226_read_power) for ina226_read_power
+    driver_ina226_shot.o(i.ina226_shot_read) refers to driver_ina226_shot.o(.bss) for gs_handle
+    pow.o(i.__softfp_pow) refers (Special) to iusefp.o(.text) for __I$use$fp
+    pow.o(i.__softfp_pow) refers to pow.o(i.pow) for pow
+    pow.o(i.pow) refers (Special) to iusefp.o(.text) for __I$use$fp
+    pow.o(i.pow) refers to dunder.o(i.__mathlib_dbl_infnan2) for __mathlib_dbl_infnan2
+    pow.o(i.pow) refers to errno.o(i.__set_errno) for __set_errno
+    pow.o(i.pow) refers to dunder.o(i.__mathlib_dbl_divzero) for __mathlib_dbl_divzero
+    pow.o(i.pow) refers to ddiv.o(.text) for __aeabi_ddiv
+    pow.o(i.pow) refers to sqrt.o(i.sqrt) for sqrt
+    pow.o(i.pow) refers to dflti.o(.text) for __aeabi_i2d
+    pow.o(i.pow) refers to dunder.o(i.__mathlib_dbl_invalid) for __mathlib_dbl_invalid
+    pow.o(i.pow) refers to dunder.o(i.__mathlib_dbl_overflow) for __mathlib_dbl_overflow
+    pow.o(i.pow) refers to dmul.o(.text) for __aeabi_dmul
+    pow.o(i.pow) refers to dunder.o(i.__mathlib_dbl_underflow) for __mathlib_dbl_underflow
+    pow.o(i.pow) refers to dadd.o(.text) for __aeabi_dsub
+    pow.o(i.pow) refers to dscalb.o(.text) for __ARM_scalbn
+    pow.o(i.pow) refers to qnan.o(.constdata) for __mathlib_zero
+    pow.o(i.pow) refers to poly.o(i.__kernel_poly) for __kernel_poly
+    pow.o(i.pow) refers to cdrcmple.o(.text) for __aeabi_cdrcmple
+    pow.o(i.pow) refers to pow.o(.constdata) for .constdata
+    pow.o(i.pow) refers to fpclassify.o(i.__ARM_fpclassify) for __ARM_fpclassify
+    pow.o(.constdata) refers (Special) to iusefp.o(.text) for __I$use$fp
+    pow_x.o(i.____softfp_pow$lsc) refers (Special) to iusefp.o(.text) for __I$use$fp
+    pow_x.o(i.____softfp_pow$lsc) refers to pow_x.o(i.__pow$lsc) for __pow$lsc
+    pow_x.o(i.__pow$lsc) refers (Special) to iusefp.o(.text) for __I$use$fp
+    pow_x.o(i.__pow$lsc) refers to dunder.o(i.__mathlib_dbl_infnan2) for __mathlib_dbl_infnan2
+    pow_x.o(i.__pow$lsc) refers to errno.o(i.__set_errno) for __set_errno
+    pow_x.o(i.__pow$lsc) refers to ddiv.o(.text) for __aeabi_ddiv
+    pow_x.o(i.__pow$lsc) refers to sqrt.o(i.sqrt) for sqrt
+    pow_x.o(i.__pow$lsc) refers to dflti.o(.text) for __aeabi_i2d
+    pow_x.o(i.__pow$lsc) refers to dmul.o(.text) for __aeabi_dmul
+    pow_x.o(i.__pow$lsc) refers to dadd.o(.text) for __aeabi_dsub
+    pow_x.o(i.__pow$lsc) refers to dscalb.o(.text) for __ARM_scalbn
+    pow_x.o(i.__pow$lsc) refers to qnan.o(.constdata) for __mathlib_zero
+    pow_x.o(i.__pow$lsc) refers to poly.o(i.__kernel_poly) for __kernel_poly
+    pow_x.o(i.__pow$lsc) refers to cdrcmple.o(.text) for __aeabi_cdrcmple
+    pow_x.o(i.__pow$lsc) refers to pow_x.o(.constdata) for .constdata
+    pow_x.o(.constdata) refers (Special) to iusefp.o(.text) for __I$use$fp
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000F) for __rt_final_cpp
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$00000011) for __rt_final_exit
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry12b.o(.ARM.Collect$$$$0000000E) for __rt_lib_shutdown_fini
@@ -630,14 +875,52 @@ Section Cross References
     dadd.o(.text) refers to llshl.o(.text) for __aeabi_llsl
     dadd.o(.text) refers to llsshr.o(.text) for __aeabi_lasr
     dadd.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    dmul.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dmul.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    ddiv.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    ddiv.o(.text) refers to depilogue.o(.text) for _double_round
     fflti.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
     fflti.o(.text) refers to fepilogue.o(.text) for _float_epilogue
     ffltui.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
     ffltui.o(.text) refers to fepilogue.o(.text) for _float_epilogue
+    dflti.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dflti.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    dfltui.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dfltui.o(.text) refers to depilogue.o(.text) for _double_epilogue
     ffixui.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
     dfixui.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
     dfixui.o(.text) refers to llushr.o(.text) for __aeabi_llsr
     f2d.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    cdcmple.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    cdrcmple.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    d2f.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    d2f.o(.text) refers to fepilogue.o(.text) for _float_round
+    dunder.o(i.__mathlib_dbl_divzero) refers to ddiv.o(.text) for __aeabi_ddiv
+    dunder.o(i.__mathlib_dbl_infnan) refers to dscalb.o(.text) for __ARM_scalbn
+    dunder.o(i.__mathlib_dbl_infnan2) refers to dadd.o(.text) for __aeabi_dadd
+    dunder.o(i.__mathlib_dbl_invalid) refers to ddiv.o(.text) for __aeabi_ddiv
+    dunder.o(i.__mathlib_dbl_overflow) refers to dscalb.o(.text) for __ARM_scalbn
+    dunder.o(i.__mathlib_dbl_posinfnan) refers to dmul.o(.text) for __aeabi_dmul
+    dunder.o(i.__mathlib_dbl_underflow) refers to dscalb.o(.text) for __ARM_scalbn
+    fpclassify.o(i.__ARM_fpclassify) refers (Special) to iusefp.o(.text) for __I$use$fp
+    poly.o(i.__kernel_poly) refers (Special) to iusefp.o(.text) for __I$use$fp
+    poly.o(i.__kernel_poly) refers to dmul.o(.text) for __aeabi_dmul
+    poly.o(i.__kernel_poly) refers to dadd.o(.text) for __aeabi_dadd
+    qnan.o(.constdata) refers (Special) to iusefp.o(.text) for __I$use$fp
+    sqrt.o(i.__softfp_sqrt) refers (Special) to iusefp.o(.text) for __I$use$fp
+    sqrt.o(i.__softfp_sqrt) refers to dsqrt.o(.text) for _dsqrt
+    sqrt.o(i.__softfp_sqrt) refers to errno.o(i.__set_errno) for __set_errno
+    sqrt.o(i.sqrt) refers (Special) to iusefp.o(.text) for __I$use$fp
+    sqrt.o(i.sqrt) refers to dsqrt.o(.text) for _dsqrt
+    sqrt.o(i.sqrt) refers to errno.o(i.__set_errno) for __set_errno
+    sqrt_x.o(i.____softfp_sqrt$lsc) refers (Special) to iusefp.o(.text) for __I$use$fp
+    sqrt_x.o(i.____softfp_sqrt$lsc) refers to cdcmple.o(.text) for __aeabi_cdcmple
+    sqrt_x.o(i.____softfp_sqrt$lsc) refers to errno.o(i.__set_errno) for __set_errno
+    sqrt_x.o(i.____softfp_sqrt$lsc) refers to dsqrt.o(.text) for _dsqrt
+    sqrt_x.o(i.__sqrt$lsc) refers (Special) to iusefp.o(.text) for __I$use$fp
+    sqrt_x.o(i.__sqrt$lsc) refers to cdcmple.o(.text) for __aeabi_cdcmple
+    sqrt_x.o(i.__sqrt$lsc) refers to errno.o(i.__set_errno) for __set_errno
+    sqrt_x.o(i.__sqrt$lsc) refers to dsqrt.o(.text) for _dsqrt
     entry2.o(.ARM.Collect$$$$00000001) refers to entry2.o(.ARM.Collect$$$$00002712) for __lit__00000000
     entry2.o(.ARM.Collect$$$$00002712) refers to startup_cw32f030.o(STACK) for __initial_sp
     entry2.o(__vectab_stack_and_reset_area) refers to startup_cw32f030.o(STACK) for __initial_sp
@@ -647,14 +930,17 @@ Section Cross References
     entry9b.o(.ARM.Collect$$$$0000000C) refers to main.o(i.main) for main
     uldiv.o(.text) refers to llushr.o(.text) for __aeabi_llsr
     uldiv.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    errno.o(i.__aeabi_errno_addr) refers to errno.o(.data) for .data
+    errno.o(i.__read_errno) refers to errno.o(.data) for .data
+    errno.o(i.__set_errno) refers to errno.o(.data) for .data
     depilogue.o(.text) refers to depilogue.o(i.__ARM_clz) for __ARM_clz
     depilogue.o(.text) refers to llshl.o(.text) for __aeabi_llsl
     depilogue.o(.text) refers to llushr.o(.text) for __aeabi_llsr
-    dmul.o(.text) refers to depilogue.o(.text) for _double_epilogue
-    ddiv.o(.text) refers to depilogue.o(.text) for _double_round
     dfixul.o(.text) refers to llushr.o(.text) for __aeabi_llsr
     dfixul.o(.text) refers to llshl.o(.text) for __aeabi_llsl
     init.o(.text) refers to entry5.o(.ARM.Collect$$$$00000004) for __main_after_scatterload
+    dsqrt.o(.text) refers to llushr.o(.text) for __aeabi_llsr
+    dsqrt.o(.text) refers to depilogue.o(.text) for _double_round
 
 
 ==============================================================================
@@ -664,6 +950,8 @@ Removing Unused input sections from the image.
     Removing main.o(.rev16_text), (4 bytes).
     Removing main.o(.revsh_text), (4 bytes).
     Removing startup_cw32f030.o(HEAP), (512 bytes).
+    Removing bsp_i2c.o(.rev16_text), (4 bytes).
+    Removing bsp_i2c.o(.revsh_text), (4 bytes).
     Removing bsp_uart.o(.rev16_text), (4 bytes).
     Removing bsp_uart.o(.revsh_text), (4 bytes).
     Removing board.o(.rev16_text), (4 bytes).
@@ -864,12 +1152,10 @@ Removing Unused input sections from the image.
     Removing cw32f030_gpio.o(.rev16_text), (4 bytes).
     Removing cw32f030_gpio.o(.revsh_text), (4 bytes).
     Removing cw32f030_gpio.o(i.GPIO_ConfigFilter), (8 bytes).
-    Removing cw32f030_gpio.o(i.GPIO_DeInit), (56 bytes).
     Removing cw32f030_gpio.o(i.GPIO_GPIO2SWD), (28 bytes).
     Removing cw32f030_gpio.o(i.GPIO_HighByte_Write), (6 bytes).
     Removing cw32f030_gpio.o(i.GPIO_LockPin), (8 bytes).
     Removing cw32f030_gpio.o(i.GPIO_LowByte_Write), (6 bytes).
-    Removing cw32f030_gpio.o(i.GPIO_ReadPin), (18 bytes).
     Removing cw32f030_gpio.o(i.GPIO_SWD2GPIO), (24 bytes).
     Removing cw32f030_gpio.o(i.GPIO_TogglePin), (4 bytes).
     Removing cw32f030_gpio.o(i.GPIO_Write), (4 bytes).
@@ -1126,11 +1412,47 @@ Removing Unused input sections from the image.
     Removing system_cw32f030.o(i.delay100us), (92 bytes).
     Removing system_cw32f030.o(i.delay10us), (92 bytes).
     Removing system_cw32f030.o(i.delay1ms), (88 bytes).
+    Removing driver_ina226.o(i.ina226_bus_voltage_convert_to_data), (52 bytes).
+    Removing driver_ina226.o(i.ina226_bus_voltage_convert_to_register), (52 bytes).
+    Removing driver_ina226.o(i.ina226_get_addr_pin), (18 bytes).
+    Removing driver_ina226.o(i.ina226_get_alert_latch), (104 bytes).
+    Removing driver_ina226.o(i.ina226_get_alert_limit), (100 bytes).
+    Removing driver_ina226.o(i.ina226_get_alert_polarity_pin), (104 bytes).
+    Removing driver_ina226.o(i.ina226_get_average_mode), (104 bytes).
+    Removing driver_ina226.o(i.ina226_get_bus_voltage_conversion_time), (104 bytes).
+    Removing driver_ina226.o(i.ina226_get_calibration), (100 bytes).
+    Removing driver_ina226.o(i.ina226_get_conversion_ready_alert_pin), (104 bytes).
+    Removing driver_ina226.o(i.ina226_get_die_id), (112 bytes).
+    Removing driver_ina226.o(i.ina226_get_mask), (108 bytes).
+    Removing driver_ina226.o(i.ina226_get_mode), (104 bytes).
+    Removing driver_ina226.o(i.ina226_get_reg), (40 bytes).
+    Removing driver_ina226.o(i.ina226_get_resistance), (22 bytes).
+    Removing driver_ina226.o(i.ina226_get_shunt_voltage_conversion_time), (104 bytes).
+    Removing driver_ina226.o(i.ina226_info), (156 bytes).
+    Removing driver_ina226.o(i.ina226_irq_handler), (240 bytes).
+    Removing driver_ina226.o(i.ina226_power_convert_to_data), (104 bytes).
+    Removing driver_ina226.o(i.ina226_power_convert_to_register), (104 bytes).
+    Removing driver_ina226.o(i.ina226_read_shunt_voltage), (388 bytes).
+    Removing driver_ina226.o(i.ina226_set_alert_latch), (176 bytes).
+    Removing driver_ina226.o(i.ina226_set_alert_limit), (100 bytes).
+    Removing driver_ina226.o(i.ina226_set_alert_polarity_pin), (180 bytes).
+    Removing driver_ina226.o(i.ina226_set_conversion_ready_alert_pin), (184 bytes).
+    Removing driver_ina226.o(i.ina226_set_mask), (188 bytes).
+    Removing driver_ina226.o(i.ina226_set_reg), (40 bytes).
+    Removing driver_ina226.o(i.ina226_shunt_voltage_convert_to_data), (52 bytes).
+    Removing driver_ina226.o(i.ina226_shunt_voltage_convert_to_register), (52 bytes).
+    Removing driver_ina226.o(i.ina226_soft_reset), (124 bytes).
+    Removing driver_ina226_interface.o(.rev16_text), (4 bytes).
+    Removing driver_ina226_interface.o(.revsh_text), (4 bytes).
+    Removing driver_ina226_alert.o(i.ina226_alert_deinit), (28 bytes).
+    Removing driver_ina226_alert.o(i.ina226_alert_init), (2196 bytes).
+    Removing driver_ina226_alert.o(i.ina226_alert_irq_handler), (24 bytes).
+    Removing driver_ina226_alert.o(i.ina226_alert_read), (76 bytes).
+    Removing driver_ina226_alert.o(.bss), (56 bytes).
+    Removing driver_ina226_basic.o(i.ina226_basic_init), (668 bytes).
+    Removing driver_ina226_basic.o(i.ina226_basic_read), (76 bytes).
+    Removing driver_ina226_shot.o(i.ina226_shot_deinit), (28 bytes).
     Removing fflti.o(.text), (22 bytes).
-    Removing dmul.o(.text), (208 bytes).
-    Removing ddiv.o(.text), (240 bytes).
-    Removing dfixul.o(.text), (64 bytes).
-    Removing cdrcmple.o(.text), (40 bytes).
     Removing cw32f030_iwdt.o(i.IWDT_Cmd), (16 bytes).
     Removing cw32f030_iwdt.o(i.IWDT_Refresh), (16 bytes).
     Removing cw32f030_iwdt.o(i.IWDT_Unlock), (16 bytes).
@@ -1138,7 +1460,7 @@ Removing Unused input sections from the image.
     Removing cw32f030_iwdt.o(i.IWDT_Stop), (28 bytes).
     Removing cw32f030_iwdt.o(i.IWDT_ClearOVFlag), (20 bytes).
 
-476 unused section(s) (total 41804 bytes) removed from the image.
+512 unused section(s) (total 47766 bytes) removed from the image.
 
 ==============================================================================
 
@@ -1152,40 +1474,44 @@ Image Symbol Table
     ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  ldiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/errno.c                 0x00000000   Number         0  errno.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry12b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry12a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry12b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry12a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
-    ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
-    ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
+    ../clib/microlib/printf/stubs.s          0x00000000   Number         0  stubs.o ABSOLUTE
     ../clib/microlib/stdio/streams.c         0x00000000   Number         0  stdout.o ABSOLUTE
-    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
     ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpya.o ABSOLUTE
+    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
     ../clib/microlib/string/memset.c         0x00000000   Number         0  memseta.o ABSOLUTE
+    ../clib/microlib/string/strncpy.c        0x00000000   Number         0  strncpy.o ABSOLUTE
     ../clib/microlib/stubs.s                 0x00000000   Number         0  iusefp.o ABSOLUTE
+    ../fplib/microlib/d2f.c                  0x00000000   Number         0  d2f.o ABSOLUTE
     ../fplib/microlib/f2d.c                  0x00000000   Number         0  f2d.o ABSOLUTE
     ../fplib/microlib/fpadd.c                0x00000000   Number         0  dadd.o ABSOLUTE
     ../fplib/microlib/fpadd.c                0x00000000   Number         0  fadd.o ABSOLUTE
@@ -1193,15 +1519,28 @@ Image Symbol Table
     ../fplib/microlib/fpdiv.c                0x00000000   Number         0  ddiv.o ABSOLUTE
     ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  depilogue.o ABSOLUTE
     ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  fepilogue.o ABSOLUTE
+    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixul.o ABSOLUTE
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixui.o ABSOLUTE
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  ffixui.o ABSOLUTE
-    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixul.o ABSOLUTE
-    ../fplib/microlib/fpflt.c                0x00000000   Number         0  ffltui.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  fflti.o ABSOLUTE
+    ../fplib/microlib/fpflt.c                0x00000000   Number         0  dfltui.o ABSOLUTE
+    ../fplib/microlib/fpflt.c                0x00000000   Number         0  dflti.o ABSOLUTE
+    ../fplib/microlib/fpflt.c                0x00000000   Number         0  ffltui.o ABSOLUTE
     ../fplib/microlib/fpmul.c                0x00000000   Number         0  fmul.o ABSOLUTE
     ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
+    ../fplib/microlib/fpscalb.c              0x00000000   Number         0  dscalb.o ABSOLUTE
+    ../fplib/microlib/fpsqrt.c               0x00000000   Number         0  dsqrt.o ABSOLUTE
+    ../mathlib/dunder.c                      0x00000000   Number         0  dunder.o ABSOLUTE
+    ../mathlib/fpclassify.c                  0x00000000   Number         0  fpclassify.o ABSOLUTE
+    ../mathlib/poly.c                        0x00000000   Number         0  poly.o ABSOLUTE
+    ../mathlib/pow.c                         0x00000000   Number         0  pow_x.o ABSOLUTE
+    ../mathlib/pow.c                         0x00000000   Number         0  pow.o ABSOLUTE
+    ../mathlib/qnan.c                        0x00000000   Number         0  qnan.o ABSOLUTE
+    ../mathlib/sqrt.c                        0x00000000   Number         0  sqrt_x.o ABSOLUTE
+    ../mathlib/sqrt.c                        0x00000000   Number         0  sqrt.o ABSOLUTE
     .\APP\main.c                             0x00000000   Number         0  main.o ABSOLUTE
     .\APP\startup_cw32f030.s                 0x00000000   Number         0  startup_cw32f030.o ABSOLUTE
+    .\BSP\i2c\bsp_i2c.c                      0x00000000   Number         0  bsp_i2c.o ABSOLUTE
     .\BSP\uart\bsp_uart.c                    0x00000000   Number         0  bsp_uart.o ABSOLUTE
     .\Board\board.c                          0x00000000   Number         0  board.o ABSOLUTE
     .\Libraries\src\cw32f030_adc.c           0x00000000   Number         0  cw32f030_adc.o ABSOLUTE
@@ -1227,7 +1566,13 @@ Image Symbol Table
     .\Libraries\src\cw32f030_vc.c            0x00000000   Number         0  cw32f030_vc.o ABSOLUTE
     .\Libraries\src\cw32f030_wwdt.c          0x00000000   Number         0  cw32f030_wwdt.o ABSOLUTE
     .\Libraries\src\system_cw32f030.c        0x00000000   Number         0  system_cw32f030.o ABSOLUTE
+    .\Module\ina226\driver_ina226.c          0x00000000   Number         0  driver_ina226.o ABSOLUTE
+    .\Module\ina226\driver_ina226_interface.c 0x00000000   Number         0  driver_ina226_interface.o ABSOLUTE
+    .\Module\ina226\example\driver_ina226_alert.c 0x00000000   Number         0  driver_ina226_alert.o ABSOLUTE
+    .\Module\ina226\example\driver_ina226_basic.c 0x00000000   Number         0  driver_ina226_basic.o ABSOLUTE
+    .\Module\ina226\example\driver_ina226_shot.c 0x00000000   Number         0  driver_ina226_shot.o ABSOLUTE
     .\\APP\\main.c                           0x00000000   Number         0  main.o ABSOLUTE
+    .\\BSP\\i2c\\bsp_i2c.c                   0x00000000   Number         0  bsp_i2c.o ABSOLUTE
     .\\BSP\\uart\\bsp_uart.c                 0x00000000   Number         0  bsp_uart.o ABSOLUTE
     .\\Board\\board.c                        0x00000000   Number         0  board.o ABSOLUTE
     .\\Libraries\\src\\cw32f030_adc.c        0x00000000   Number         0  cw32f030_adc.o ABSOLUTE
@@ -1253,6 +1598,8 @@ Image Symbol Table
     .\\Libraries\\src\\cw32f030_vc.c         0x00000000   Number         0  cw32f030_vc.o ABSOLUTE
     .\\Libraries\\src\\cw32f030_wwdt.c       0x00000000   Number         0  cw32f030_wwdt.o ABSOLUTE
     .\\Libraries\\src\\system_cw32f030.c     0x00000000   Number         0  system_cw32f030.o ABSOLUTE
+    .\\Module\\ina226\\driver_ina226_interface.c 0x00000000   Number         0  driver_ina226_interface.o ABSOLUTE
+    cdcmple.s                                0x00000000   Number         0  cdcmple.o ABSOLUTE
     cdrcmple.s                               0x00000000   Number         0  cdrcmple.o ABSOLUTE
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
     handlers.s                               0x00000000   Number         0  handlers.o ABSOLUTE
@@ -1272,75 +1619,197 @@ Image Symbol Table
     .text                                    0x00000100   Section        0  uidiv.o(.text)
     .text                                    0x0000012c   Section        0  ldiv.o(.text)
     .text                                    0x00000178   Section        0  memcpya.o(.text)
-    .text                                    0x0000019c   Section        0  fadd.o(.text)
-    .text                                    0x0000024e   Section        0  fmul.o(.text)
-    .text                                    0x000002c8   Section        0  fdiv.o(.text)
-    .text                                    0x00000344   Section        0  dadd.o(.text)
-    .text                                    0x000004ac   Section        0  ffltui.o(.text)
-    .text                                    0x000004ba   Section        0  ffixui.o(.text)
-    .text                                    0x000004e4   Section        0  dfixui.o(.text)
-    .text                                    0x00000520   Section        0  f2d.o(.text)
-    .text                                    0x00000548   Section        0  uldiv.o(.text)
-    .text                                    0x000005a8   Section        0  llshl.o(.text)
-    .text                                    0x000005c8   Section        0  llushr.o(.text)
-    .text                                    0x000005ea   Section        0  llsshr.o(.text)
-    .text                                    0x00000610   Section        0  fepilogue.o(.text)
-    .text                                    0x00000610   Section        0  iusefp.o(.text)
-    .text                                    0x00000692   Section        0  depilogue.o(.text)
-    .text                                    0x00000750   Section       36  init.o(.text)
-    i.FLASH_SetLatency                       0x00000774   Section        0  cw32f030_flash.o(i.FLASH_SetLatency)
-    i.GPIO_Init                              0x000007e8   Section        0  cw32f030_gpio.o(i.GPIO_Init)
-    i.GPIO_WritePin                          0x000008e8   Section        0  cw32f030_gpio.o(i.GPIO_WritePin)
-    i.RCC_AHBPeriphClk_Enable                0x000008f4   Section        0  cw32f030_rcc.o(i.RCC_AHBPeriphClk_Enable)
-    i.RCC_APBPeriphClk_Enable2               0x00000958   Section        0  cw32f030_rcc.o(i.RCC_APBPeriphClk_Enable2)
-    i.RCC_HCLKPRS_Config                     0x000009bc   Section        0  cw32f030_rcc.o(i.RCC_HCLKPRS_Config)
-    i.RCC_HSE_Enable                         0x00000a2c   Section        0  cw32f030_rcc.o(i.RCC_HSE_Enable)
-    i.RCC_PLL_Enable                         0x00000b98   Section        0  cw32f030_rcc.o(i.RCC_PLL_Enable)
-    i.RCC_SysClk_Switch                      0x00000cfc   Section        0  cw32f030_rcc.o(i.RCC_SysClk_Switch)
-    i.RCC_Sysctrl_GetHClkFreq                0x00000d7c   Section        0  cw32f030_rcc.o(i.RCC_Sysctrl_GetHClkFreq)
-    i.RCC_SystemCoreClockUpdate              0x00000e54   Section        0  cw32f030_rcc.o(i.RCC_SystemCoreClockUpdate)
-    i.SysTick_Handler                        0x00000e60   Section        0  cw32f030_systick.o(i.SysTick_Handler)
-    i.SystemCoreClockUpdate                  0x00000e78   Section        0  system_cw32f030.o(i.SystemCoreClockUpdate)
-    i.SystemInit                             0x00000e88   Section        0  system_cw32f030.o(i.SystemInit)
-    i.UART1_IRQHandler                       0x00000ec4   Section        0  bsp_uart.o(i.UART1_IRQHandler)
-    i.USART_ClearITPendingBit                0x00000ef0   Section        0  cw32f030_uart.o(i.USART_ClearITPendingBit)
-    i.USART_GetFlagStatus                    0x00000f64   Section        0  cw32f030_uart.o(i.USART_GetFlagStatus)
-    i.USART_GetITStatus                      0x00000fe0   Section        0  cw32f030_uart.o(i.USART_GetITStatus)
-    i.USART_ITConfig                         0x0000105c   Section        0  cw32f030_uart.o(i.USART_ITConfig)
-    i.USART_Init                             0x000010f8   Section        0  cw32f030_uart.o(i.USART_Init)
-    i.USART_ReceiveData_8bit                 0x000013d4   Section        0  cw32f030_uart.o(i.USART_ReceiveData_8bit)
-    i.USART_SendData                         0x00001428   Section        0  cw32f030_uart.o(i.USART_SendData)
-    i.USART_SendData_8bit                    0x00001494   Section        0  cw32f030_uart.o(i.USART_SendData_8bit)
-    i.__0printf$bare                         0x000014f4   Section        0  printfb.o(i.__0printf$bare)
-    i.__ARM_clz                              0x00001508   Section        0  depilogue.o(i.__ARM_clz)
-    i.__ARM_common_switch8                   0x00001536   Section        0  cw32f030_rcc.o(i.__ARM_common_switch8)
-    i.__NVIC_SetPriority                     0x00001554   Section        0  bsp_uart.o(i.__NVIC_SetPriority)
-    __NVIC_SetPriority                       0x00001555   Thumb Code   110  bsp_uart.o(i.__NVIC_SetPriority)
-    i.__scatterload_copy                     0x000015cc   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x000015da   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x000015dc   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i._printf_core                           0x000015ea   Section        0  printfb.o(i._printf_core)
-    _printf_core                             0x000015eb   Thumb Code    30  printfb.o(i._printf_core)
-    i.assert_failed                          0x00001608   Section        0  board.o(i.assert_failed)
-    i.board_init                             0x0000160c   Section        0  board.o(i.board_init)
-    i.delay_ms                               0x0000167c   Section        0  board.o(i.delay_ms)
-    i.delay_us                               0x00001690   Section        0  board.o(i.delay_us)
-    i.fputc                                  0x000016cc   Section        0  bsp_uart.o(i.fputc)
-    i.main                                   0x000016f0   Section        0  main.o(i.main)
-    i.uart1_init                             0x00001770   Section        0  bsp_uart.o(i.uart1_init)
-    .constdata                               0x0000183c   Section      100  cw32f030_rcc.o(.constdata)
+    .text                                    0x0000019c   Section        0  memseta.o(.text)
+    .text                                    0x000001c0   Section        0  fadd.o(.text)
+    .text                                    0x00000272   Section        0  fmul.o(.text)
+    .text                                    0x000002ec   Section        0  fdiv.o(.text)
+    .text                                    0x00000368   Section        0  dadd.o(.text)
+    .text                                    0x000004d0   Section        0  dmul.o(.text)
+    .text                                    0x000005a0   Section        0  ddiv.o(.text)
+    .text                                    0x00000690   Section        0  ffltui.o(.text)
+    .text                                    0x000006a0   Section        0  dflti.o(.text)
+    .text                                    0x000006c8   Section        0  dfltui.o(.text)
+    .text                                    0x000006e4   Section        0  ffixui.o(.text)
+    .text                                    0x0000070c   Section        0  dfixui.o(.text)
+    .text                                    0x00000748   Section        0  f2d.o(.text)
+    .text                                    0x00000770   Section       40  cdcmple.o(.text)
+    .text                                    0x00000798   Section       40  cdrcmple.o(.text)
+    .text                                    0x000007c0   Section        0  d2f.o(.text)
+    .text                                    0x000007f8   Section        0  uldiv.o(.text)
+    .text                                    0x00000858   Section        0  llshl.o(.text)
+    .text                                    0x00000878   Section        0  llushr.o(.text)
+    .text                                    0x0000089a   Section        0  llsshr.o(.text)
+    .text                                    0x000008c0   Section        0  iusefp.o(.text)
+    .text                                    0x000008c0   Section        0  fepilogue.o(.text)
+    .text                                    0x00000942   Section        0  depilogue.o(.text)
+    .text                                    0x00000a00   Section        0  dscalb.o(.text)
+    .text                                    0x00000a2c   Section        0  dfixul.o(.text)
+    .text                                    0x00000a6c   Section       36  init.o(.text)
+    .text                                    0x00000a90   Section        0  dsqrt.o(.text)
+    i.FLASH_SetLatency                       0x00000b34   Section        0  cw32f030_flash.o(i.FLASH_SetLatency)
+    i.GPIO_DeInit                            0x00000ba8   Section        0  cw32f030_gpio.o(i.GPIO_DeInit)
+    i.GPIO_Init                              0x00000be0   Section        0  cw32f030_gpio.o(i.GPIO_Init)
+    i.GPIO_ReadPin                           0x00000ce0   Section        0  cw32f030_gpio.o(i.GPIO_ReadPin)
+    i.GPIO_WritePin                          0x00000cf2   Section        0  cw32f030_gpio.o(i.GPIO_WritePin)
+    i.I2C_GPIO_DEINIT                        0x00000d00   Section        0  bsp_i2c.o(i.I2C_GPIO_DEINIT)
+    i.I2C_GPIO_INIT                          0x00000d14   Section        0  bsp_i2c.o(i.I2C_GPIO_INIT)
+    i.IIC_Read                               0x00000d5c   Section        0  bsp_i2c.o(i.IIC_Read)
+    i.IIC_Send_Ack                           0x00000dc8   Section        0  bsp_i2c.o(i.IIC_Send_Ack)
+    i.IIC_Start                              0x00000e38   Section        0  bsp_i2c.o(i.IIC_Start)
+    i.IIC_Stop                               0x00000e94   Section        0  bsp_i2c.o(i.IIC_Stop)
+    i.IIC_Wait_Ack                           0x00000ef4   Section        0  bsp_i2c.o(i.IIC_Wait_Ack)
+    i.IIC_Write                              0x00000f68   Section        0  bsp_i2c.o(i.IIC_Write)
+    i.RCC_AHBPeriphClk_Enable                0x00000fe0   Section        0  cw32f030_rcc.o(i.RCC_AHBPeriphClk_Enable)
+    i.RCC_APBPeriphClk_Enable2               0x00001044   Section        0  cw32f030_rcc.o(i.RCC_APBPeriphClk_Enable2)
+    i.RCC_HCLKPRS_Config                     0x000010a8   Section        0  cw32f030_rcc.o(i.RCC_HCLKPRS_Config)
+    i.RCC_HSE_Enable                         0x00001118   Section        0  cw32f030_rcc.o(i.RCC_HSE_Enable)
+    i.RCC_PLL_Enable                         0x00001284   Section        0  cw32f030_rcc.o(i.RCC_PLL_Enable)
+    i.RCC_SysClk_Switch                      0x000013e8   Section        0  cw32f030_rcc.o(i.RCC_SysClk_Switch)
+    i.RCC_Sysctrl_GetHClkFreq                0x00001468   Section        0  cw32f030_rcc.o(i.RCC_Sysctrl_GetHClkFreq)
+    i.RCC_SystemCoreClockUpdate              0x00001540   Section        0  cw32f030_rcc.o(i.RCC_SystemCoreClockUpdate)
+    i.SysTick_Handler                        0x0000154c   Section        0  cw32f030_systick.o(i.SysTick_Handler)
+    i.SystemCoreClockUpdate                  0x00001564   Section        0  system_cw32f030.o(i.SystemCoreClockUpdate)
+    i.SystemInit                             0x00001574   Section        0  system_cw32f030.o(i.SystemInit)
+    i.UART1_IRQHandler                       0x000015b0   Section        0  bsp_uart.o(i.UART1_IRQHandler)
+    i.USART_ClearITPendingBit                0x000015dc   Section        0  cw32f030_uart.o(i.USART_ClearITPendingBit)
+    i.USART_GetFlagStatus                    0x00001650   Section        0  cw32f030_uart.o(i.USART_GetFlagStatus)
+    i.USART_GetITStatus                      0x000016cc   Section        0  cw32f030_uart.o(i.USART_GetITStatus)
+    i.USART_ITConfig                         0x00001748   Section        0  cw32f030_uart.o(i.USART_ITConfig)
+    i.USART_Init                             0x000017e4   Section        0  cw32f030_uart.o(i.USART_Init)
+    i.USART_ReceiveData_8bit                 0x00001ac0   Section        0  cw32f030_uart.o(i.USART_ReceiveData_8bit)
+    i.USART_SendData                         0x00001b14   Section        0  cw32f030_uart.o(i.USART_SendData)
+    i.USART_SendData_8bit                    0x00001b80   Section        0  cw32f030_uart.o(i.USART_SendData_8bit)
+    i.__0printf                              0x00001be0   Section        0  printfa.o(i.__0printf)
+    i.__0vsnprintf                           0x00001c00   Section        0  printfa.o(i.__0vsnprintf)
+    i.__ARM_clz                              0x00001c30   Section        0  depilogue.o(i.__ARM_clz)
+    i.__ARM_common_switch8                   0x00001c5e   Section        0  cw32f030_rcc.o(i.__ARM_common_switch8)
+    i.__ARM_fpclassify                       0x00001c7c   Section        0  fpclassify.o(i.__ARM_fpclassify)
+    i.__NVIC_SetPriority                     0x00001ca8   Section        0  bsp_uart.o(i.__NVIC_SetPriority)
+    __NVIC_SetPriority                       0x00001ca9   Thumb Code   110  bsp_uart.o(i.__NVIC_SetPriority)
+    i.__kernel_poly                          0x00001d20   Section        0  poly.o(i.__kernel_poly)
+    i.__mathlib_dbl_divzero                  0x00001dcc   Section        0  dunder.o(i.__mathlib_dbl_divzero)
+    i.__mathlib_dbl_infnan2                  0x00001de0   Section        0  dunder.o(i.__mathlib_dbl_infnan2)
+    i.__mathlib_dbl_invalid                  0x00001de8   Section        0  dunder.o(i.__mathlib_dbl_invalid)
+    i.__mathlib_dbl_overflow                 0x00001df8   Section        0  dunder.o(i.__mathlib_dbl_overflow)
+    i.__mathlib_dbl_underflow                0x00001e0c   Section        0  dunder.o(i.__mathlib_dbl_underflow)
+    i.__scatterload_copy                     0x00001e20   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x00001e2e   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x00001e30   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.__set_errno                            0x00001e40   Section        0  errno.o(i.__set_errno)
+    i._fp_digits                             0x00001e4c   Section        0  printfa.o(i._fp_digits)
+    _fp_digits                               0x00001e4d   Thumb Code   344  printfa.o(i._fp_digits)
+    i._printf_core                           0x00001fc0   Section        0  printfa.o(i._printf_core)
+    _printf_core                             0x00001fc1   Thumb Code  1760  printfa.o(i._printf_core)
+    i._printf_post_padding                   0x000026b0   Section        0  printfa.o(i._printf_post_padding)
+    _printf_post_padding                     0x000026b1   Thumb Code    32  printfa.o(i._printf_post_padding)
+    i._printf_pre_padding                    0x000026d0   Section        0  printfa.o(i._printf_pre_padding)
+    _printf_pre_padding                      0x000026d1   Thumb Code    44  printfa.o(i._printf_pre_padding)
+    i._snputc                                0x000026fc   Section        0  printfa.o(i._snputc)
+    _snputc                                  0x000026fd   Thumb Code    22  printfa.o(i._snputc)
+    i.a_ina226_iic_read                      0x00002712   Section        0  driver_ina226.o(i.a_ina226_iic_read)
+    a_ina226_iic_read                        0x00002713   Thumb Code    48  driver_ina226.o(i.a_ina226_iic_read)
+    i.a_ina226_iic_write                     0x00002742   Section        0  driver_ina226.o(i.a_ina226_iic_write)
+    a_ina226_iic_write                       0x00002743   Thumb Code    42  driver_ina226.o(i.a_ina226_iic_write)
+    i.assert_failed                          0x0000276c   Section        0  board.o(i.assert_failed)
+    i.board_init                             0x00002770   Section        0  board.o(i.board_init)
+    i.delay_ms                               0x000027e0   Section        0  board.o(i.delay_ms)
+    i.delay_us                               0x000027f4   Section        0  board.o(i.delay_us)
+    i.fputc                                  0x00002830   Section        0  bsp_uart.o(i.fputc)
+    i.ina226_basic_deinit                    0x00002854   Section        0  driver_ina226_basic.o(i.ina226_basic_deinit)
+    i.ina226_calculate_calibration           0x00002870   Section        0  driver_ina226.o(i.ina226_calculate_calibration)
+    i.ina226_deinit                          0x00002968   Section        0  driver_ina226.o(i.ina226_deinit)
+    i.ina226_init                            0x00002a40   Section        0  driver_ina226.o(i.ina226_init)
+    i.ina226_interface_debug_print           0x00002ca4   Section        0  driver_ina226_interface.o(i.ina226_interface_debug_print)
+    i.ina226_interface_delay_ms              0x00002cdc   Section        0  driver_ina226_interface.o(i.ina226_interface_delay_ms)
+    i.ina226_interface_iic_deinit            0x00002ce8   Section        0  driver_ina226_interface.o(i.ina226_interface_iic_deinit)
+    i.ina226_interface_iic_init              0x00002cf2   Section        0  driver_ina226_interface.o(i.ina226_interface_iic_init)
+    i.ina226_interface_iic_read              0x00002cfc   Section        0  driver_ina226_interface.o(i.ina226_interface_iic_read)
+    i.ina226_interface_iic_write             0x00002d62   Section        0  driver_ina226_interface.o(i.ina226_interface_iic_write)
+    i.ina226_interface_receive_callback      0x00002dc8   Section        0  driver_ina226_interface.o(i.ina226_interface_receive_callback)
+    i.ina226_poll                            0x00002ef4   Section        0  main.o(i.ina226_poll)
+    i.ina226_read_bus_voltage                0x00002fe4   Section        0  driver_ina226.o(i.ina226_read_bus_voltage)
+    i.ina226_read_current                    0x0000315c   Section        0  driver_ina226.o(i.ina226_read_current)
+    i.ina226_read_power                      0x000032ec   Section        0  driver_ina226.o(i.ina226_read_power)
+    i.ina226_set_addr_pin                    0x00003484   Section        0  driver_ina226.o(i.ina226_set_addr_pin)
+    i.ina226_set_average_mode                0x00003494   Section        0  driver_ina226.o(i.ina226_set_average_mode)
+    i.ina226_set_bus_voltage_conversion_time 0x00003514   Section        0  driver_ina226.o(i.ina226_set_bus_voltage_conversion_time)
+    i.ina226_set_calibration                 0x00003590   Section        0  driver_ina226.o(i.ina226_set_calibration)
+    i.ina226_set_mode                        0x000035f4   Section        0  driver_ina226.o(i.ina226_set_mode)
+    i.ina226_set_resistance                  0x000036c0   Section        0  driver_ina226.o(i.ina226_set_resistance)
+    i.ina226_set_shunt_voltage_conversion_time 0x000036d4   Section        0  driver_ina226.o(i.ina226_set_shunt_voltage_conversion_time)
+    i.ina226_shot_init                       0x00003750   Section        0  driver_ina226_shot.o(i.ina226_shot_init)
+    i.ina226_shot_read                       0x000039ec   Section        0  driver_ina226_shot.o(i.ina226_shot_read)
+    i.main                                   0x00003a4c   Section        0  main.o(i.main)
+    i.pow                                    0x00003ae8   Section        0  pow.o(i.pow)
+    i.sqrt                                   0x000044e4   Section        0  sqrt.o(i.sqrt)
+    i.uart1_init                             0x0000452c   Section        0  bsp_uart.o(i.uart1_init)
+    .constdata                               0x000045f8   Section      100  cw32f030_rcc.o(.constdata)
+    .constdata                               0x00004660   Section      136  pow.o(.constdata)
+    bp                                       0x00004660   Data          16  pow.o(.constdata)
+    dp_h                                     0x00004670   Data          16  pow.o(.constdata)
+    dp_l                                     0x00004680   Data          16  pow.o(.constdata)
+    L                                        0x00004690   Data          48  pow.o(.constdata)
+    P                                        0x000046c0   Data          40  pow.o(.constdata)
+    .constdata                               0x000046e8   Section        8  qnan.o(.constdata)
     .data                                    0x20000000   Section        9  cw32f030_systick.o(.data)
     .data                                    0x2000000c   Section        4  system_cw32f030.o(.data)
     .data                                    0x20000010   Section        4  stdout.o(.data)
-    STACK                                    0x20000018   Section     1024  startup_cw32f030.o(STACK)
+    .data                                    0x20000014   Section        4  errno.o(.data)
+    _errno                                   0x20000014   Data           4  errno.o(.data)
+    .bss                                     0x20000018   Section       56  driver_ina226_basic.o(.bss)
+    gs_handle                                0x20000018   Data          56  driver_ina226_basic.o(.bss)
+    .bss                                     0x20000050   Section       56  driver_ina226_shot.o(.bss)
+    gs_handle                                0x20000050   Data          56  driver_ina226_shot.o(.bss)
+    STACK                                    0x20000088   Section     1024  startup_cw32f030.o(STACK)
 
     Global Symbols
 
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
-    BuildAttributes$$THM_ISAv3M$S$PE$A:L22$X:L11$S22$IEEE1$IW$USESV6$~STKCKD$USESV7$~SHL$OTIME$ROPI$EBA8$MICROLIB$REQ8$PRES8$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
+    BuildAttributes$$THM_ISAv3M$S$PE$A:L22$X:L11$S22$IEEE1$IW$USESV6$~STKCKD$USESV7$~SHL$OTIME$ROPI$IEEEX$EBA8$MICROLIB$REQ8$PRES8$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
     __ARM_use_no_argv                        0x00000000   Number         0  main.o ABSOLUTE
     __Vectors                                0x00000000   Data           0  startup_cw32f030.o(RESET)
+    _printf_a                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_c                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_charcount                        0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_d                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_e                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_f                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_flags                            0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_fp_dec                           0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_fp_hex                           0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_g                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_i                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_int_dec                          0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_l                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_lc                               0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_ll                               0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_lld                              0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_lli                              0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_llo                              0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_llu                              0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_llx                              0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_longlong_dec                     0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_longlong_hex                     0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_longlong_oct                     0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_ls                               0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_mbtowc                           0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_n                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_o                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_p                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_percent                          0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_pre_padding                      0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_return_value                     0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_s                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_sizespec                         0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_str                              0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_truncate_signed                  0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_truncate_unsigned                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_u                                0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_wc                               0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_wctomb                           0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_widthprec                        0x00000000   Number         0  stubs.o ABSOLUTE
+    _printf_x                                0x00000000   Number         0  stubs.o ABSOLUTE
     __arm_fini_                               - Undefined Weak Reference
     __cpp_initialize__aeabi_                  - Undefined Weak Reference
     __cxa_finalize                            - Undefined Weak Reference
@@ -1401,79 +1870,150 @@ Image Symbol Table
     __aeabi_memcpy                           0x00000179   Thumb Code    36  memcpya.o(.text)
     __aeabi_memcpy4                          0x00000179   Thumb Code     0  memcpya.o(.text)
     __aeabi_memcpy8                          0x00000179   Thumb Code     0  memcpya.o(.text)
-    __aeabi_fadd                             0x0000019d   Thumb Code   162  fadd.o(.text)
-    __aeabi_fsub                             0x0000023f   Thumb Code     8  fadd.o(.text)
-    __aeabi_frsub                            0x00000247   Thumb Code     8  fadd.o(.text)
-    __aeabi_fmul                             0x0000024f   Thumb Code   122  fmul.o(.text)
-    __aeabi_fdiv                             0x000002c9   Thumb Code   124  fdiv.o(.text)
-    __aeabi_dadd                             0x00000345   Thumb Code   330  dadd.o(.text)
-    __aeabi_dsub                             0x0000048f   Thumb Code    12  dadd.o(.text)
-    __aeabi_drsub                            0x0000049b   Thumb Code    12  dadd.o(.text)
-    __aeabi_ui2f                             0x000004ad   Thumb Code    14  ffltui.o(.text)
-    __aeabi_f2uiz                            0x000004bb   Thumb Code    40  ffixui.o(.text)
-    __aeabi_d2uiz                            0x000004e5   Thumb Code    50  dfixui.o(.text)
-    __aeabi_f2d                              0x00000521   Thumb Code    40  f2d.o(.text)
-    __aeabi_uldivmod                         0x00000549   Thumb Code    96  uldiv.o(.text)
-    __aeabi_llsl                             0x000005a9   Thumb Code    32  llshl.o(.text)
-    _ll_shift_l                              0x000005a9   Thumb Code     0  llshl.o(.text)
-    __aeabi_llsr                             0x000005c9   Thumb Code    34  llushr.o(.text)
-    _ll_ushift_r                             0x000005c9   Thumb Code     0  llushr.o(.text)
-    __aeabi_lasr                             0x000005eb   Thumb Code    38  llsshr.o(.text)
-    _ll_sshift_r                             0x000005eb   Thumb Code     0  llsshr.o(.text)
-    __I$use$fp                               0x00000611   Thumb Code     0  iusefp.o(.text)
-    _float_round                             0x00000611   Thumb Code    16  fepilogue.o(.text)
-    _float_epilogue                          0x00000621   Thumb Code   114  fepilogue.o(.text)
-    _double_round                            0x00000693   Thumb Code    26  depilogue.o(.text)
-    _double_epilogue                         0x000006ad   Thumb Code   164  depilogue.o(.text)
-    __scatterload                            0x00000751   Thumb Code    28  init.o(.text)
-    __scatterload_rt2                        0x00000751   Thumb Code     0  init.o(.text)
-    FLASH_SetLatency                         0x00000775   Thumb Code    66  cw32f030_flash.o(i.FLASH_SetLatency)
-    GPIO_Init                                0x000007e9   Thumb Code   252  cw32f030_gpio.o(i.GPIO_Init)
-    GPIO_WritePin                            0x000008e9   Thumb Code    12  cw32f030_gpio.o(i.GPIO_WritePin)
-    RCC_AHBPeriphClk_Enable                  0x000008f5   Thumb Code    58  cw32f030_rcc.o(i.RCC_AHBPeriphClk_Enable)
-    RCC_APBPeriphClk_Enable2                 0x00000959   Thumb Code    56  cw32f030_rcc.o(i.RCC_APBPeriphClk_Enable2)
-    RCC_HCLKPRS_Config                       0x000009bd   Thumb Code    66  cw32f030_rcc.o(i.RCC_HCLKPRS_Config)
-    RCC_HSE_Enable                           0x00000a2d   Thumb Code   298  cw32f030_rcc.o(i.RCC_HSE_Enable)
-    RCC_PLL_Enable                           0x00000b99   Thumb Code   300  cw32f030_rcc.o(i.RCC_PLL_Enable)
-    RCC_SysClk_Switch                        0x00000cfd   Thumb Code    84  cw32f030_rcc.o(i.RCC_SysClk_Switch)
-    RCC_Sysctrl_GetHClkFreq                  0x00000d7d   Thumb Code   194  cw32f030_rcc.o(i.RCC_Sysctrl_GetHClkFreq)
-    RCC_SystemCoreClockUpdate                0x00000e55   Thumb Code     6  cw32f030_rcc.o(i.RCC_SystemCoreClockUpdate)
-    SysTick_Handler                          0x00000e61   Thumb Code    16  cw32f030_systick.o(i.SysTick_Handler)
-    SystemCoreClockUpdate                    0x00000e79   Thumb Code     8  system_cw32f030.o(i.SystemCoreClockUpdate)
-    SystemInit                               0x00000e89   Thumb Code    54  system_cw32f030.o(i.SystemInit)
-    UART1_IRQHandler                         0x00000ec5   Thumb Code    40  bsp_uart.o(i.UART1_IRQHandler)
-    USART_ClearITPendingBit                  0x00000ef1   Thumb Code    68  cw32f030_uart.o(i.USART_ClearITPendingBit)
-    USART_GetFlagStatus                      0x00000f65   Thumb Code    78  cw32f030_uart.o(i.USART_GetFlagStatus)
-    USART_GetITStatus                        0x00000fe1   Thumb Code    76  cw32f030_uart.o(i.USART_GetITStatus)
-    USART_ITConfig                           0x0000105d   Thumb Code   106  cw32f030_uart.o(i.USART_ITConfig)
-    USART_Init                               0x000010f9   Thumb Code   666  cw32f030_uart.o(i.USART_Init)
-    USART_ReceiveData_8bit                   0x000013d5   Thumb Code    38  cw32f030_uart.o(i.USART_ReceiveData_8bit)
-    USART_SendData                           0x00001429   Thumb Code    58  cw32f030_uart.o(i.USART_SendData)
-    USART_SendData_8bit                      0x00001495   Thumb Code    52  cw32f030_uart.o(i.USART_SendData_8bit)
-    __0printf$bare                           0x000014f5   Thumb Code    12  printfb.o(i.__0printf$bare)
-    __1printf$bare                           0x000014f5   Thumb Code     0  printfb.o(i.__0printf$bare)
-    __2printf                                0x000014f5   Thumb Code     0  printfb.o(i.__0printf$bare)
-    __ARM_clz                                0x00001509   Thumb Code    46  depilogue.o(i.__ARM_clz)
-    __ARM_common_switch8                     0x00001537   Thumb Code    28  cw32f030_rcc.o(i.__ARM_common_switch8)
-    __scatterload_copy                       0x000015cd   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x000015db   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x000015dd   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    assert_failed                            0x00001609   Thumb Code     2  board.o(i.assert_failed)
-    board_init                               0x0000160d   Thumb Code    94  board.o(i.board_init)
-    delay_ms                                 0x0000167d   Thumb Code    18  board.o(i.delay_ms)
-    delay_us                                 0x00001691   Thumb Code    56  board.o(i.delay_us)
-    fputc                                    0x000016cd   Thumb Code    32  bsp_uart.o(i.fputc)
-    main                                     0x000016f1   Thumb Code    96  main.o(i.main)
-    uart1_init                               0x00001771   Thumb Code   186  bsp_uart.o(i.uart1_init)
-    hsiprs_tbl                               0x0000183c   Data          64  cw32f030_rcc.o(.constdata)
-    Region$$Table$$Base                      0x000018a0   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x000018c0   Number         0  anon$$obj.o(Region$$Table)
+    __aeabi_memset                           0x0000019d   Thumb Code    14  memseta.o(.text)
+    __aeabi_memset4                          0x0000019d   Thumb Code     0  memseta.o(.text)
+    __aeabi_memset8                          0x0000019d   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr                           0x000001ab   Thumb Code     4  memseta.o(.text)
+    __aeabi_memclr4                          0x000001ab   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr8                          0x000001ab   Thumb Code     0  memseta.o(.text)
+    _memset$wrapper                          0x000001af   Thumb Code    18  memseta.o(.text)
+    __aeabi_fadd                             0x000001c1   Thumb Code   162  fadd.o(.text)
+    __aeabi_fsub                             0x00000263   Thumb Code     8  fadd.o(.text)
+    __aeabi_frsub                            0x0000026b   Thumb Code     8  fadd.o(.text)
+    __aeabi_fmul                             0x00000273   Thumb Code   122  fmul.o(.text)
+    __aeabi_fdiv                             0x000002ed   Thumb Code   124  fdiv.o(.text)
+    __aeabi_dadd                             0x00000369   Thumb Code   330  dadd.o(.text)
+    __aeabi_dsub                             0x000004b3   Thumb Code    12  dadd.o(.text)
+    __aeabi_drsub                            0x000004bf   Thumb Code    12  dadd.o(.text)
+    __aeabi_dmul                             0x000004d1   Thumb Code   202  dmul.o(.text)
+    __aeabi_ddiv                             0x000005a1   Thumb Code   234  ddiv.o(.text)
+    __aeabi_ui2f                             0x00000691   Thumb Code    14  ffltui.o(.text)
+    __aeabi_i2d                              0x000006a1   Thumb Code    34  dflti.o(.text)
+    __aeabi_ui2d                             0x000006c9   Thumb Code    24  dfltui.o(.text)
+    __aeabi_f2uiz                            0x000006e5   Thumb Code    40  ffixui.o(.text)
+    __aeabi_d2uiz                            0x0000070d   Thumb Code    50  dfixui.o(.text)
+    __aeabi_f2d                              0x00000749   Thumb Code    40  f2d.o(.text)
+    __aeabi_cdcmpeq                          0x00000771   Thumb Code     0  cdcmple.o(.text)
+    __aeabi_cdcmple                          0x00000771   Thumb Code    38  cdcmple.o(.text)
+    __aeabi_cdrcmple                         0x00000799   Thumb Code    38  cdrcmple.o(.text)
+    __aeabi_d2f                              0x000007c1   Thumb Code    56  d2f.o(.text)
+    __aeabi_uldivmod                         0x000007f9   Thumb Code    96  uldiv.o(.text)
+    __aeabi_llsl                             0x00000859   Thumb Code    32  llshl.o(.text)
+    _ll_shift_l                              0x00000859   Thumb Code     0  llshl.o(.text)
+    __aeabi_llsr                             0x00000879   Thumb Code    34  llushr.o(.text)
+    _ll_ushift_r                             0x00000879   Thumb Code     0  llushr.o(.text)
+    __aeabi_lasr                             0x0000089b   Thumb Code    38  llsshr.o(.text)
+    _ll_sshift_r                             0x0000089b   Thumb Code     0  llsshr.o(.text)
+    __I$use$fp                               0x000008c1   Thumb Code     0  iusefp.o(.text)
+    _float_round                             0x000008c1   Thumb Code    16  fepilogue.o(.text)
+    _float_epilogue                          0x000008d1   Thumb Code   114  fepilogue.o(.text)
+    _double_round                            0x00000943   Thumb Code    26  depilogue.o(.text)
+    _double_epilogue                         0x0000095d   Thumb Code   164  depilogue.o(.text)
+    __ARM_scalbn                             0x00000a01   Thumb Code    44  dscalb.o(.text)
+    scalbn                                   0x00000a01   Thumb Code     0  dscalb.o(.text)
+    __aeabi_d2ulz                            0x00000a2d   Thumb Code    54  dfixul.o(.text)
+    __scatterload                            0x00000a6d   Thumb Code    28  init.o(.text)
+    __scatterload_rt2                        0x00000a6d   Thumb Code     0  init.o(.text)
+    _dsqrt                                   0x00000a91   Thumb Code   162  dsqrt.o(.text)
+    FLASH_SetLatency                         0x00000b35   Thumb Code    66  cw32f030_flash.o(i.FLASH_SetLatency)
+    GPIO_DeInit                              0x00000ba9   Thumb Code    56  cw32f030_gpio.o(i.GPIO_DeInit)
+    GPIO_Init                                0x00000be1   Thumb Code   252  cw32f030_gpio.o(i.GPIO_Init)
+    GPIO_ReadPin                             0x00000ce1   Thumb Code    18  cw32f030_gpio.o(i.GPIO_ReadPin)
+    GPIO_WritePin                            0x00000cf3   Thumb Code    12  cw32f030_gpio.o(i.GPIO_WritePin)
+    I2C_GPIO_DEINIT                          0x00000d01   Thumb Code    14  bsp_i2c.o(i.I2C_GPIO_DEINIT)
+    I2C_GPIO_INIT                            0x00000d15   Thumb Code    58  bsp_i2c.o(i.I2C_GPIO_INIT)
+    IIC_Read                                 0x00000d5d   Thumb Code   100  bsp_i2c.o(i.IIC_Read)
+    IIC_Send_Ack                             0x00000dc9   Thumb Code   102  bsp_i2c.o(i.IIC_Send_Ack)
+    IIC_Start                                0x00000e39   Thumb Code    82  bsp_i2c.o(i.IIC_Start)
+    IIC_Stop                                 0x00000e95   Thumb Code    88  bsp_i2c.o(i.IIC_Stop)
+    IIC_Wait_Ack                             0x00000ef5   Thumb Code   108  bsp_i2c.o(i.IIC_Wait_Ack)
+    IIC_Write                                0x00000f69   Thumb Code   112  bsp_i2c.o(i.IIC_Write)
+    RCC_AHBPeriphClk_Enable                  0x00000fe1   Thumb Code    58  cw32f030_rcc.o(i.RCC_AHBPeriphClk_Enable)
+    RCC_APBPeriphClk_Enable2                 0x00001045   Thumb Code    56  cw32f030_rcc.o(i.RCC_APBPeriphClk_Enable2)
+    RCC_HCLKPRS_Config                       0x000010a9   Thumb Code    66  cw32f030_rcc.o(i.RCC_HCLKPRS_Config)
+    RCC_HSE_Enable                           0x00001119   Thumb Code   298  cw32f030_rcc.o(i.RCC_HSE_Enable)
+    RCC_PLL_Enable                           0x00001285   Thumb Code   300  cw32f030_rcc.o(i.RCC_PLL_Enable)
+    RCC_SysClk_Switch                        0x000013e9   Thumb Code    84  cw32f030_rcc.o(i.RCC_SysClk_Switch)
+    RCC_Sysctrl_GetHClkFreq                  0x00001469   Thumb Code   194  cw32f030_rcc.o(i.RCC_Sysctrl_GetHClkFreq)
+    RCC_SystemCoreClockUpdate                0x00001541   Thumb Code     6  cw32f030_rcc.o(i.RCC_SystemCoreClockUpdate)
+    SysTick_Handler                          0x0000154d   Thumb Code    16  cw32f030_systick.o(i.SysTick_Handler)
+    SystemCoreClockUpdate                    0x00001565   Thumb Code     8  system_cw32f030.o(i.SystemCoreClockUpdate)
+    SystemInit                               0x00001575   Thumb Code    54  system_cw32f030.o(i.SystemInit)
+    UART1_IRQHandler                         0x000015b1   Thumb Code    40  bsp_uart.o(i.UART1_IRQHandler)
+    USART_ClearITPendingBit                  0x000015dd   Thumb Code    68  cw32f030_uart.o(i.USART_ClearITPendingBit)
+    USART_GetFlagStatus                      0x00001651   Thumb Code    78  cw32f030_uart.o(i.USART_GetFlagStatus)
+    USART_GetITStatus                        0x000016cd   Thumb Code    76  cw32f030_uart.o(i.USART_GetITStatus)
+    USART_ITConfig                           0x00001749   Thumb Code   106  cw32f030_uart.o(i.USART_ITConfig)
+    USART_Init                               0x000017e5   Thumb Code   666  cw32f030_uart.o(i.USART_Init)
+    USART_ReceiveData_8bit                   0x00001ac1   Thumb Code    38  cw32f030_uart.o(i.USART_ReceiveData_8bit)
+    USART_SendData                           0x00001b15   Thumb Code    58  cw32f030_uart.o(i.USART_SendData)
+    USART_SendData_8bit                      0x00001b81   Thumb Code    52  cw32f030_uart.o(i.USART_SendData_8bit)
+    __0printf                                0x00001be1   Thumb Code    24  printfa.o(i.__0printf)
+    __1printf                                0x00001be1   Thumb Code     0  printfa.o(i.__0printf)
+    __2printf                                0x00001be1   Thumb Code     0  printfa.o(i.__0printf)
+    __c89printf                              0x00001be1   Thumb Code     0  printfa.o(i.__0printf)
+    printf                                   0x00001be1   Thumb Code     0  printfa.o(i.__0printf)
+    __0vsnprintf                             0x00001c01   Thumb Code    44  printfa.o(i.__0vsnprintf)
+    __1vsnprintf                             0x00001c01   Thumb Code     0  printfa.o(i.__0vsnprintf)
+    __2vsnprintf                             0x00001c01   Thumb Code     0  printfa.o(i.__0vsnprintf)
+    __c89vsnprintf                           0x00001c01   Thumb Code     0  printfa.o(i.__0vsnprintf)
+    vsnprintf                                0x00001c01   Thumb Code     0  printfa.o(i.__0vsnprintf)
+    __ARM_clz                                0x00001c31   Thumb Code    46  depilogue.o(i.__ARM_clz)
+    __ARM_common_switch8                     0x00001c5f   Thumb Code    28  cw32f030_rcc.o(i.__ARM_common_switch8)
+    __ARM_fpclassify                         0x00001c7d   Thumb Code    40  fpclassify.o(i.__ARM_fpclassify)
+    __kernel_poly                            0x00001d21   Thumb Code   172  poly.o(i.__kernel_poly)
+    __mathlib_dbl_divzero                    0x00001dcd   Thumb Code    16  dunder.o(i.__mathlib_dbl_divzero)
+    __mathlib_dbl_infnan2                    0x00001de1   Thumb Code     8  dunder.o(i.__mathlib_dbl_infnan2)
+    __mathlib_dbl_invalid                    0x00001de9   Thumb Code    16  dunder.o(i.__mathlib_dbl_invalid)
+    __mathlib_dbl_overflow                   0x00001df9   Thumb Code    16  dunder.o(i.__mathlib_dbl_overflow)
+    __mathlib_dbl_underflow                  0x00001e0d   Thumb Code    14  dunder.o(i.__mathlib_dbl_underflow)
+    __scatterload_copy                       0x00001e21   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x00001e2f   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x00001e31   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    __set_errno                              0x00001e41   Thumb Code     6  errno.o(i.__set_errno)
+    assert_failed                            0x0000276d   Thumb Code     2  board.o(i.assert_failed)
+    board_init                               0x00002771   Thumb Code    94  board.o(i.board_init)
+    delay_ms                                 0x000027e1   Thumb Code    18  board.o(i.delay_ms)
+    delay_us                                 0x000027f5   Thumb Code    56  board.o(i.delay_us)
+    fputc                                    0x00002831   Thumb Code    32  bsp_uart.o(i.fputc)
+    ina226_basic_deinit                      0x00002855   Thumb Code    22  driver_ina226_basic.o(i.ina226_basic_deinit)
+    ina226_calculate_calibration             0x00002871   Thumb Code   194  driver_ina226.o(i.ina226_calculate_calibration)
+    ina226_deinit                            0x00002969   Thumb Code   112  driver_ina226.o(i.ina226_deinit)
+    ina226_init                              0x00002a41   Thumb Code   292  driver_ina226.o(i.ina226_init)
+    ina226_interface_debug_print             0x00002ca5   Thumb Code    52  driver_ina226_interface.o(i.ina226_interface_debug_print)
+    ina226_interface_delay_ms                0x00002cdd   Thumb Code    12  driver_ina226_interface.o(i.ina226_interface_delay_ms)
+    ina226_interface_iic_deinit              0x00002ce9   Thumb Code    10  driver_ina226_interface.o(i.ina226_interface_iic_deinit)
+    ina226_interface_iic_init                0x00002cf3   Thumb Code    10  driver_ina226_interface.o(i.ina226_interface_iic_init)
+    ina226_interface_iic_read                0x00002cfd   Thumb Code   102  driver_ina226_interface.o(i.ina226_interface_iic_read)
+    ina226_interface_iic_write               0x00002d63   Thumb Code   102  driver_ina226_interface.o(i.ina226_interface_iic_write)
+    ina226_interface_receive_callback        0x00002dc9   Thumb Code    74  driver_ina226_interface.o(i.ina226_interface_receive_callback)
+    ina226_poll                              0x00002ef5   Thumb Code   124  main.o(i.ina226_poll)
+    ina226_read_bus_voltage                  0x00002fe5   Thumb Code   242  driver_ina226.o(i.ina226_read_bus_voltage)
+    ina226_read_current                      0x0000315d   Thumb Code   272  driver_ina226.o(i.ina226_read_current)
+    ina226_read_power                        0x000032ed   Thumb Code   274  driver_ina226.o(i.ina226_read_power)
+    ina226_set_addr_pin                      0x00003485   Thumb Code    16  driver_ina226.o(i.ina226_set_addr_pin)
+    ina226_set_average_mode                  0x00003495   Thumb Code    90  driver_ina226.o(i.ina226_set_average_mode)
+    ina226_set_bus_voltage_conversion_time   0x00003515   Thumb Code    88  driver_ina226.o(i.ina226_set_bus_voltage_conversion_time)
+    ina226_set_calibration                   0x00003591   Thumb Code    56  driver_ina226.o(i.ina226_set_calibration)
+    ina226_set_mode                          0x000035f5   Thumb Code   126  driver_ina226.o(i.ina226_set_mode)
+    ina226_set_resistance                    0x000036c1   Thumb Code    18  driver_ina226.o(i.ina226_set_resistance)
+    ina226_set_shunt_voltage_conversion_time 0x000036d5   Thumb Code    86  driver_ina226.o(i.ina226_set_shunt_voltage_conversion_time)
+    ina226_shot_init                         0x00003751   Thumb Code   304  driver_ina226_shot.o(i.ina226_shot_init)
+    ina226_shot_read                         0x000039ed   Thumb Code    90  driver_ina226_shot.o(i.ina226_shot_read)
+    main                                     0x00003a4d   Thumb Code   116  main.o(i.main)
+    pow                                      0x00003ae9   Thumb Code  2548  pow.o(i.pow)
+    sqrt                                     0x000044e5   Thumb Code    66  sqrt.o(i.sqrt)
+    uart1_init                               0x0000452d   Thumb Code   186  bsp_uart.o(i.uart1_init)
+    hsiprs_tbl                               0x000045f8   Data          64  cw32f030_rcc.o(.constdata)
+    __mathlib_zero                           0x000046e8   Data           8  qnan.o(.constdata)
+    Region$$Table$$Base                      0x000046f0   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00004710   Number         0  anon$$obj.o(Region$$Table)
     uwTick                                   0x20000000   Data           4  cw32f030_systick.o(.data)
     uwTickPrio                               0x20000004   Data           4  cw32f030_systick.o(.data)
     uwTickFreq                               0x20000008   Data           1  cw32f030_systick.o(.data)
     SystemCoreClock                          0x2000000c   Data           4  system_cw32f030.o(.data)
     __stdout                                 0x20000010   Data           4  stdout.o(.data)
-    __initial_sp                             0x20000418   Data           0  startup_cw32f030.o(STACK)
+    __initial_sp                             0x20000488   Data           0  startup_cw32f030.o(STACK)
 
 
 
@@ -1483,99 +2023,170 @@ Memory Map of the image
 
   Image Entry point : 0x000000c1
 
-  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x000018d4, Max: 0x00010000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x00004728, Max: 0x00010000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x00000000, Size: 0x000018c0, Max: 0x00010000, ABSOLUTE)
-
-    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
-
-    0x00000000   0x000000c0   Data   RO          137    RESET               startup_cw32f030.o
-    0x000000c0   0x00000000   Code   RO         3315  * .ARM.Collect$$$$00000000  mc_p.l(entry.o)
-    0x000000c0   0x00000004   Code   RO         3606    .ARM.Collect$$$$00000001  mc_p.l(entry2.o)
-    0x000000c4   0x00000004   Code   RO         3609    .ARM.Collect$$$$00000004  mc_p.l(entry5.o)
-    0x000000c8   0x00000000   Code   RO         3611    .ARM.Collect$$$$00000008  mc_p.l(entry7b.o)
-    0x000000c8   0x00000000   Code   RO         3613    .ARM.Collect$$$$0000000A  mc_p.l(entry8b.o)
-    0x000000c8   0x00000008   Code   RO         3614    .ARM.Collect$$$$0000000B  mc_p.l(entry9a.o)
-    0x000000d0   0x00000004   Code   RO         3621    .ARM.Collect$$$$0000000E  mc_p.l(entry12b.o)
-    0x000000d4   0x00000000   Code   RO         3616    .ARM.Collect$$$$0000000F  mc_p.l(entry10a.o)
-    0x000000d4   0x00000000   Code   RO         3618    .ARM.Collect$$$$00000011  mc_p.l(entry11a.o)
-    0x000000d4   0x00000004   Code   RO         3607    .ARM.Collect$$$$00002712  mc_p.l(entry2.o)
-    0x000000d8   0x00000028   Code   RO          138    .text               startup_cw32f030.o
-    0x00000100   0x0000002c   Code   RO         3318    .text               mc_p.l(uidiv.o)
-    0x0000012c   0x0000004c   Code   RO         3320    .text               mc_p.l(ldiv.o)
-    0x00000178   0x00000024   Code   RO         3322    .text               mc_p.l(memcpya.o)
-    0x0000019c   0x000000b2   Code   RO         3588    .text               mf_p.l(fadd.o)
-    0x0000024e   0x0000007a   Code   RO         3590    .text               mf_p.l(fmul.o)
-    0x000002c8   0x0000007c   Code   RO         3592    .text               mf_p.l(fdiv.o)
-    0x00000344   0x00000168   Code   RO         3594    .text               mf_p.l(dadd.o)
-    0x000004ac   0x0000000e   Code   RO         3598    .text               mf_p.l(ffltui.o)
-    0x000004ba   0x00000028   Code   RO         3600    .text               mf_p.l(ffixui.o)
-    0x000004e2   0x00000002   PAD
-    0x000004e4   0x0000003c   Code   RO         3602    .text               mf_p.l(dfixui.o)
-    0x00000520   0x00000028   Code   RO         3604    .text               mf_p.l(f2d.o)
-    0x00000548   0x00000060   Code   RO         3623    .text               mc_p.l(uldiv.o)
-    0x000005a8   0x00000020   Code   RO         3625    .text               mc_p.l(llshl.o)
-    0x000005c8   0x00000022   Code   RO         3627    .text               mc_p.l(llushr.o)
-    0x000005ea   0x00000026   Code   RO         3629    .text               mc_p.l(llsshr.o)
-    0x00000610   0x00000000   Code   RO         3631    .text               mc_p.l(iusefp.o)
-    0x00000610   0x00000082   Code   RO         3632    .text               mf_p.l(fepilogue.o)
-    0x00000692   0x000000be   Code   RO         3634    .text               mf_p.l(depilogue.o)
-    0x00000750   0x00000024   Code   RO         3646    .text               mc_p.l(init.o)
-    0x00000774   0x00000074   Code   RO         1322    i.FLASH_SetLatency  cw32f030_flash.o
-    0x000007e8   0x00000100   Code   RO         1462    i.GPIO_Init         cw32f030_gpio.o
-    0x000008e8   0x0000000c   Code   RO         1469    i.GPIO_WritePin     cw32f030_gpio.o
-    0x000008f4   0x00000064   Code   RO         2037    i.RCC_AHBPeriphClk_Enable  cw32f030_rcc.o
-    0x00000958   0x00000064   Code   RO         2040    i.RCC_APBPeriphClk_Enable2  cw32f030_rcc.o
-    0x000009bc   0x00000070   Code   RO         2060    i.RCC_HCLKPRS_Config  cw32f030_rcc.o
-    0x00000a2c   0x0000016c   Code   RO         2063    i.RCC_HSE_Enable    cw32f030_rcc.o
-    0x00000b98   0x00000164   Code   RO         2081    i.RCC_PLL_Enable    cw32f030_rcc.o
-    0x00000cfc   0x00000080   Code   RO         2085    i.RCC_SysClk_Switch  cw32f030_rcc.o
-    0x00000d7c   0x000000d8   Code   RO         2086    i.RCC_Sysctrl_GetHClkFreq  cw32f030_rcc.o
-    0x00000e54   0x0000000c   Code   RO         2088    i.RCC_SystemCoreClockUpdate  cw32f030_rcc.o
-    0x00000e60   0x00000018   Code   RO         2683    i.SysTick_Handler   cw32f030_systick.o
-    0x00000e78   0x00000010   Code   RO         3253    i.SystemCoreClockUpdate  system_cw32f030.o
-    0x00000e88   0x0000003c   Code   RO         3254    i.SystemInit        system_cw32f030.o
-    0x00000ec4   0x0000002c   Code   RO          144    i.UART1_IRQHandler  bsp_uart.o
-    0x00000ef0   0x00000074   Code   RO         2750    i.USART_ClearITPendingBit  cw32f030_uart.o
-    0x00000f64   0x0000007c   Code   RO         2755    i.USART_GetFlagStatus  cw32f030_uart.o
-    0x00000fe0   0x0000007c   Code   RO         2756    i.USART_GetITStatus  cw32f030_uart.o
-    0x0000105c   0x0000009c   Code   RO         2758    i.USART_ITConfig    cw32f030_uart.o
-    0x000010f8   0x000002dc   Code   RO         2759    i.USART_Init        cw32f030_uart.o
-    0x000013d4   0x00000054   Code   RO         2762    i.USART_ReceiveData_8bit  cw32f030_uart.o
-    0x00001428   0x0000006c   Code   RO         2763    i.USART_SendData    cw32f030_uart.o
-    0x00001494   0x00000060   Code   RO         2764    i.USART_SendData_8bit  cw32f030_uart.o
-    0x000014f4   0x00000014   Code   RO         3329    i.__0printf$bare    mc_p.l(printfb.o)
-    0x00001508   0x0000002e   Code   RO         3636    i.__ARM_clz         mf_p.l(depilogue.o)
-    0x00001536   0x0000001c   Code   RO         2367    i.__ARM_common_switch8  cw32f030_rcc.o
-    0x00001552   0x00000002   PAD
-    0x00001554   0x00000078   Code   RO          145    i.__NVIC_SetPriority  bsp_uart.o
-    0x000015cc   0x0000000e   Code   RO         3650    i.__scatterload_copy  mc_p.l(handlers.o)
-    0x000015da   0x00000002   Code   RO         3651    i.__scatterload_null  mc_p.l(handlers.o)
-    0x000015dc   0x0000000e   Code   RO         3652    i.__scatterload_zeroinit  mc_p.l(handlers.o)
-    0x000015ea   0x0000001e   Code   RO         3336    i._printf_core      mc_p.l(printfb.o)
-    0x00001608   0x00000002   Code   RO          194    i.assert_failed     board.o
-    0x0000160a   0x00000002   PAD
-    0x0000160c   0x00000070   Code   RO          195    i.board_init        board.o
-    0x0000167c   0x00000012   Code   RO          198    i.delay_ms          board.o
-    0x0000168e   0x00000002   PAD
-    0x00001690   0x0000003c   Code   RO          199    i.delay_us          board.o
-    0x000016cc   0x00000024   Code   RO          146    i.fputc             bsp_uart.o
-    0x000016f0   0x00000080   Code   RO            3    i.main              main.o
-    0x00001770   0x000000cc   Code   RO          147    i.uart1_init        bsp_uart.o
-    0x0000183c   0x00000064   Data   RO         2090    .constdata          cw32f030_rcc.o
-    0x000018a0   0x00000020   Data   RO         3648    Region$$Table       anon$$obj.o
-
-
-    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000418, Max: 0x00002000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x00000000, Size: 0x00004710, Max: 0x00010000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x00000009   Data   RW         2685    .data               cw32f030_systick.o
+    0x00000000   0x000000c0   Data   RO          155    RESET               startup_cw32f030.o
+    0x000000c0   0x00000000   Code   RO         3871  * .ARM.Collect$$$$00000000  mc_p.l(entry.o)
+    0x000000c0   0x00000004   Code   RO         4206    .ARM.Collect$$$$00000001  mc_p.l(entry2.o)
+    0x000000c4   0x00000004   Code   RO         4209    .ARM.Collect$$$$00000004  mc_p.l(entry5.o)
+    0x000000c8   0x00000000   Code   RO         4211    .ARM.Collect$$$$00000008  mc_p.l(entry7b.o)
+    0x000000c8   0x00000000   Code   RO         4213    .ARM.Collect$$$$0000000A  mc_p.l(entry8b.o)
+    0x000000c8   0x00000008   Code   RO         4214    .ARM.Collect$$$$0000000B  mc_p.l(entry9a.o)
+    0x000000d0   0x00000004   Code   RO         4221    .ARM.Collect$$$$0000000E  mc_p.l(entry12b.o)
+    0x000000d4   0x00000000   Code   RO         4216    .ARM.Collect$$$$0000000F  mc_p.l(entry10a.o)
+    0x000000d4   0x00000000   Code   RO         4218    .ARM.Collect$$$$00000011  mc_p.l(entry11a.o)
+    0x000000d4   0x00000004   Code   RO         4207    .ARM.Collect$$$$00002712  mc_p.l(entry2.o)
+    0x000000d8   0x00000028   Code   RO          156    .text               startup_cw32f030.o
+    0x00000100   0x0000002c   Code   RO         3874    .text               mc_p.l(uidiv.o)
+    0x0000012c   0x0000004c   Code   RO         3876    .text               mc_p.l(ldiv.o)
+    0x00000178   0x00000024   Code   RO         3878    .text               mc_p.l(memcpya.o)
+    0x0000019c   0x00000024   Code   RO         3880    .text               mc_p.l(memseta.o)
+    0x000001c0   0x000000b2   Code   RO         4147    .text               mf_p.l(fadd.o)
+    0x00000272   0x0000007a   Code   RO         4149    .text               mf_p.l(fmul.o)
+    0x000002ec   0x0000007c   Code   RO         4151    .text               mf_p.l(fdiv.o)
+    0x00000368   0x00000168   Code   RO         4153    .text               mf_p.l(dadd.o)
+    0x000004d0   0x000000d0   Code   RO         4155    .text               mf_p.l(dmul.o)
+    0x000005a0   0x000000f0   Code   RO         4157    .text               mf_p.l(ddiv.o)
+    0x00000690   0x0000000e   Code   RO         4161    .text               mf_p.l(ffltui.o)
+    0x0000069e   0x00000002   PAD
+    0x000006a0   0x00000028   Code   RO         4163    .text               mf_p.l(dflti.o)
+    0x000006c8   0x0000001c   Code   RO         4165    .text               mf_p.l(dfltui.o)
+    0x000006e4   0x00000028   Code   RO         4167    .text               mf_p.l(ffixui.o)
+    0x0000070c   0x0000003c   Code   RO         4169    .text               mf_p.l(dfixui.o)
+    0x00000748   0x00000028   Code   RO         4171    .text               mf_p.l(f2d.o)
+    0x00000770   0x00000028   Code   RO         4173    .text               mf_p.l(cdcmple.o)
+    0x00000798   0x00000028   Code   RO         4175    .text               mf_p.l(cdrcmple.o)
+    0x000007c0   0x00000038   Code   RO         4177    .text               mf_p.l(d2f.o)
+    0x000007f8   0x00000060   Code   RO         4223    .text               mc_p.l(uldiv.o)
+    0x00000858   0x00000020   Code   RO         4225    .text               mc_p.l(llshl.o)
+    0x00000878   0x00000022   Code   RO         4227    .text               mc_p.l(llushr.o)
+    0x0000089a   0x00000026   Code   RO         4229    .text               mc_p.l(llsshr.o)
+    0x000008c0   0x00000000   Code   RO         4238    .text               mc_p.l(iusefp.o)
+    0x000008c0   0x00000082   Code   RO         4239    .text               mf_p.l(fepilogue.o)
+    0x00000942   0x000000be   Code   RO         4241    .text               mf_p.l(depilogue.o)
+    0x00000a00   0x0000002c   Code   RO         4245    .text               mf_p.l(dscalb.o)
+    0x00000a2c   0x00000040   Code   RO         4247    .text               mf_p.l(dfixul.o)
+    0x00000a6c   0x00000024   Code   RO         4249    .text               mc_p.l(init.o)
+    0x00000a90   0x000000a2   Code   RO         4251    .text               mf_p.l(dsqrt.o)
+    0x00000b32   0x00000002   PAD
+    0x00000b34   0x00000074   Code   RO         1409    i.FLASH_SetLatency  cw32f030_flash.o
+    0x00000ba8   0x00000038   Code   RO         1546    i.GPIO_DeInit       cw32f030_gpio.o
+    0x00000be0   0x00000100   Code   RO         1549    i.GPIO_Init         cw32f030_gpio.o
+    0x00000ce0   0x00000012   Code   RO         1552    i.GPIO_ReadPin      cw32f030_gpio.o
+    0x00000cf2   0x0000000c   Code   RO         1556    i.GPIO_WritePin     cw32f030_gpio.o
+    0x00000cfe   0x00000002   PAD
+    0x00000d00   0x00000014   Code   RO          162    i.I2C_GPIO_DEINIT   bsp_i2c.o
+    0x00000d14   0x00000048   Code   RO          163    i.I2C_GPIO_INIT     bsp_i2c.o
+    0x00000d5c   0x0000006c   Code   RO          164    i.IIC_Read          bsp_i2c.o
+    0x00000dc8   0x00000070   Code   RO          165    i.IIC_Send_Ack      bsp_i2c.o
+    0x00000e38   0x0000005c   Code   RO          166    i.IIC_Start         bsp_i2c.o
+    0x00000e94   0x00000060   Code   RO          167    i.IIC_Stop          bsp_i2c.o
+    0x00000ef4   0x00000074   Code   RO          168    i.IIC_Wait_Ack      bsp_i2c.o
+    0x00000f68   0x00000078   Code   RO          169    i.IIC_Write         bsp_i2c.o
+    0x00000fe0   0x00000064   Code   RO         2124    i.RCC_AHBPeriphClk_Enable  cw32f030_rcc.o
+    0x00001044   0x00000064   Code   RO         2127    i.RCC_APBPeriphClk_Enable2  cw32f030_rcc.o
+    0x000010a8   0x00000070   Code   RO         2147    i.RCC_HCLKPRS_Config  cw32f030_rcc.o
+    0x00001118   0x0000016c   Code   RO         2150    i.RCC_HSE_Enable    cw32f030_rcc.o
+    0x00001284   0x00000164   Code   RO         2168    i.RCC_PLL_Enable    cw32f030_rcc.o
+    0x000013e8   0x00000080   Code   RO         2172    i.RCC_SysClk_Switch  cw32f030_rcc.o
+    0x00001468   0x000000d8   Code   RO         2173    i.RCC_Sysctrl_GetHClkFreq  cw32f030_rcc.o
+    0x00001540   0x0000000c   Code   RO         2175    i.RCC_SystemCoreClockUpdate  cw32f030_rcc.o
+    0x0000154c   0x00000018   Code   RO         2770    i.SysTick_Handler   cw32f030_systick.o
+    0x00001564   0x00000010   Code   RO         3340    i.SystemCoreClockUpdate  system_cw32f030.o
+    0x00001574   0x0000003c   Code   RO         3341    i.SystemInit        system_cw32f030.o
+    0x000015b0   0x0000002c   Code   RO          234    i.UART1_IRQHandler  bsp_uart.o
+    0x000015dc   0x00000074   Code   RO         2837    i.USART_ClearITPendingBit  cw32f030_uart.o
+    0x00001650   0x0000007c   Code   RO         2842    i.USART_GetFlagStatus  cw32f030_uart.o
+    0x000016cc   0x0000007c   Code   RO         2843    i.USART_GetITStatus  cw32f030_uart.o
+    0x00001748   0x0000009c   Code   RO         2845    i.USART_ITConfig    cw32f030_uart.o
+    0x000017e4   0x000002dc   Code   RO         2846    i.USART_Init        cw32f030_uart.o
+    0x00001ac0   0x00000054   Code   RO         2849    i.USART_ReceiveData_8bit  cw32f030_uart.o
+    0x00001b14   0x0000006c   Code   RO         2850    i.USART_SendData    cw32f030_uart.o
+    0x00001b80   0x00000060   Code   RO         2851    i.USART_SendData_8bit  cw32f030_uart.o
+    0x00001be0   0x00000020   Code   RO         4119    i.__0printf         mc_p.l(printfa.o)
+    0x00001c00   0x00000030   Code   RO         4124    i.__0vsnprintf      mc_p.l(printfa.o)
+    0x00001c30   0x0000002e   Code   RO         4243    i.__ARM_clz         mf_p.l(depilogue.o)
+    0x00001c5e   0x0000001c   Code   RO         2454    i.__ARM_common_switch8  cw32f030_rcc.o
+    0x00001c7a   0x00000002   PAD
+    0x00001c7c   0x0000002c   Code   RO         4193    i.__ARM_fpclassify  m_ps.l(fpclassify.o)
+    0x00001ca8   0x00000078   Code   RO          235    i.__NVIC_SetPriority  bsp_uart.o
+    0x00001d20   0x000000ac   Code   RO         4195    i.__kernel_poly     m_ps.l(poly.o)
+    0x00001dcc   0x00000014   Code   RO         4179    i.__mathlib_dbl_divzero  m_ps.l(dunder.o)
+    0x00001de0   0x00000008   Code   RO         4181    i.__mathlib_dbl_infnan2  m_ps.l(dunder.o)
+    0x00001de8   0x00000010   Code   RO         4182    i.__mathlib_dbl_invalid  m_ps.l(dunder.o)
+    0x00001df8   0x00000014   Code   RO         4183    i.__mathlib_dbl_overflow  m_ps.l(dunder.o)
+    0x00001e0c   0x00000014   Code   RO         4185    i.__mathlib_dbl_underflow  m_ps.l(dunder.o)
+    0x00001e20   0x0000000e   Code   RO         4255    i.__scatterload_copy  mc_p.l(handlers.o)
+    0x00001e2e   0x00000002   Code   RO         4256    i.__scatterload_null  mc_p.l(handlers.o)
+    0x00001e30   0x0000000e   Code   RO         4257    i.__scatterload_zeroinit  mc_p.l(handlers.o)
+    0x00001e3e   0x00000002   PAD
+    0x00001e40   0x0000000c   Code   RO         4233    i.__set_errno       mc_p.l(errno.o)
+    0x00001e4c   0x00000174   Code   RO         4126    i._fp_digits        mc_p.l(printfa.o)
+    0x00001fc0   0x000006f0   Code   RO         4127    i._printf_core      mc_p.l(printfa.o)
+    0x000026b0   0x00000020   Code   RO         4128    i._printf_post_padding  mc_p.l(printfa.o)
+    0x000026d0   0x0000002c   Code   RO         4129    i._printf_pre_padding  mc_p.l(printfa.o)
+    0x000026fc   0x00000016   Code   RO         4130    i._snputc           mc_p.l(printfa.o)
+    0x00002712   0x00000030   Code   RO         3402    i.a_ina226_iic_read  driver_ina226.o
+    0x00002742   0x0000002a   Code   RO         3403    i.a_ina226_iic_write  driver_ina226.o
+    0x0000276c   0x00000002   Code   RO          281    i.assert_failed     board.o
+    0x0000276e   0x00000002   PAD
+    0x00002770   0x00000070   Code   RO          282    i.board_init        board.o
+    0x000027e0   0x00000012   Code   RO          285    i.delay_ms          board.o
+    0x000027f2   0x00000002   PAD
+    0x000027f4   0x0000003c   Code   RO          286    i.delay_us          board.o
+    0x00002830   0x00000024   Code   RO          236    i.fputc             bsp_uart.o
+    0x00002854   0x0000001c   Code   RO         3795    i.ina226_basic_deinit  driver_ina226_basic.o
+    0x00002870   0x000000f8   Code   RO         3406    i.ina226_calculate_calibration  driver_ina226.o
+    0x00002968   0x000000d8   Code   RO         3407    i.ina226_deinit     driver_ina226.o
+    0x00002a40   0x00000264   Code   RO         3423    i.ina226_init       driver_ina226.o
+    0x00002ca4   0x00000038   Code   RO         3689    i.ina226_interface_debug_print  driver_ina226_interface.o
+    0x00002cdc   0x0000000c   Code   RO         3690    i.ina226_interface_delay_ms  driver_ina226_interface.o
+    0x00002ce8   0x0000000a   Code   RO         3691    i.ina226_interface_iic_deinit  driver_ina226_interface.o
+    0x00002cf2   0x0000000a   Code   RO         3692    i.ina226_interface_iic_init  driver_ina226_interface.o
+    0x00002cfc   0x00000066   Code   RO         3693    i.ina226_interface_iic_read  driver_ina226_interface.o
+    0x00002d62   0x00000066   Code   RO         3694    i.ina226_interface_iic_write  driver_ina226_interface.o
+    0x00002dc8   0x0000012c   Code   RO         3695    i.ina226_interface_receive_callback  driver_ina226_interface.o
+    0x00002ef4   0x000000f0   Code   RO            3    i.ina226_poll       main.o
+    0x00002fe4   0x00000178   Code   RO         3427    i.ina226_read_bus_voltage  driver_ina226.o
+    0x0000315c   0x00000190   Code   RO         3428    i.ina226_read_current  driver_ina226.o
+    0x000032ec   0x00000198   Code   RO         3429    i.ina226_read_power  driver_ina226.o
+    0x00003484   0x00000010   Code   RO         3431    i.ina226_set_addr_pin  driver_ina226.o
+    0x00003494   0x00000080   Code   RO         3435    i.ina226_set_average_mode  driver_ina226.o
+    0x00003514   0x0000007c   Code   RO         3436    i.ina226_set_bus_voltage_conversion_time  driver_ina226.o
+    0x00003590   0x00000064   Code   RO         3437    i.ina226_set_calibration  driver_ina226.o
+    0x000035f4   0x000000cc   Code   RO         3440    i.ina226_set_mode   driver_ina226.o
+    0x000036c0   0x00000012   Code   RO         3442    i.ina226_set_resistance  driver_ina226.o
+    0x000036d2   0x00000002   PAD
+    0x000036d4   0x0000007c   Code   RO         3443    i.ina226_set_shunt_voltage_conversion_time  driver_ina226.o
+    0x00003750   0x0000029c   Code   RO         3829    i.ina226_shot_init  driver_ina226_shot.o
+    0x000039ec   0x00000060   Code   RO         3830    i.ina226_shot_read  driver_ina226_shot.o
+    0x00003a4c   0x0000009c   Code   RO            4    i.main              main.o
+    0x00003ae8   0x000009fc   Code   RO         3862    i.pow               m_ps.l(pow.o)
+    0x000044e4   0x00000048   Code   RO         4199    i.sqrt              m_ps.l(sqrt.o)
+    0x0000452c   0x000000cc   Code   RO          237    i.uart1_init        bsp_uart.o
+    0x000045f8   0x00000064   Data   RO         2177    .constdata          cw32f030_rcc.o
+    0x0000465c   0x00000004   PAD
+    0x00004660   0x00000088   Data   RO         3863    .constdata          m_ps.l(pow.o)
+    0x000046e8   0x00000008   Data   RO         4197    .constdata          m_ps.l(qnan.o)
+    0x000046f0   0x00000020   Data   RO         4253    Region$$Table       anon$$obj.o
+
+
+    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000488, Max: 0x00002000, ABSOLUTE)
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x20000000   0x00000009   Data   RW         2772    .data               cw32f030_systick.o
     0x20000009   0x00000003   PAD
-    0x2000000c   0x00000004   Data   RW         3258    .data               system_cw32f030.o
-    0x20000010   0x00000004   Data   RW         3622    .data               mc_p.l(stdout.o)
-    0x20000014   0x00000004   PAD
-    0x20000018   0x00000400   Zero   RW          135    STACK               startup_cw32f030.o
+    0x2000000c   0x00000004   Data   RW         3345    .data               system_cw32f030.o
+    0x20000010   0x00000004   Data   RW         4222    .data               mc_p.l(stdout.o)
+    0x20000014   0x00000004   Data   RW         4234    .data               mc_p.l(errno.o)
+    0x20000018   0x00000038   Zero   RW         3798    .bss                driver_ina226_basic.o
+    0x20000050   0x00000038   Zero   RW         3831    .bss                driver_ina226_shot.o
+    0x20000088   0x00000400   Zero   RW          153    STACK               startup_cw32f030.o
 
 
 ==============================================================================
@@ -1586,25 +2197,36 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
        192         22          0          0          0       2375   board.o
+       736         72          0          0          0       4158   bsp_i2c.o
        404         36          0          0          0      11812   bsp_uart.o
        116         50          0          0          0        551   cw32f030_flash.o
-       268          4          0          0          0       1604   cw32f030_gpio.o
+       342          4          0          0          0       2661   cw32f030_gpio.o
       1416        334        100          0          0       6191   cw32f030_rcc.o
         24          8          0          9          0       1725   cw32f030_systick.o
       1540        398          0          0          0       5530   cw32f030_uart.o
-       128         32          0          0          0     187155   main.o
+      3064       1108          0          0          0      15876   driver_ina226.o
+        28          6          0          0         56        762   driver_ina226_basic.o
+       592        238          0          0          0       5706   driver_ina226_interface.o
+       764        370          0          0         56       1882   driver_ina226_shot.o
+       396        156          0          0          0     191321   main.o
         40         14        192          0       1024        588   startup_cw32f030.o
         76         14          0          4          0       1091   system_cw32f030.o
 
     ----------------------------------------------------------------------
-      4210        912        324         16       1024     218622   Object Totals
+      9740       2830        328         16       1136     252229   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-         6          0          0          3          0          0   (incl. Padding)
+        10          0          4          3          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Member Name
 
+        84         14          0          0          0        340   dunder.o
+        44          4          0          0          0         60   fpclassify.o
+       172          0          0          0          0         76   poly.o
+      2556        196        136          0          0        240   pow.o
+         0          0          8          0          0          0   qnan.o
+        72          6          0          0          0         76   sqrt.o
          0          0          0          0          0          0   entry.o
          0          0          0          0          0          0   entry10a.o
          0          0          0          0          0          0   entry11a.o
@@ -1614,6 +2236,7 @@ Image component sizes
          0          0          0          0          0          0   entry7b.o
          0          0          0          0          0          0   entry8b.o
          8          4          0          0          0          0   entry9a.o
+        12          6          0          4          0         60   errno.o
         30          0          0          0          0          0   handlers.o
         36          8          0          0          0         68   init.o
          0          0          0          0          0          0   iusefp.o
@@ -1622,13 +2245,24 @@ Image component sizes
         38          0          0          0          0         68   llsshr.o
         34          0          0          0          0         68   llushr.o
         36          0          0          0          0         60   memcpya.o
-        50          8          0          0          0        144   printfb.o
+        36          0          0          0          0        100   memseta.o
+      2326        102          0          0          0        544   printfa.o
          0          0          0          4          0          0   stdout.o
         44          0          0          0          0         72   uidiv.o
         96          0          0          0          0         84   uldiv.o
+        40          2          0          0          0         68   cdcmple.o
+        40          2          0          0          0         68   cdrcmple.o
+        56          0          0          0          0         68   d2f.o
        360          6          0          0          0        140   dadd.o
+       240          6          0          0          0         84   ddiv.o
        236          0          0          0          0        216   depilogue.o
         60         10          0          0          0         68   dfixui.o
+        64         10          0          0          0         68   dfixul.o
+        40          6          0          0          0         68   dflti.o
+        28          4          0          0          0         68   dfltui.o
+       208          6          0          0          0         88   dmul.o
+        44          0          0          0          0         72   dscalb.o
+       162          0          0          0          0         80   dsqrt.o
         40          0          0          0          0         60   f2d.o
        178          0          0          0          0        108   fadd.o
        124          0          0          0          0         72   fdiv.o
@@ -1638,18 +2272,19 @@ Image component sizes
        122          0          0          0          0         72   fmul.o
 
     ----------------------------------------------------------------------
-      1802         40          0          4          4       1716   Library Totals
-         2          0          0          0          4          0   (incl. Padding)
+      7980        396        144          8          0       3800   Library Totals
+         6          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Name
 
-       496         24          0          4          0        708   mc_p.l
-      1304         16          0          0          0       1008   mf_p.l
+      2928        220        144          0          0        792   m_ps.l
+      2820        124          0          8          0       1268   mc_p.l
+      2226         52          0          0          0       1740   mf_p.l
 
     ----------------------------------------------------------------------
-      1802         40          0          4          4       1716   Library Totals
+      7980        396        144          8          0       3800   Library Totals
 
     ----------------------------------------------------------------------
 
@@ -1658,15 +2293,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      6012        952        324         20       1028     218378   Grand Totals
-      6012        952        324         20       1028     218378   ELF Image Totals
-      6012        952        324         20          0          0   ROM Totals
+     17720       3226        472         24       1136     251325   Grand Totals
+     17720       3226        472         24       1136     251325   ELF Image Totals
+     17720       3226        472         24          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 6336 (   6.19kB)
-    Total RW  Size (RW Data + ZI Data)              1048 (   1.02kB)
-    Total ROM Size (Code + RO Data + RW Data)       6356 (   6.21kB)
+    Total RO  Size (Code + RO Data)                18192 (  17.77kB)
+    Total RW  Size (RW Data + ZI Data)              1160 (   1.13kB)
+    Total ROM Size (Code + RO Data + RW Data)      18216 (  17.79kB)
 
 ==============================================================================
 

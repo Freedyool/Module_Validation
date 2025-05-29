@@ -12,6 +12,10 @@
 #include "board.h"
 #include "stdio.h"
 #include "bsp_uart.h"
+#include "driver_ina226_interface.h"
+#include "driver_ina226_basic.h"
+
+int32_t ina226_poll(uint32_t times);
 
 int32_t main(void)
 {
@@ -28,17 +32,52 @@ int32_t main(void)
     GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;		// 输出速度高
     GPIO_Init(CW_GPIOC, &GPIO_InitStruct);			// 初始化
 	
+	ina226_basic_init(INA226_ADDRESS_0, 0.1); // 初始化INA226，地址为0x40，分辨率为0.1mV
+
+    delay_ms(20);
+
 	while(1)
 	{
 		// 高电平
 		GPIO_WritePin(CW_GPIOC, GPIO_PIN_13, GPIO_Pin_SET);
-		printf("[SET]\r\n");
+		// printf("[SET]\r\n");
 		delay_ms(100);
-		
+
+		// 轮询INA226，读取10次数据
+		printf("ina226 poll %x\r\n", ina226_poll(10));;
+
 		// 低电平
 		GPIO_WritePin(CW_GPIOC, GPIO_PIN_13, GPIO_Pin_RESET);
-		printf("[RESET]\r\n");
+		// printf("[RESET]\r\n");
 		delay_ms(100);
 	}
 }
 
+int32_t ina226_poll(uint32_t times)
+{
+	uint32_t i;
+	uint8_t res;
+
+	for (i = 0; i < times; i++)
+	{
+		float mV;
+		float mA;
+		float mW;
+
+		res = ina226_basic_read(&mV, &mA, &mW);
+		if (res != 0)
+		{
+			(void)ina226_basic_deinit();
+
+			return 1;
+		}
+
+		ina226_interface_debug_print("ina226: %d/%d.\r\n", i + 1, times);
+		ina226_interface_debug_print("ina226: bus voltage is %0.3fmV.\r\n", mV);
+		ina226_interface_debug_print("ina226: current is %0.3fmA.\r\n", mA);
+		ina226_interface_debug_print("ina226: power is %0.3fmW.\r\n", mW);
+		ina226_interface_delay_ms(1000);
+	}
+
+	return 0;
+}

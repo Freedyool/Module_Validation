@@ -20,13 +20,17 @@
         "Module",
         "BSP/uart",
         ".cmsis/include",
-        "Project/MDK/RTE/_Project"
+        "Project/MDK/RTE/_Project",
+        "Module/ina226",
+        "BSP/i2c",
+        "Module/ina226/example"
     ],
     "libDirs": [],
     "defines": [],
     "sourceList": [
         "APP/main.c",
         "APP/startup_cw32f030.s",
+        "BSP/i2c/bsp_i2c.c",
         "BSP/uart/bsp_uart.c",
         "Board/board.c",
         "Libraries/src/cw32f030_adc.c",
@@ -51,7 +55,12 @@
         "Libraries/src/cw32f030_uart.c",
         "Libraries/src/cw32f030_vc.c",
         "Libraries/src/cw32f030_wwdt.c",
-        "Libraries/src/system_cw32f030.c"
+        "Libraries/src/system_cw32f030.c",
+        "Module/ina226/driver_ina226.c",
+        "Module/ina226/driver_ina226_interface.c",
+        "Module/ina226/example/driver_ina226_alert.c",
+        "Module/ina226/example/driver_ina226_basic.c",
+        "Module/ina226/example/driver_ina226_shot.c"
     ],
     "alwaysInBuildSources": [],
     "sourceParams": {},
