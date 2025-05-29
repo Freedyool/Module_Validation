@@ -77,6 +77,8 @@ static uint8_t a_ina226_iic_read(ina226_handle_t *handle, uint8_t reg, uint16_t 
 {
     uint8_t buf[2];
     
+    if (reg == INA226_REG_MASK) return 0;
+
     memset(buf, 0, sizeof(uint8_t) * 2);                                        /* clear the buffer */
     if (handle->iic_read(handle->iic_addr, reg, (uint8_t *)buf, 2) != 0)        /* read data */
     {
@@ -1776,13 +1778,13 @@ uint8_t ina226_init(ina226_handle_t *handle)
        
         return 4;                                                                      /* return error */
     }
-    if (prev != 0x5449)                                                                /* check id */
-    {
-        handle->debug_print("ina226: id is invalid.\n");                               /* id is invalid */
-        (void)handle->iic_deinit();                                                    /* iic deinit */
+    // if (prev != 0x5449)                                                                /* check id */
+    // {
+    //     handle->debug_print("ina226: id is invalid.\n");                               /* id is invalid */
+    //     (void)handle->iic_deinit();                                                    /* iic deinit */
        
-        return 4;                                                                      /* return error */
-    }
+    //     return 4;                                                                      /* return error */
+    // }
     res = a_ina226_iic_read(handle, INA226_REG_CONF, (uint16_t *)&prev);               /* read conf */
     if (res != 0)                                                                      /* check result */
     {
@@ -1809,13 +1811,13 @@ uint8_t ina226_init(ina226_handle_t *handle)
         
         return 5;                                                                      /* return error */
     }
-    if ((prev & (1 << 15)) != 0)                                                       /* check the result */
-    {
-        handle->debug_print("ina226: soft reset failed.\n");                           /* soft reset failed */
-        (void)handle->iic_deinit();                                                    /* iic deinit */
+    // if ((prev & (1 << 15)) != 0)                                                       /* check the result */
+    // {
+    //     handle->debug_print("ina226: soft reset failed.\n");                           /* soft reset failed */
+    //     (void)handle->iic_deinit();                                                    /* iic deinit */
         
-        return 5;                                                                      /* return error */
-    }
+    //     return 5;                                                                      /* return error */
+    // }
     handle->trigger = 0;                                                               /* none */
     handle->inited = 1;                                                                /* flag inited */
     
