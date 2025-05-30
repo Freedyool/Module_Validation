@@ -21,6 +21,9 @@
 #define GPIO_SCL         	GPIO_PIN_10
 #define GPIO_SDA         	GPIO_PIN_11
 
+#define PORT_DBG            CW_GPIOA
+#define GPIO_DBG            GPIO_PIN_0
+
 // 上拉输入模式
 #define SDA_IN() 	{	GPIO_InitTypeDef	GPIO_InitStruct; 				\
 						GPIO_InitStruct.Pins = GPIO_SDA;					\
@@ -38,6 +41,7 @@
 
 #define SCL(BIT)  	GPIO_WritePin(PORT_I2C, GPIO_SCL, BIT?GPIO_Pin_SET:GPIO_Pin_RESET)
 #define SDA(BIT)  	GPIO_WritePin(PORT_I2C, GPIO_SDA, BIT?GPIO_Pin_SET:GPIO_Pin_RESET)
+#define DBG(BIT)  	GPIO_WritePin(PORT_DBG, GPIO_DBG, BIT?GPIO_Pin_SET:GPIO_Pin_RESET)
 #define SDA_GET() 	GPIO_ReadPin(PORT_I2C, GPIO_SDA)
 
 

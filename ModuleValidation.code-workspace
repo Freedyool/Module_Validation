@@ -2,6 +2,9 @@
     "folders": [
         {
             "path": "."
+        },
+        {
+            "path": "../../BOARDS/CW32F030/CW32F030_StandardPeripheralLib_V2.1"
         }
     ],
     "settings": {

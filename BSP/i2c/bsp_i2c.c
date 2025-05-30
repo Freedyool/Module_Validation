@@ -26,6 +26,16 @@ void I2C_GPIO_INIT(void)
 
 	SDA(1); // 设置SDA高电平
 	SCL(1); // 设置SCL高电平
+
+	GPIO_InitTypeDef GPIO_InitStruct_DBG; // GPIO调试引脚初始化结构体
+	GPIO_InitStruct_DBG.Pins = GPIO_DBG;				// GPIO调试引脚
+	GPIO_InitStruct_DBG.Mode = GPIO_MODE_OUTPUT_PP;	// 推挽输出
+	GPIO_Init(PORT_DBG, &GPIO_InitStruct_DBG);	// 初始化调试引脚
+
+	DBG(1); // 设置调试引脚高电平
+	DBG(0); // 设置调试引脚高电平
+	DBG(1); // 设置调试引脚高电平
+	DBG(0); // 设置调试引脚高电平
 }
 
 void I2C_GPIO_DEINIT(void)
@@ -44,10 +54,18 @@ void I2C_GPIO_DEINIT(void)
 void IIC_Start(void)
 {
 	SDA_OUT();
+	DBG(1); // 设置调试引脚高电平
+	DBG(0);
+	DBG(1);
+	DBG(0);
 	SDA(1);
 	SCL(1);
 	delay_us(4);
 	SDA(0);
+	DBG(1); // 设置调试引脚高电平
+	DBG(0);
+	DBG(1);
+	DBG(0);
 	delay_us(4);
 	SCL(0);
 }

@@ -12,6 +12,7 @@
 #include "board.h"
 #include "stdio.h"
 #include "bsp_uart.h"
+#include "bsp_i2c.h"
 #include "driver_ina226_interface.h"
 #include "driver_ina226_basic.h"
 
@@ -32,7 +33,16 @@ int32_t main(void)
     GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;		// 输出速度高
     GPIO_Init(CW_GPIOC, &GPIO_InitStruct);			// 初始化
 	
-	ina226_basic_init(INA226_ADDRESS_0, 0.1); // 初始化INA226，地址为0x40，分辨率为0.1mV
+	I2C_GPIO_INIT();
+
+	for (int32_t i = 0; i < 16; i++)
+	{
+		IIC_Start();
+		IIC_Stop();
+		delay_ms(1000);
+	}
+
+	// ina226_basic_init(INA226_ADDRESS_0, 0.1); // 初始化INA226，地址为0x40，分辨率为0.1mV
 
     delay_ms(20);
 
@@ -44,7 +54,7 @@ int32_t main(void)
 		delay_ms(100);
 
 		// 轮询INA226，读取10次数据
-		printf("ina226 poll %x\r\n", ina226_poll(10));;
+		// printf("ina226 poll %x\r\n", ina226_poll(10));;
 
 		// 低电平
 		GPIO_WritePin(CW_GPIOC, GPIO_PIN_13, GPIO_Pin_RESET);
