@@ -13,8 +13,10 @@
  */
 #include "board.h"
 #include "bsp_uart.h"
+#include "driver_ina226_basic.h"
 #include <stdio.h>
 
+int32_t ina226_poll(uint32_t times);
 
 int main(void)
 {
@@ -32,6 +34,8 @@ int main(void)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+	ina226_basic_init(INA226_ADDRESS_0, 0.1);
 	
 	while(1)
 	{
@@ -39,10 +43,39 @@ int main(void)
 		printf("LED On!\r\n");
 		delay_ms(500);
 		
+		ina226_poll(10);
+
 		GPIO_ResetBits(GPIOB, GPIO_Pin_2);
 		printf("LED Off!\r\n");
 		delay_ms(500);
 	}
-	
+}
 
+int32_t ina226_poll(uint32_t times)
+{
+	uint32_t i;
+	uint8_t res;
+
+	for (i = 0; i < times; i++)
+	{
+		float mV;
+		float mA;
+		float mW;
+
+		res = ina226_basic_read(&mV, &mA, &mW);
+		if (res != 0)
+		{
+			(void)ina226_basic_deinit();
+
+			return 1;
+		}
+
+		ina226_interface_debug_print("ina226: %d/%d.\r\n", i + 1, times);
+		ina226_interface_debug_print("ina226: bus voltage is %0.3fmV.\r\n", mV);
+		ina226_interface_debug_print("ina226: current is %0.3fmA.\r\n", mA);
+		ina226_interface_debug_print("ina226: power is %0.3fmW.\r\n", mW);
+		ina226_interface_delay_ms(1000);
+	}
+
+	return 0;
 }

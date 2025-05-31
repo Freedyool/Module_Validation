@@ -36,6 +36,9 @@
         "files": [
           {
             "path": "bsp/uart/bsp_uart.c"
+          },
+          {
+            "path": "bsp/iic/bsp_iic.c"
           }
         ],
         "folders": []
@@ -183,7 +186,23 @@
       },
       {
         "name": "MODULE",
-        "files": [],
+        "files": [
+          {
+            "path": "module/ina226/driver_ina226.c"
+          },
+          {
+            "path": "module/ina226/example/driver_ina226_alert.c"
+          },
+          {
+            "path": "module/ina226/example/driver_ina226_basic.c"
+          },
+          {
+            "path": "module/ina226/driver_ina226_interface.c"
+          },
+          {
+            "path": "module/ina226/example/driver_ina226_shot.c"
+          }
+        ],
         "folders": []
       },
       {
@@ -352,7 +371,10 @@
           "module",
           "bsp/uart",
           ".cmsis/include",
-          "project/MDK(V5)/RTE/_Project"
+          "project/MDK(V5)/RTE/_Project",
+          "bsp/iic",
+          "module/ina226",
+          "module/ina226/example"
         ],
         "libList": [],
         "defineList": [
