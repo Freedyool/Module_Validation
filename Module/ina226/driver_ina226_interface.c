@@ -49,9 +49,7 @@
  */
 uint8_t ina226_interface_iic_init(void)
 {
-    IIC_INIT();
-
-    return 0;
+    return iic_init();
 }
 
 /**
@@ -63,9 +61,7 @@ uint8_t ina226_interface_iic_init(void)
  */
 uint8_t ina226_interface_iic_deinit(void)
 {
-    IIC_DEINIT();
-
-    return 0;
+    return iic_deinit();
 }
 
 /**
@@ -81,7 +77,7 @@ uint8_t ina226_interface_iic_deinit(void)
  */
 uint8_t ina226_interface_iic_read(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len)
 {
-    return IIC_Read(addr, reg, buf, len);
+    return iic_read(addr, reg, buf, len);
 }
 
 /**
@@ -97,7 +93,7 @@ uint8_t ina226_interface_iic_read(uint8_t addr, uint8_t reg, uint8_t *buf, uint1
  */
 uint8_t ina226_interface_iic_write(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len)
 {
-    return IIC_Write(addr, reg, buf, len);
+    return iic_write(addr, reg, buf, len);
 }
 
 /**
