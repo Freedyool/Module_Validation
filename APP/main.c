@@ -32,19 +32,8 @@ int32_t main(void)
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;		// 推挽输出
     GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;		// 输出速度高
     GPIO_Init(CW_GPIOC, &GPIO_InitStruct);			// 初始化
-	
-	I2C_GPIO_INIT();
 
-	for (int32_t i = 0; i < 16; i++)
-	{
-		IIC_Start();
-		IIC_Stop();
-		delay_ms(1000);
-	}
-
-	// ina226_basic_init(INA226_ADDRESS_0, 0.1); // 初始化INA226，地址为0x40，分辨率为0.1mV
-
-    delay_ms(20);
+	ina226_basic_init(INA226_ADDRESS_0, 0.1); // 初始化INA226，地址为0x40，分辨率为0.1mV
 
 	while(1)
 	{
@@ -54,7 +43,7 @@ int32_t main(void)
 		delay_ms(100);
 
 		// 轮询INA226，读取10次数据
-		// printf("ina226 poll %x\r\n", ina226_poll(10));;
+		printf("ina226 poll %x\r\n", ina226_poll(10));;
 
 		// 低电平
 		GPIO_WritePin(CW_GPIOC, GPIO_PIN_13, GPIO_Pin_RESET);

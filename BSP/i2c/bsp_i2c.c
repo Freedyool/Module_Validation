@@ -13,24 +13,38 @@
 #include "bsp_i2c.h"
 #include "stdio.h"
 
-void I2C_GPIO_INIT(void)
+void IIC_INIT(void)
 {
-	GPIO_InitTypeDef	GPIO_InitStruct; // GPIO初始化结构体
-	
-	RCC_I2C_ENABLE();					 // 使能GPIO时钟
-	
-	GPIO_InitStruct.Pins = GPIO_SCL|GPIO_SDA;		// GPIO引脚
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;		// 开漏输出
-	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;		// 输出速度高
-	GPIO_Init(PORT_I2C, &GPIO_InitStruct);	    // 初始化
+	I2C_InitTypeDef I2C_InitStruct;
+    
+	//时钟初始化
+	RCC_I2C_ENABLE();
+	RCC_DBG_ENABLE();
 
-	SDA(1); // 设置SDA高电平
-	SCL(1); // 设置SCL高电平
+    //IO口初始化
+    GPIO_InitTypeDef GPIO_InitStructure;
+    PB10_AFx_I2C1SCL();
+    PB11_AFx_I2C1SDA();
+    GPIO_InitStructure.Pins = GPIO_SCL | GPIO_SDA;
+    GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_OD;
+    GPIO_InitStructure.Speed = GPIO_SPEED_HIGH;
+    GPIO_Init(GPIO_PORT_I2C, &GPIO_InitStructure);
+    //I2C初始化
+    I2C_InitStruct.I2C_BaudEn = ENABLE;
+    I2C_InitStruct.I2C_Baud = 0xF;//500K=(8000000/(8*(1+1))
+    I2C_InitStruct.I2C_FLT = DISABLE;
+    I2C_InitStruct.I2C_AA = DISABLE;
 
-	GPIO_InitTypeDef GPIO_InitStruct_DBG; // GPIO调试引脚初始化结构体
+    I2C_Deinit();
+    I2C_Master_Init(I2C_PORT, &I2C_InitStruct); //初始化模块
+    I2C_Cmd(I2C_PORT, ENABLE); //模块使能
+	
+	// Debug Port 初始化
+	GPIO_InitTypeDef GPIO_InitStruct_DBG;
+
 	GPIO_InitStruct_DBG.Pins = GPIO_DBG;				// GPIO调试引脚
 	GPIO_InitStruct_DBG.Mode = GPIO_MODE_OUTPUT_PP;	// 推挽输出
-	GPIO_Init(PORT_DBG, &GPIO_InitStruct_DBG);	// 初始化调试引脚
+	GPIO_Init(GPIO_PORT_DBG, &GPIO_InitStruct_DBG);	// 初始化调试引脚
 
 	DBG(1); // 设置调试引脚高电平
 	DBG(0); // 设置调试引脚高电平
@@ -38,157 +52,118 @@ void I2C_GPIO_INIT(void)
 	DBG(0); // 设置调试引脚高电平
 }
 
-void I2C_GPIO_DEINIT(void)
+void IIC_DEINIT(void)
 {
-    GPIO_DeInit(PORT_I2C, GPIO_SCL|GPIO_SDA); // 复位I2C引脚
+    GPIO_DeInit(GPIO_PORT_I2C, GPIO_SCL|GPIO_SDA); // 复位I2C引脚
+	GPIO_DeInit(GPIO_PORT_DBG, GPIO_DBG);
+	I2C_Deinit();
 }
 
-/******************************************************************
- * 函 数 名 称：IIC_Start
- * 函 数 说 明：IIC起始信号
- * 函 数 形 参：无
- * 函 数 返 回：无
- * 作       者：LC
- * 备       注：无
-******************************************************************/
-void IIC_Start(void)
+uint8_t IIC_Read(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len)
 {
-	SDA_OUT();
+    uint8_t i = 0, state, uc_err_time = 0;
+    
 	DBG(1); // 设置调试引脚高电平
-	DBG(0);
-	DBG(1);
-	DBG(0);
-	SDA(1);
-	SCL(1);
-	delay_us(4);
-	SDA(0);
-	DBG(1); // 设置调试引脚高电平
-	DBG(0);
-	DBG(1);
-	DBG(0);
-	delay_us(4);
-	SCL(0);
-}
-
-/******************************************************************
- * 函 数 名 称：IIC_Stop
- * 函 数 说 明：IIC停止信号
- * 函 数 形 参：无
- * 函 数 返 回：无
- * 作       者：LC
- * 备       注：无
-******************************************************************/
-void IIC_Stop(void)
-{
-	SDA_OUT();
-	SCL(0);
-	SDA(0);
-	delay_us(4);  
-	SCL(1);
-	delay_us(4);
-	SDA(1);
-	delay_us(4);
-}
-
-/******************************************************************
- * 函 数 名 称：IIC_Send_Ack
- * 函 数 说 明：主机发送应答
- * 函 数 形 参：0应答  1非应答
- * 函 数 返 回：无
- * 作       者：LC
- * 备       注：无
-******************************************************************/
-void IIC_Send_Ack(uint8_t ack)
-{
-	SCL(0);
-	SDA_OUT();
-	if(!ack) SDA(0);
-	else     SDA(1);
-	delay_us(2);
-	SCL(1);
-	delay_us(2);
-	SCL(0);
-}
-
-/******************************************************************
- * 函 数 名 称：IIC_Wait_Ack
- * 函 数 说 明：等待从机应答
- * 函 数 形 参：无
- * 函 数 返 回：1=无应答   0=有应答
- * 作       者：LC
- * 备       注：无
-******************************************************************/
-uint8_t IIC_Wait_Ack(void)
-{
-	uint16_t uc_err_time = 0;
-
-	SDA_IN();
-	SDA(1);
-	delay_us(1);
-	SCL(1);
-	delay_us(1);
-	while (SDA_GET() != 0)
-	{
-		uc_err_time++;
-		if (uc_err_time > 250) // 超时判断
-		{
-			IIC_Stop();
-			return 1; // 无应答
-		}
-	}
-	SCL(0);
-
+    I2C_GenerateSTART(I2C_PORT, ENABLE);
+	DBG(0); // 设置调试引脚高电平
+    while (uc_err_time++ < 250)
+    {
+        while (0 == I2C_GetIrq(I2C_PORT))
+        {}
+        state = I2C_GetState(I2C_PORT);
+        switch (state)
+        {
+            case 0x08:   //发送完START信号
+                I2C_GenerateSTART(I2C_PORT, DISABLE);
+                I2C_Send7bitAddress(I2C_PORT, reg, 0X00);  //发送从机地址
+                break;
+            case 0x18:    //发送完SLA+W/R字节
+                I2C_SendData(I2C_PORT, reg);
+                break;
+            case 0x28:   //发送完1字节数据：发送EEPROM中memory地址也会产生，发送后面的数据也会产生
+                I2C_PORT->CR_f.STA = 1;  //set start        //发送重复START信号,START生成函数改写后，会导致0X10状态被略过，故此处不调用函数
+                break;
+            case 0x10:   //发送完重复起始信号
+                I2C_GenerateSTART(I2C_PORT, DISABLE);
+                I2C_Send7bitAddress(I2C_PORT, I2C_SLAVEADDRESS, 0X01);
+                break;
+            case 0x40:   //发送完SLA+R信号，开始接收数据
+                if (len > 1)
+                {
+                    I2C_AcknowledgeConfig(I2C_PORT, ENABLE);
+                }
+                break;
+            case 0x50:   //接收完一字节数据，在接收最后1字节数据之前设置AA=0;
+                buf[i++] = I2C_ReceiveData(I2C_PORT);
+                if (i == len - 1)
+                {
+                    I2C_AcknowledgeConfig(I2C_PORT, DISABLE);
+                }
+                break;
+            case 0x58:   //接收到一个数据字节，且NACK已回复
+                buf[i++] = I2C_ReceiveData(I2C_PORT);
+                I2C_GenerateSTOP(I2C_PORT, ENABLE);
+                break;
+            case 0x38:   //主机在发送 SLA+W 阶段或者发送数据阶段丢失仲裁  或者  主机在发送 SLA+R 阶段或者回应 NACK 阶段丢失仲裁
+                I2C_GenerateSTART(I2C_PORT, ENABLE);
+                break;
+            case 0x48:   //发送完SLA+R后从机返回NACK
+                I2C_GenerateSTOP(I2C_PORT, ENABLE);
+                I2C_GenerateSTART(I2C_PORT, ENABLE);
+                break;
+            default:
+                I2C_GenerateSTART(I2C_PORT, ENABLE);//其他错误状态，重新发送起始条件
+                break;
+        }
+        I2C_ClearIrq(I2C_PORT);
+        if (i == len)
+        {
+            break;
+        }
+    }
+    printf("%x %d %d\r\n", state, uc_err_time, i);
 	return 0;
 }
-/******************************************************************
- * 函 数 名 称：IIC_Write
- * 函 数 说 明：IIC写一个字节
- * 函 数 形 参：dat写入的数据
- * 函 数 返 回：无
- * 作       者：LC
- * 备       注：无
-******************************************************************/
-void IIC_Write(uint8_t data)
-{
-	int i = 0;
-	SDA_OUT();
-	SCL(0);//拉低时钟开始数据传输
 
-	for( i = 0; i < 8; i++ )
-	{
-		SDA( (data & 0x80) >> 7 );
-		data<<=1;
-		delay_us(2);
-		SCL(1);
-		delay_us(2); 
-		SCL(0);
-		delay_us(2);
-	}
-}
-
-/******************************************************************
- * 函 数 名 称：IIC_Read
- * 函 数 说 明：IIC读1个字节
- * 函 数 形 参：无
- * 函 数 返 回：读出的1个字节数据
- * 作       者：LC
- * 备       注：无
-******************************************************************/
-uint8_t IIC_Read(void)
+uint8_t IIC_Write(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len)
 {
-	unsigned char i,receive=0;
-	SDA_IN();//SDA设置为输入
-	for(i=0;i<8;i++ )
-	{
-		SCL(0);
-		delay_us(2);
-		SCL(1);
-		receive<<=1;
-		if( SDA_GET() != 0 )
-		{        
-			receive++;   
-		}
-		delay_us(1); 
-	}
-	return receive;
+	uint8_t i = 0, state, uc_err_time = 0;
+    I2C_GenerateSTART(I2C_PORT, ENABLE);
+    while (uc_err_time++ < 250)
+    {
+        while (0 == I2C_GetIrq(I2C_PORT))
+        {;}
+        state = I2C_GetState(I2C_PORT);
+        switch (state)
+        {
+            case 0x08:   //发送完START信号
+                I2C_GenerateSTART(I2C_PORT, DISABLE);
+                I2C_Send7bitAddress(I2C_PORT, addr, 0X00); //从设备地址发送
+                break;
+            case 0x18:   //发送完SLA+W信号,ACK已收到
+                I2C_SendData(I2C_PORT, reg); //从设备内存地址发送
+                break;
+            case 0x28:   //发送完1字节数据：发送EEPROM中memory地址也会产生，发送后面的数据也会产生
+                I2C_SendData(I2C_PORT, buf[i++]);
+                break;
+            case 0x20:   //发送完SLA+W后从机返回NACK
+            case 0x38:    //主机在发送 SLA+W 阶段或者发送数据阶段丢失仲裁  或者  主机在发送 SLA+R 阶段或者回应 NACK 阶段丢失仲裁
+                I2C_GenerateSTART(I2C_PORT, ENABLE);
+                break;
+            case 0x30:   //发送完一个数据字节后从机返回NACK
+                I2C_GenerateSTOP(I2C_PORT, ENABLE);
+                break;
+            default:
+                break;
+        }
+        if (i > len)
+        {
+            I2C_GenerateSTOP(I2C_PORT, ENABLE);//此顺序不能调换，出停止条件
+            I2C_ClearIrq(I2C_PORT);
+            break;
+        }
+        I2C_ClearIrq(I2C_PORT);
+    }
+    printf("%x %d %d\r\n", state, uc_err_time, i);
+	return 0;
 }

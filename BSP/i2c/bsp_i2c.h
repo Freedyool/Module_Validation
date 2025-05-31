@@ -14,45 +14,25 @@
 
 #include "board.h"
 
+#define RCC_I2C_ENABLE()    __RCC_GPIOB_CLK_ENABLE(); \
+                            __RCC_I2C1_CLK_ENABLE()
+#define RCC_DBG_ENABLE()    __RCC_GPIOA_CLK_ENABLE()
 
-#define RCC_I2C_ENABLE()  __RCC_GPIOB_CLK_ENABLE()
-#define PORT_I2C         	CW_GPIOB
+#define I2C_PORT            CW_I2C1
+#define I2C_Deinit()        I2C1_DeInit()
 
+#define GPIO_PORT_I2C       CW_GPIOB
 #define GPIO_SCL         	GPIO_PIN_10
 #define GPIO_SDA         	GPIO_PIN_11
 
-#define PORT_DBG            CW_GPIOA
+#define GPIO_PORT_DBG       CW_GPIOA
 #define GPIO_DBG            GPIO_PIN_0
+#define DBG(BIT)  	        GPIO_WritePin(GPIO_PORT_DBG, GPIO_DBG, BIT?GPIO_Pin_SET:GPIO_Pin_RESET)
 
-// 上拉输入模式
-#define SDA_IN() 	{	GPIO_InitTypeDef	GPIO_InitStruct; 				\
-						GPIO_InitStruct.Pins = GPIO_SDA;					\
-						GPIO_InitStruct.Mode = GPIO_MODE_INPUT_PULLUP;		\
-						GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;			\
-						GPIO_Init(PORT_I2C, &GPIO_InitStruct);				\
-					}
-// 开漏输出
-#define SDA_OUT() 	{	GPIO_InitTypeDef	GPIO_InitStruct; 				\
-						GPIO_InitStruct.Pins = GPIO_SDA;					\
-						GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;			\
-						GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;			\
-						GPIO_Init(PORT_I2C, &GPIO_InitStruct);				\
-					}
-
-#define SCL(BIT)  	GPIO_WritePin(PORT_I2C, GPIO_SCL, BIT?GPIO_Pin_SET:GPIO_Pin_RESET)
-#define SDA(BIT)  	GPIO_WritePin(PORT_I2C, GPIO_SDA, BIT?GPIO_Pin_SET:GPIO_Pin_RESET)
-#define DBG(BIT)  	GPIO_WritePin(PORT_DBG, GPIO_DBG, BIT?GPIO_Pin_SET:GPIO_Pin_RESET)
-#define SDA_GET() 	GPIO_ReadPin(PORT_I2C, GPIO_SDA)
-
-
-void I2C_GPIO_INIT(void);
-void I2C_GPIO_DEINIT(void);
-void IIC_Start(void);
-void IIC_Stop(void);
-void IIC_Send_Ack(uint8_t ack);
-uint8_t IIC_Wait_Ack(void);
-void IIC_Write(uint8_t data);
-uint8_t IIC_Read(void);
+void IIC_INIT(void);
+void IIC_DEINIT(void);
+uint8_t IIC_Read(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len);
+uint8_t IIC_Write(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len);
 
 
 

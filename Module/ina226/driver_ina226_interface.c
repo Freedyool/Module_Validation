@@ -49,7 +49,7 @@
  */
 uint8_t ina226_interface_iic_init(void)
 {
-    I2C_GPIO_INIT();
+    IIC_INIT();
 
     return 0;
 }
@@ -63,7 +63,7 @@ uint8_t ina226_interface_iic_init(void)
  */
 uint8_t ina226_interface_iic_deinit(void)
 {
-    I2C_GPIO_DEINIT();
+    IIC_DEINIT();
 
     return 0;
 }
@@ -81,42 +81,7 @@ uint8_t ina226_interface_iic_deinit(void)
  */
 uint8_t ina226_interface_iic_read(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len)
 {
-    IIC_Start(); // start signal
-
-    IIC_Write(addr); // write device address
-    if (IIC_Wait_Ack() != 0) // wait ack
-    {
-        IIC_Stop(); // stop signal
-        return 1;
-    }
-
-    IIC_Write(reg); // write register address
-    if (IIC_Wait_Ack() != 0) // wait ack
-    {
-        IIC_Stop(); // stop signal
-        return 1;
-    }
-
-    while(len)
-    {
-        *buf = IIC_Read(); // read data
-
-        if (len == 1) // last byte
-        {
-            IIC_Send_Ack(1); // send nack
-        }
-        else
-        {
-            IIC_Send_Ack(0); // send ack
-        }
-
-        len--;
-        buf++;
-    }
-
-    IIC_Stop(); // stop signal
-
-    return 0;
+    return IIC_Read(addr, reg, buf, len);
 }
 
 /**
@@ -132,38 +97,7 @@ uint8_t ina226_interface_iic_read(uint8_t addr, uint8_t reg, uint8_t *buf, uint1
  */
 uint8_t ina226_interface_iic_write(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len)
 {
-    uint16_t i;
-
-    IIC_Start(); // start signal
-
-    IIC_Write(addr); // write device address
-    if (IIC_Wait_Ack() != 0) // wait ack
-    {
-        IIC_Stop(); // stop signal
-        return 1;
-    }
-
-    IIC_Write(reg); // write register address
-    if (IIC_Wait_Ack() != 0) // wait ack
-    {
-        IIC_Stop(); // stop signal
-        return 1;
-    }
-
-    for (i = 0; i < len; i++)
-    {
-        IIC_Write(buf[i]); // write data
-        if (IIC_Wait_Ack() != 0) // wait ack
-        {
-            IIC_Stop(); // stop signal
-            return 1;
-        }
-        
-    }
-
-    IIC_Stop(); // stop signal
-
-    return 0;
+    return IIC_Write(addr, reg, buf, len);
 }
 
 /**
