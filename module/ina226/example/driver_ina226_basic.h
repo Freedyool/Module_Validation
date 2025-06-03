@@ -53,7 +53,7 @@ extern "C"{
 /**
  * @brief ina226 basic example default definition
  */
-#define INA226_BASIC_DEFAULT_AVG_MODE                             INA226_AVG_16                        /**< 16 averages */
+#define INA226_BASIC_DEFAULT_AVG_MODE                             INA226_AVG_4                         /**< 16 averages */
 #define INA226_BASIC_DEFAULT_BUS_VOLTAGE_CONVERSION_TIME          INA226_CONVERSION_TIME_1P1_MS        /**< bus voltage conversion time 1.1 ms */
 #define INA226_BASIC_DEFAULT_SHUNT_VOLTAGE_CONVERSION_TIME        INA226_CONVERSION_TIME_1P1_MS        /**< shunt voltage conversion time 1.1 ms */
 

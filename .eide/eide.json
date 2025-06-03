@@ -39,6 +39,9 @@
           },
           {
             "path": "bsp/iic/bsp_iic.c"
+          },
+          {
+            "path": "bsp/dbg/bsp_dbg.c"
           }
         ],
         "folders": []
@@ -374,7 +377,8 @@
           "project/MDK(V5)/RTE/_Project",
           "bsp/iic",
           "module/ina226",
-          "module/ina226/example"
+          "module/ina226/example",
+          "bsp/dbg"
         ],
         "libList": [],
         "defineList": [

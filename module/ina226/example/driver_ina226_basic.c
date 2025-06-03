@@ -35,6 +35,7 @@
  */
 
 #include "driver_ina226_basic.h"
+#include "bsp_dbg.h"
 
 static ina226_handle_t gs_handle;        /**< ina226 handle */
 
@@ -166,6 +167,8 @@ uint8_t ina226_basic_read(float *mV, float *mA, float *mW)
     int16_t s_raw;
     uint16_t u_raw;
     
+    DBG(0);
+    DBG(1);
     /* read bus voltage */
     res = ina226_read_bus_voltage(&gs_handle, (uint16_t *)&u_raw, mV);
     if (res != 0)
@@ -173,6 +176,8 @@ uint8_t ina226_basic_read(float *mV, float *mA, float *mW)
         return 1;
     }
     
+    DBG(0);
+    DBG(1);
     /* read current */
     res = ina226_read_current(&gs_handle, (int16_t *)&s_raw, mA);
     if (res != 0)
@@ -180,12 +185,16 @@ uint8_t ina226_basic_read(float *mV, float *mA, float *mW)
         return 1;
     }
     
+    DBG(0);
+    DBG(1);
     /* read power */
     res = ina226_read_power(&gs_handle, (uint16_t *)&u_raw, mW);
     if (res != 0)
     {
         return 1;
     }
+    
+    DBG(0);
     
     return 0;
 }

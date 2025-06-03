@@ -13,7 +13,9 @@
  */
 #include "board.h"
 #include "bsp_uart.h"
+#include "bsp_dbg.h"
 #include "driver_ina226_basic.h"
+#include "driver_ina226_shot.h"
 #include <stdio.h>
 
 int32_t ina226_poll(uint32_t times);
@@ -24,6 +26,8 @@ int main(void)
 	board_init();
 	
 	uart1_init(115200U);
+
+	dbg_init();
 
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
@@ -36,7 +40,8 @@ int main(void)
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
 	ina226_basic_init(INA226_ADDRESS_0, 0.1);
-	
+	// ina226_shot_init(INA226_ADDRESS_0, 0.1);
+
 	while(1)
 	{
 		GPIO_SetBits(GPIOB, GPIO_Pin_2);
@@ -63,18 +68,20 @@ int32_t ina226_poll(uint32_t times)
 		float mW;
 
 		res = ina226_basic_read(&mV, &mA, &mW);
+    	// res = ina226_shot_read(&mV, &mA, &mW);
 		if (res != 0)
 		{
 			(void)ina226_basic_deinit();
+			// (void)ina226_shot_deinit();1
 
 			return 1;
 		}
 
-		ina226_interface_debug_print("ina226: %d/%d.\r\n", i + 1, times);
-		ina226_interface_debug_print("ina226: bus voltage is %0.3fmV.\r\n", mV);
+		// ina226_interface_debug_print("ina226: %d/%d.\r\n", i + 1, times);
+		// ina226_interface_debug_print("ina226: bus voltage is %0.3fmV.\r\n", mV);
 		ina226_interface_debug_print("ina226: current is %0.3fmA.\r\n", mA);
-		ina226_interface_debug_print("ina226: power is %0.3fmW.\r\n", mW);
-		ina226_interface_delay_ms(1000);
+		// ina226_interface_debug_print("ina226: power is %0.3fmW.\r\n", mW);
+		// ina226_interface_delay_ms(50);
 	}
 
 	return 0;
