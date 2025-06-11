@@ -40,19 +40,16 @@ int main(void)
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
 	ina226_basic_init(INA226_ADDRESS_0, 0.1);
-	// ina226_shot_init(INA226_ADDRESS_0, 0.1);
 
 	while(1)
 	{
 		GPIO_SetBits(GPIOB, GPIO_Pin_2);
-		printf("LED On!\r\n");
-		delay_ms(500);
-		
+		// delay_ms(500);
+
 		ina226_poll(10);
 
 		GPIO_ResetBits(GPIOB, GPIO_Pin_2);
-		printf("LED Off!\r\n");
-		delay_ms(500);
+		delay_ms(100);
 	}
 }
 
@@ -68,19 +65,18 @@ int32_t ina226_poll(uint32_t times)
 		float mW;
 
 		res = ina226_basic_read(&mV, &mA, &mW);
-    	// res = ina226_shot_read(&mV, &mA, &mW);
 		if (res != 0)
 		{
 			(void)ina226_basic_deinit();
-			// (void)ina226_shot_deinit();1
 
 			return 1;
 		}
 
-		// ina226_interface_debug_print("ina226: %d/%d.\r\n", i + 1, times);
-		// ina226_interface_debug_print("ina226: bus voltage is %0.3fmV.\r\n", mV);
-		ina226_interface_debug_print("ina226: current is %0.3fmA.\r\n", mA);
-		// ina226_interface_debug_print("ina226: power is %0.3fmW.\r\n", mW);
+		uart1_send_raw((uint8_t *)&mV, sizeof(mV));
+		uart1_send_raw((uint8_t *)&mA, sizeof(mA));
+		uart1_send_raw((uint8_t *)&mW, sizeof(mW));
+		uart1_send_raw((uint8_t *)&i, sizeof(i));
+		
 		// ina226_interface_delay_ms(50);
 	}
 

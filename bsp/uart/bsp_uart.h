@@ -22,8 +22,8 @@
  //外部可调用函数的声明
 void uart1_init(uint32_t __Baud);
 void USART1_IRQHandler(void);
- 
- 
+
+void uart1_send_raw(uint8_t *buf, uint16_t len);
  
  
  

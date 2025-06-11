@@ -71,6 +71,19 @@ void uart1_init(uint32_t __Baud)
 		
 }
 
+void uart1_send_raw(uint8_t *buf, uint16_t len)
+{
+	uint16_t i;
+	
+	for(i = 0; i < len; i++)
+	{
+		while( RESET == USART_GetFlagStatus(USART1, USART_FLAG_TXE) ){}//等待发送缓冲区空
+		USART_SendData(USART1, buf[i]);//发送数据
+	}
+	
+	while( RESET == USART_GetFlagStatus(USART1, USART_FLAG_TC) ){}//等待发送完成
+}
+
 #if !defined(__MICROLIB)
 //不使用微库的话就需要添加下面的函数
 #if (__ARMCLIB_VERSION <= 6000000)
@@ -107,7 +120,7 @@ void USART1_IRQHandler(void)
 {
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) == SET)//判断是不是真的有中断发生
 	{
-		//USART_SendData(USART1,USART_ReceiveData(USART1));//又将数据发回去(用于验证)
+		USART_SendData(USART1, USART_ReceiveData(USART1));//又将数据发回去(用于验证)
 		
 		
 		USART_ClearITPendingBit(USART1, USART_IT_RXNE); //已经处理就清楚标志位 
