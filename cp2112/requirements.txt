@@ -1,0 +1,23 @@
+# CP2112 Python项目依赖
+# 
+# 本项目主要使用Python标准库，不需要额外安装第三方包
+# 以下是可选的依赖包，用于增强功能
+
+# 数据分析和可视化 (可选)
+# numpy>=1.19.0
+# matplotlib>=3.3.0
+# pandas>=1.1.0
+
+# 串口通信 (如果需要对比测试)  
+# pyserial>=3.4
+
+# 配置文件处理 (如果需要保存设置)
+# configparser  # Python 3.2+内置
+
+# 日志记录增强 (如果需要高级日志功能)
+# coloredlogs>=15.0
+
+# 说明:
+# 1. 本项目的核心功能只依赖Python标准库 (ctypes, sys, os, time, threading, datetime)
+# 2. 需要确保CP2112的DLL文件在正确路径下
+# 3. 如果需要数据分析功能，可以取消注释相关包并运行: pip install -r requirements.txt
