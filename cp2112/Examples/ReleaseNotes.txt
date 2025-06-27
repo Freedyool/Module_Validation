@@ -1,0 +1,25 @@
+
+CP2112 HID to SMBus Example Release Notes
+Copyright (C) 2010 Silicon Laboratories, Inc.
+
+This release contains the following components:
+
+        * SLABHIDtoSMBus.dll (v1.3)
+        * SLABHIDDevice.dll (v1.6)
+        * HidSmbusExample.exe(v1.0)
+        * Source files directory
+        * ReleaseNotes.TXT (this file)
+
+
+Release Dates
+-------------
+
+	CP2110 HID to SMBus Example v1.0 - November 17, 2010
+
+
+REVISION HISTORY
+-----------------
+
+Version 1.0
+	Initial Release
+
