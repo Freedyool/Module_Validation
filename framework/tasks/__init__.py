@@ -1,0 +1,61 @@
+"""
+模块验证框架 - 任务模块
+
+包含所有预定义的测试任务
+"""
+
+from .current_sampling import CurrentSamplingTask
+
+# 注册可用的任务
+AVAILABLE_TASKS = {
+    "current_sampling": {
+        "name": "Current Sampling Task",
+        "class": CurrentSamplingTask,
+        "description": "定时电流采样任务，支持高精度定时和多通道采样",
+        "parameters": {
+            "duration_s": "采样持续时间(秒)",
+            "interval_ms": "采样间隔(毫秒)",
+            "channels": "采样通道列表"
+        }
+    }
+}
+
+def get_task_list():
+    """获取可用任务列表"""
+    return list(AVAILABLE_TASKS.keys())
+
+def create_task(task_type: str, adapter, module):
+    """创建任务实例
+    
+    Args:
+        task_type: 任务类型
+        adapter: I2C适配器实例
+        module: 模组实例
+        
+    Returns:
+        任务实例或None
+    """
+    if task_type not in AVAILABLE_TASKS:
+        return None
+        
+    task_info = AVAILABLE_TASKS[task_type]
+    return task_info["class"](adapter, module)
+
+def get_task_info(task_type: str):
+    """获取任务信息
+    
+    Args:
+        task_type: 任务类型
+        
+    Returns:
+        任务信息或None
+    """
+    return AVAILABLE_TASKS.get(task_type)
+
+__all__ = [
+    "CurrentSamplingTask",
+    "AVAILABLE_TASKS",
+    "get_task_list",
+    "create_task",
+    "get_task_info"
+]
