@@ -56,3 +56,6 @@ build/
 
 # log files
 *.log
+
+# python cache files
+**/*.py[cod]

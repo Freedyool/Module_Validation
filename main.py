@@ -235,6 +235,8 @@ class ModuleValidationFramework:
                 # 根据任务类型获取参数
                 if task_type == "current_sampling":
                     return self._execute_current_sampling()
+                elif task_type == "continuous_sampling":
+                    return self._execute_continuous_sampling()
                 else:
                     print(f"未实现的任务类型: {task_type}")
                     return False
@@ -316,6 +318,74 @@ class ModuleValidationFramework:
             print(f"执行任务时出错: {e}")
             return False
     
+    def _execute_continuous_sampling(self) -> bool:
+        """执行连续采样任务"""
+        print(f"\n{'='*40}")
+        print("连续采样任务配置")
+        print(f"{'='*40}")
+        
+        try:
+            # 获取任务参数
+            interval_input = input("采样间隔(毫秒，默认1000): ").strip()
+            interval_ms = float(interval_input) if interval_input else 1000.0
+            
+            channels_input = input("采样通道(例如1,2,3，默认所有通道): ").strip()
+            if channels_input:
+                channels = [int(x.strip()) for x in channels_input.split(',')]
+            else:
+                channels = None
+            
+            display_input = input("实时显示采样数据? (Y/n): ").strip().lower()
+            display_samples = display_input not in ['n', 'no', 'false']
+            
+            print(f"\n任务配置:")
+            print(f"  采样间隔: {interval_ms}毫秒")
+            print(f"  采样通道: {channels if channels else '所有通道'}")
+            print(f"  实时显示: {'是' if display_samples else '否'}")
+            print(f"\n注意事项:")
+            print(f"  - 在采样过程中按 'q' + Enter 停止采样")
+            print(f"  - 在采样过程中按 's' + Enter 显示当前统计信息")
+            print(f"  - 或者使用 Ctrl+C 强制停止")
+            
+            confirm = input("\n确认开始连续采样? (y/N): ").strip().lower()
+            if confirm != 'y':
+                print("任务已取消")
+                return False
+            
+            # 执行任务
+            result = self.task.execute(
+                interval_ms=interval_ms,
+                channels=channels,
+                display_samples=display_samples
+            )
+            
+            # 显示结果摘要
+            if hasattr(self.task, 'print_results'):
+                self.task.print_results(result)
+            else:
+                if result["success"]:
+                    print("连续采样任务完成")
+                    if result["data"]:
+                        stats = result["data"]["statistics"]
+                        print(f"总采样数: {stats['total_samples']}")
+                        print(f"运行时间: {stats['actual_duration']:.1f}秒")
+                else:
+                    print(f"任务执行失败: {result['error']}")
+            
+            return result["success"]
+            
+        except ValueError:
+            print("参数格式错误")
+            return False
+        except KeyboardInterrupt:
+            print("\n任务被用户中断")
+            if self.task and hasattr(self.task, 'stop'):
+                self.task.stop()
+            return False
+        except Exception as e:
+            print(f"执行任务时出错: {e}")
+            return False
+
     def show_device_status(self):
         """显示设备状态"""
         print(f"\n{'='*40}")

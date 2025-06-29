@@ -5,6 +5,7 @@
 """
 
 from .current_sampling import CurrentSamplingTask
+from .continuous_sampling import ContinuousSamplingTask
 
 # 注册可用的任务
 AVAILABLE_TASKS = {
@@ -16,6 +17,16 @@ AVAILABLE_TASKS = {
             "duration_s": "采样持续时间(秒)",
             "interval_ms": "采样间隔(毫秒)",
             "channels": "采样通道列表"
+        }
+    },
+    "continuous_sampling": {
+        "name": "Continuous Sampling Task",
+        "class": ContinuousSamplingTask,
+        "description": "连续循环采样任务，支持用户交互终止和实时数据显示",
+        "parameters": {
+            "interval_ms": "采样间隔(毫秒)",
+            "channels": "采样通道列表",
+            "display_samples": "是否实时显示采样数据"
         }
     }
 }
@@ -54,6 +65,7 @@ def get_task_info(task_type: str):
 
 __all__ = [
     "CurrentSamplingTask",
+    "ContinuousSamplingTask",
     "AVAILABLE_TASKS",
     "get_task_list",
     "create_task",
