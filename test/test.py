@@ -9,7 +9,7 @@ import sys
 import os
 
 # 添加框架路径
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def test_framework_imports():
     """测试框架模块导入"""

@@ -173,12 +173,13 @@ Module_Validation/
 │       ├── current_sampling.py     # 电流采样任务
 │       ├── continuous_sampling.py  # 连续采样任务
 │       └── __init__.py              # 任务注册
-├── test_cli_args.py                 # 🆕 命令行参数测试
-├── test_resource_cleanup.py         # 🆕 资源清理测试
-├── test_default_interval.py         # 🆕 默认间隔测试
-├── examples.py                      # 🆕 使用示例和故障排除
+├── test/                            # 🆕 测试脚本目录
+│   ├── test_cli_args.py             # 命令行参数测试
+│   ├── test_resource_cleanup.py     # 资源清理测试
+│   ├── test_default_interval.py     # 默认间隔测试
+│   ├── examples.py                  # 使用示例和故障排除
+│   └── test.py                      # 框架组件测试
 ├── quick_test.py                    # 快速测试脚本
-├── test_framework.py               # 框架组件测试
 └── device/                          # 设备驱动和文档
     ├── ch341/                       # CH341相关文件
     └── cp2112/                      # CP2112相关文件
@@ -210,10 +211,10 @@ Module_Validation/
 
 ```bash
 python quick_test.py                # 验证组件注册
-python test_framework.py           # 完整组件测试
-python test_cli_args.py            # 命令行参数测试
-python test_resource_cleanup.py    # 资源清理测试
-python examples.py                 # 查看使用示例
+python test/test.py                 # 完整组件测试
+python test/test_cli_args.py        # 命令行参数测试
+python test/test_resource_cleanup.py # 资源清理测试
+python test/examples.py             # 查看使用示例
 ```
 
 ### 硬件要求
@@ -270,7 +271,7 @@ python main.py  # 进入交互模式，选择 "5. 扫描I2C总线"
 python quick_test.py
 
 # 检查资源清理
-python test_resource_cleanup.py
+python test/test_resource_cleanup.py
 ```
 
 ## 示例代码
@@ -344,7 +345,7 @@ module.initialize()
 ## 支持和贡献
 
 ### 获取帮助
-- 查看 `examples.py` 了解详细使用示例
+- 查看 `test/examples.py` 了解详细使用示例
 - 运行测试脚本验证环境配置
 - 使用 `--help` 参数查看命令行帮助
 
