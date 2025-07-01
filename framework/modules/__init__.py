@@ -5,6 +5,7 @@
 """
 
 from .ina3221_module import INA3221Module
+from .ina219_module import INA219Module
 
 # 注册可用的模组
 AVAILABLE_MODULES = {
@@ -14,6 +15,14 @@ AVAILABLE_MODULES = {
         "description": "德州仪器INA3221三通道电流/电压监测芯片",
         "default_address": 0x40,
         "channels": 3,
+        "measurements": ["current", "voltage", "power"]
+    },
+    "ina219": {
+        "name": "INA219 Single Current Monitor",
+        "class": INA219Module,
+        "description": "德州仪器INA219单通道电流/电压/功率监测芯片",
+        "default_address": 0x40,
+        "channels": 1,
         "measurements": ["current", "voltage", "power"]
     }
 }
@@ -56,6 +65,7 @@ def get_module_info(module_type: str):
 
 __all__ = [
     "INA3221Module",
+    "INA219Module",
     "AVAILABLE_MODULES",
     "get_module_list",
     "create_module",
