@@ -83,19 +83,22 @@ class INA219Module(ModuleInterface):
         self.name = "INA219 Single Current Monitor"
         
         # 默认配置参数
-        self.shunt_resistor = 0.1  # 分流电阻值 (欧姆) - 100mΩ
-        self.max_expected_current = 0.1  # 最大期望电流 (A)
-        self.bus_voltage_range = 32  # 总线电压范围 (V) - 16V或32V
+        self.shunt_resistor = 10  # 分流电阻值 (欧姆) - 100mΩ
+        self.max_expected_current = 0.03  # 最大期望电流 (A)
+        self.bus_voltage_range = 16  # 总线电压范围 (V) - 16V或32V
         
         # 校准参数
-        self.current_lsb = None
+        self.current_lsb = 0.000001 # 1uA/bit
+        # 实际上应该是 8uA/bit
         self.power_lsb = None
         self.cal_value = None
         
+        self.current_bias = 0 # 偏置电流
+        
         # 默认配置寄存器
         self.default_config = (
-            INA219_CONFIG_BVOLTAGERANGE_32V |  # 32V总线电压范围
-            INA219_CONFIG_GAIN_8_320MV |      # ±320mV增益 (适用于0.1Ω分流电阻)
+            INA219_CONFIG_BVOLTAGERANGE_16V |  # 16V总线电压范围
+            INA219_CONFIG_GAIN_8_320MV |      # ±320mV增益
             INA219_CONFIG_BADCRES_12BIT |     # 12位总线ADC分辨率
             INA219_CONFIG_SADCRES_12BIT_1S_532US |  # 12位分流ADC分辨率
             INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS  # 连续转换模式
@@ -128,18 +131,8 @@ class INA219Module(ModuleInterface):
         # 计算电流LSB (每位代表的电流值)
         # 推荐值为最大期望电流的1/32768，但要确保是合理的值
         min_lsb = self.max_expected_current / 32767
-        self.current_lsb = min_lsb
-        
-        # 调整LSB到合理的值 (通常为10的倍数)
-
-        if self.current_lsb < 0.0001:  # 100µA
-            self.current_lsb = 0.0001
-        elif self.current_lsb < 0.001:  # 1mA
-            self.current_lsb = 0.001
-        elif self.current_lsb < 0.01:   # 10mA
-            self.current_lsb = 0.01
-        elif self.current_lsb < 0.1:    # 100mA
-            self.current_lsb = 0.1
+        if self.current_lsb is None:
+            self.current_lsb = min_lsb
         
         # 计算校准寄存器值
         # Cal = trunc(0.04096 / (Current_LSB * R_shunt))
@@ -253,7 +246,9 @@ class INA219Module(ModuleInterface):
             raw_value -= 0x10000
         
         # 电流值 = 原始值 * 电流LSB
-        current_a = raw_value * self.current_lsb
+        current_a = raw_value * self.current_lsb - self.current_bias
+        if current_a < 0:
+            current_a = 0  # 确保电流不为负值
         return current_a
     
     def read_current(self, channel: Optional[int] = None) -> Union[float, List[float], None]:
