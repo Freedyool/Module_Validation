@@ -122,6 +122,30 @@ INA228_ADC_CONFIG_AVG_512 = 0x0006
 INA228_ADC_CONFIG_AVG_1024 = 0x0007
 
 
+# 诊断和报警寄存器位定义
+INA228_DIAG_ALRT_ALATCH_EN = 0x8000  # 报警锁存使能
+INA228_DIAG_ALRT_SLOWALERT_EN = 0x2000  # 慢速报警使能
+INA228_DIAG_ALRT_APOL_RV_EN = 0x1000  # 报警极性反相使能
+
+# 溢出状态（只读）
+INA228_DIAG_ALRT_ENERGYOF = 0x0800  # 能量溢出
+INA228_DIAG_ALRT_CHARGEOF = 0x0400  # 充电溢出
+INA228_DIAG_ALRT_MATHOF = 0x0200  # 数学溢出
+
+# 超限报警（当 ALATCH=1 时，通过读取该寄存器清除该位）
+INA228_DIAG_ALRT_TMPOL = 0x0080  # 温度超上限报警
+INA228_DIAG_ALRT_SHNTOL = 0x0040  # 分流电压超上限报警
+INA228_DIAG_ALRT_SHNTUL = 0x0020  # 分流电压超下限报警
+INA228_DIAG_ALRT_BUSOL = 0x0010  # 总线电压超下限报警
+INA228_DIAG_ALRT_BUSUL = 0x0008  # 总线电压超上限报警
+INA228_DIAG_ALRT_POL = 0x0004  # 功率超上限报警
+
+# 转换完成标志
+INA228_DIAG_ALRT_CNVR_EN = 0x4000  # 转换完成使能
+INA228_DIAG_ALRT_CNVRF = 0x0002  # 转换完成标志
+INA228_DIAG_ALRT_MEMSTAT = 0x0001  # 内存状态报警
+
+
 class INA228Module(ModuleInterface):
     """INA228高精度单通道电流监测模组
     
@@ -139,7 +163,7 @@ class INA228Module(ModuleInterface):
         # 默认配置参数
         self.shunt_resistor = 1  # 分流电阻值 (欧姆) - 1Ω
         self.max_expected_current = 0.2  # 最大期望电流 (A)
-        self.adc_range = 0 # ADC范围 (0: ±163.84mV, 1: ±40.96mV)
+        self.adc_range = 1 # ADC范围 (0: ±163.84mV, 1: ±40.96mV)
         
         # 校准参数
         self.current_lsb = None  # 电流LSB (A/bit)
@@ -155,13 +179,19 @@ class INA228Module(ModuleInterface):
             INA228_CONFIG_ADC_RANGE_0             # 使用默认ADC范围 (±163.84mV)
         )
         self.default_adc_config = (
-            INA228_ADC_CONFIG_MODE_CONT_ALL |     # 连续测量所有参数
-            INA228_ADC_CONFIG_VBUSCT_1052us |     # 总线电压转换时间
+            INA228_ADC_CONFIG_MODE_CONT_BUS_SHUNT |     # 连续测量所有参数
+            INA228_ADC_CONFIG_VBUSCT_50us |     # 总线电压转换时间
             INA228_ADC_CONFIG_VSHCT_1052us |      # 分流电压转换时间
             INA228_ADC_CONFIG_VTCT_1052us |       # 温度转换时间
             INA228_ADC_CONFIG_AVG_1               # 平均1次采样
         )
-        
+        self.default_diag_alrt_config = INA228_DIAG_ALRT_ALATCH_EN # 报警锁存使能
+        # self.default_diag_alrt_config = 0
+        # 分流过压阈值
+        self.sovl = 0x7FFF - 1  # 0x7FFF (32767)* 5uV/LSB = 163.835mV (ADC_RANGE_0)
+        # 总线欠压阈值
+        self.buvl = 0x310       # 0x410（1040）* 3.125mV/LSB = 3.25V
+
         # 如果使用40.96mV范围，更新ADC范围配置
         if self.adc_range == 1:
             self.default_config |= INA228_CONFIG_ADC_RANGE_1
@@ -297,6 +327,19 @@ class INA228Module(ModuleInterface):
                 logger.error("写入ADC配置寄存器失败")
                 return False
             
+            # 写入诊断和报警配置寄存器
+            if not self._write_register(INA228_REG_DIAG_ALRT, self.default_diag_alrt_config):
+                logger.error("写入诊断和报警配置寄存器失败")
+                return False
+            
+            if not self._write_register(INA228_REG_SOVL, self.sovl):
+                logger.error("写入分流过压阈值寄存器失败")
+                return False
+            
+            if not self._write_register(INA228_REG_BUVL, self.buvl):
+                logger.error("写入总线欠压阈值寄存器失败")
+                return False
+
             self.is_initialized = True
             logger.info("INA228模组初始化成功")
             return True
