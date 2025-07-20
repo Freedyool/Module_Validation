@@ -6,6 +6,7 @@
 
 from .ina3221_module import INA3221Module
 from .ina219_module import INA219Module
+from .ina228_module import INA228Module
 
 # 注册可用的模组
 AVAILABLE_MODULES = {
@@ -24,6 +25,14 @@ AVAILABLE_MODULES = {
         "default_address": 0x40,
         "channels": 1,
         "measurements": ["current", "voltage", "power"]
+    },
+    "ina228": {
+        "name": "INA228 High-Precision Current Monitor",
+        "class": INA228Module,
+        "description": "德州仪器INA228高精度单通道电流/电压/功率/能量监测芯片",
+        "default_address": 0x40,
+        "channels": 1,
+        "measurements": ["current", "voltage", "power", "energy", "charge", "temperature"]
     }
 }
 
@@ -66,6 +75,7 @@ def get_module_info(module_type: str):
 __all__ = [
     "INA3221Module",
     "INA219Module",
+    "INA228Module",
     "AVAILABLE_MODULES",
     "get_module_list",
     "create_module",
