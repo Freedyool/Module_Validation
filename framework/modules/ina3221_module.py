@@ -7,10 +7,11 @@ INA3221 电流监测模组实现
 import os
 import sys
 import time
+from abc import ABC, abstractmethod
 from typing import List, Optional, Union, Dict, Any
 
 # 相对导入父级模块
-from ..interfaces import ModuleInterface, AdapterInterface
+from ..interfaces import ModuleInterface, AdapterInterface, PinID, PinLevel, PinDirection
 import logging
 
 logger = logging.getLogger(__name__)
@@ -97,7 +98,34 @@ class INA3221Module(ModuleInterface):
             C_VSH_CT_1100_us |  # 分流电压转换时间
             C_MODE_SHUNT_AND_BUS_CONTINUOUS  # 连续模式
         )
+    
+    # 添加分流电阻配置方法
+    def set_shunt_resistors(self, resistors: List[float]) -> bool:
+        """设置分流电阻值
         
+        Args:
+            resistors: 三个通道的分流电阻值列表(欧姆)
+            
+        Returns:
+            bool: 成功返回True
+        """
+        if len(resistors) != 3:
+            logger.error("必须提供3个通道的分流电阻值")
+            return False
+        
+        for i, resistance in enumerate(resistors):
+            if resistance <= 0:
+                logger.error(f"通道{i+1}的分流电阻值必须大于0")
+                return False
+        
+        self.shunt_resistors = resistors.copy()
+        logger.info(f"设置分流电阻: {self.shunt_resistors}")
+        return True
+    
+    def get_shunt_resistors(self) -> List[float]:
+        """获取分流电阻值"""
+        return self.shunt_resistors.copy()
+    
     def _read_register(self, reg_addr: int) -> Optional[int]:
         """读取16位寄存器"""
         try:
@@ -330,3 +358,325 @@ class INA3221Module(ModuleInterface):
         
         base_info.update(extra_info)
         return base_info
+
+
+class AutoRangerInterface(ABC):
+    """自动量程器抽象接口
+    
+    定义了自动量程器必须实现的基本功能
+    """
+    def __init__(self, adapter: AdapterInterface, module: ModuleInterface):
+        """初始化自动量程器
+
+        Args:
+            adapter (AdapterInterface): I2C适配器实例
+            module (ModuleInterface): I2C模组实例
+        """
+        self.adapter = adapter
+        self.module = module
+        self.name = "Unkown AutoRanger"
+        # 通常 range_level 越小，参与计算的采样电阻阻值越小，能够测量的上限电流值越大，整体范围越大，分辨率更低；
+        self.current_range_level = None
+        self._range_levels = {} # Dict(int, str)
+        
+    def regist_range_level(self, level: int = 0, description: str = "Unkown range level"):
+        if level == 0:
+            level = len(self._range_levels)
+        self._range_levels[level] = description
+        
+    @abstractmethod
+    def calculate_current(self) -> float:
+        pass
+    
+    @abstractmethod
+    def calculate_range_level(self, current) -> int:
+        pass
+    
+    @abstractmethod
+    def switch_range_level(self, next_range_level) -> bool:
+        pass
+    
+    def process(self) -> float:
+        current = self.calculate_current()
+        
+        next_range_level = self.calculate_range_level(current)
+        
+        if next_range_level != self.current_range_level:
+            self.switch_range_level(next_range_level)
+
+
+class AutoRangerA3(AutoRangerInterface):
+    """CH340+INA3221专用的三量程切换器
+
+    方案对比
+    方案一：直接读取 shunt_voltage 根据 shunt_voltage 调节量程和执行切换
+    需要全局变量 current_range_level 和 局部变量 next_range_level；
+    
+    三个通道读取的电压值分别记为 v1、v2、v3，当前量程记为 lc，将要切换的量程记为 ln；
+    
+    算法流程：
+    1. 首先需要根据当前量程和读取到的电压值计算当前的电流；
+    2. 接下来根据计算得到的电流值和当前量程计算下一个量程；
+    3. 根据当前量程和下一个量程决定量程切换动作；
+    
+    方案二：读取 current 调节量程和执行切换
+    1. 调用接口读取所有的电流结果；
+    2. 根据电流结果计算当前电流值和下一个量程；
+    3. 根据当前量程和下一个量程决定量程切换动作；
+    
+    两种方案都尝试一下，理论分析 方案1的自由度应该更好，方案2的性能应该更好，但考虑到其它电流测量芯片的可迁移性，优先选择方案一进行实现；
+  `  方案一的算法实现
+        将方案一中所需的算法划分为三个子流程：
+        1) 计算当前电流；
+        2) 计算目标量程；
+        3) 执行量程切换；
+
+    calculate_current
+    input: v1 v2 v3 range_level
+    output: current
+    
+    calculate_range_level
+    input: current range_level
+    output: next_range_level
+    
+    switch_range_level
+    input: current_range_level next_range_level
+    output: None
+    """
+
+    def __init__(self, adapter, module):
+        super().__init__(adapter, module)
+        self.regist_range_level(0, "8.192 mA ~ 1.64 A")
+        self.regist_range_level(1, "81.920 μA ~ 16.302 mA")
+        self.regist_range_level(2, "40.000 nA ~ 163.021 μA")
+        
+        self.adapter.set_pin_direction(PinID.GPIO_0, PinDirection.OUTPUT)
+        self.adapter.set_pin_direction(PinID.GPIO_1, PinDirection.OUTPUT)
+        
+    def calculate_current(self):
+        """根据shunt voltage计算电流值
+        
+        INA3221的三个通道分别配置为不同的分流电阻值:
+        - 通道1: 0.1Ω
+        - 通道2: 10Ω
+        - 通道3: 1000Ω
+        三个通道相互并联在电路中，因此待测电流始终等于三个通道的电流之和。
+        各个通道的分流电压上下限均为：±163mV
+        通道三的分流电压始终等于三个通道并联后的分流电压。
+        通道二的分流电压仅表示10Ω分流电阻上的电压。
+        通道一的分流电压仅表示0.1Ω分流电阻上的电压。
+        通过读取通道三的分流电压，识别到分流电压超过±163mV时，自动切换到阻值较小的量程。
+        而当分流电压低于800uV时，自动切换到阻值较大的量程。
+        这样可以实现自动量程切换，确保在不同电流范围内都能准确测量电流。
+        """
+        shunt_resisters = [0.1, 10, 1000]  # 分流电阻值为0.1Ω, 10Ω, 1000Ω
+        current = [0.0, 0.0, 0.0] # mA
+        shunt_voltage = self.module._read_shunt_voltage(3)  # 先读取通道3的分流电压 mV
+        current[2] = shunt_voltage / shunt_resisters[2] if shunt_voltage is not None else 0.0  # 计算通道3的电流
+
+        if self.current_range_level == 0:
+            print("当前量程: 8.192 mA ~ 1.64 A")
+            for channel in range(2):
+                shunt_voltage = self.module._read_shunt_voltage(channel + 1)
+                if shunt_voltage is None:
+                    print(f"✗ 读取通道 {channel + 1} 的分流电压失败")
+                    continue
+                current[channel] = shunt_voltage / shunt_resisters[channel]  # 计算通道1通道2的电流
+        elif self.current_range_level == 1:
+            print("当前量程: 81.920 μA ~ 16.302 mA")
+            shunt_voltage = self.module._read_shunt_voltage(2)  # 读取通道2的分流电压
+            if shunt_voltage is None:
+                print("✗ 读取通道2的分流电压失败")
+            current[1] = shunt_voltage / shunt_resisters[1]  # 计算通道2的电流
+
+        print(f"当前电流: {current[0]*1000:.2f} + {current[1]*1000:.2f} + {current[2]*1000:.2f} = {sum(current)*1000:.2f} uA")
+        
+        return sum(current)
+    
+    def calculate_range_level(self, current):
+        """计算下一个量程"""
+        next_range_level = self.current_range_level
+        if self.current_range_level == 0:
+            if current < 8.192 * 1e-3:
+                next_range_level = 1
+        elif self.current_range_level == 1:
+            if current < 81.920 * 1e-6:
+                next_range_level = 2
+            elif current > 16.302 * 1e-6:
+                next_range_level = 0
+        elif self.current_range_level == 2:
+            if current > 16.302 * 1e-6:
+                next_range_level = 0 # 跳档？
+            elif current > 163.021 * 1e-6:
+                next_range_level = 1
+        return next_range_level
+    
+    def switch_range_level(self, next_range_level):
+        """切换INA3221的量程"""
+        if next_range_level not in [0, 1, 2]:  # 假设0, 1, 2分别代表不同的量程
+            print(f"✗ 无效的量程值: {next_range_level}")
+            return False
+        
+        # 发送命令到INA3221切换量程
+        if next_range_level == 0: # 8.192 mA ~ 1.64 A
+            self.adapter.set_pin_level(PinID.GPIO_0, PinLevel.LOW)
+            self.adapter.set_pin_level(PinID.GPIO_1, PinLevel.LOW)
+        elif next_range_level == 1: # 81.920 μA ~ 16.302 mA
+            self.adapter.set_pin_level(PinID.GPIO_0, PinLevel.LOW)
+            self.adapter.set_pin_level(PinID.GPIO_1, PinLevel.HIGH)
+        elif next_range_level == 2: # 40.000 nA ~ 163.021 μA
+            self.adapter.set_pin_level(PinID.GPIO_0, PinLevel.HIGH)
+            self.adapter.set_pin_level(PinID.GPIO_1, PinLevel.HIGH)
+        
+        level0 = self.adapter.get_pin_level(PinID.GPIO_0)  # 确保设置
+        level1 = self.adapter.get_pin_level(PinID.GPIO_1)  # 确保设置
+        print(f"✓ 成功切换到量程 {next_range_level} : {level0} {level1}")
+        return True
+
+
+class AutoRangerInterface(ABC):
+    """自动量程器抽象接口
+    
+    定义了自动量程器必须实现的基本功能
+    """
+    def __init__(self, adapter: AdapterInterface, module: ModuleInterface):
+        """初始化自动量程器
+
+        Args:
+            adapter (AdapterInterface): I2C适配器实例
+            module (ModuleInterface): I2C模组实例
+        """
+        self.adapter = adapter
+        self.module = module
+        self.name = "Unkown AutoRanger"
+        # 通常 range_level 越小，参与计算的采样电阻阻值越小，能够测量的上限电流值越大，整体范围越大，分辨率更低；
+        self.current_range_level = None
+        self._range_levels = {}
+        
+    def regist_range_level(self, level: int = 0, description: str = "Unkown range level"):
+        if level == 0:
+            level = len(self._range_levels)
+        self._range_levels[level] = description
+        
+    @abstractmethod
+    def calculate_current(self) -> float:
+        pass
+    
+    @abstractmethod
+    def calculate_range_level(self, current) -> int:
+        pass
+    
+    @abstractmethod
+    def switch_range_level(self, next_range_level) -> bool:
+        pass
+    
+    def process(self) -> float:
+        current = self.calculate_current()
+        
+        next_range_level = self.calculate_range_level(current)
+        
+        if next_range_level != self.current_range_level:
+            self.switch_range_level(next_range_level)
+
+
+class AutoRangerS3(AutoRangerInterface):
+    """CH340+INA3221专用的三量程切换器
+
+    在 A3 的基础上增加了 Alert 中断（实现一个半自动的硬件量程切换）
+    
+    Alert 中断用法：
+    1. 监控通道3的shunt voltage（因为 vbus = vin - v3）；
+    2. 当 v3 增大到阈值时，会触发一个由CH340注册的中断处理函数；
+    3. 然后在这个处理函数中执行档位的切换；
+    
+    总体上使用 Alert 触发档位切换会比正常方案的切换效率更高；
+    """
+
+    def __init__(self, adapter, module):
+        super().__init__(adapter, module)
+        self.regist_range_level(0, "8.192 mA ~ 1.64 A")
+        self.regist_range_level(1, "81.920 μA ~ 16.302 mA")
+        self.regist_range_level(2, "40.000 nA ~ 163.021 μA")
+        
+        self.adapter.set_pin_direction(PinID.GPIO_0, PinDirection.OUTPUT)
+        self.adapter.set_pin_direction(PinID.GPIO_1, PinDirection.OUTPUT)
+        
+    def calculate_current(self):
+        """根据shunt voltage计算电流值
+        
+        INA3221的三个通道分别配置为不同的分流电阻值:
+        - 通道1: 0.1Ω
+        - 通道2: 10Ω
+        - 通道3: 1000Ω
+        三个通道相互并联在电路中，因此待测电流始终等于三个通道的电流之和。
+        各个通道的分流电压上下限均为：±163mV
+        通道三的分流电压始终等于三个通道并联后的分流电压。
+        通道二的分流电压仅表示10Ω分流电阻上的电压。
+        通道一的分流电压仅表示0.1Ω分流电阻上的电压。
+        通过读取通道三的分流电压，识别到分流电压超过±163mV时，自动切换到阻值较小的量程。
+        而当分流电压低于800uV时，自动切换到阻值较大的量程。
+        这样可以实现自动量程切换，确保在不同电流范围内都能准确测量电流。
+        """
+        shunt_resisters = [0.1, 10, 1000]  # 分流电阻值为0.1Ω, 10Ω, 1000Ω
+        current = [0.0, 0.0, 0.0] # mA
+        shunt_voltage = self.module._read_shunt_voltage(3)  # 先读取通道3的分流电压 mV
+        current[2] = shunt_voltage / shunt_resisters[2] if shunt_voltage is not None else 0.0  # 计算通道3的电流
+
+        if self.current_range_level == 0:
+            print("当前量程: 8.192 mA ~ 1.64 A")
+            for channel in range(2):
+                shunt_voltage = self.module._read_shunt_voltage(channel + 1)
+                if shunt_voltage is None:
+                    print(f"✗ 读取通道 {channel + 1} 的分流电压失败")
+                    continue
+                current[channel] = shunt_voltage / shunt_resisters[channel]  # 计算通道1通道2的电流
+        elif self.current_range_level == 1:
+            print("当前量程: 81.920 μA ~ 16.302 mA")
+            shunt_voltage = self.module._read_shunt_voltage(2)  # 读取通道2的分流电压
+            if shunt_voltage is None:
+                print("✗ 读取通道2的分流电压失败")
+            current[1] = shunt_voltage / shunt_resisters[1]  # 计算通道2的电流
+
+        print(f"当前电流: {current[0]*1000:.2f} + {current[1]*1000:.2f} + {current[2]*1000:.2f} = {sum(current)*1000:.2f} uA")
+        
+        return sum(current)
+    
+    def calculate_range_level(self, current):
+        """计算下一个量程"""
+        next_range_level = self.current_range_level
+        if self.current_range_level == 0:
+            if current < 8.192 * 1e-3:
+                next_range_level = 1
+        elif self.current_range_level == 1:
+            if current < 81.920 * 1e-6:
+                next_range_level = 2
+            elif current > 16.302 * 1e-6:
+                next_range_level = 0
+        elif self.current_range_level == 2:
+            if current > 16.302 * 1e-6:
+                next_range_level = 0 # 跳档？
+            elif current > 163.021 * 1e-6:
+                next_range_level = 1
+        return next_range_level
+    
+    def switch_range_level(self, next_range_level):
+        """切换INA3221的量程"""
+        if next_range_level not in [0, 1, 2]:  # 假设0, 1, 2分别代表不同的量程
+            print(f"✗ 无效的量程值: {next_range_level}")
+            return False
+        
+        # 发送命令到INA3221切换量程
+        if next_range_level == 0: # 8.192 mA ~ 1.64 A
+            self.adapter.set_pin_level(PinID.GPIO_0, PinLevel.LOW)
+            self.adapter.set_pin_level(PinID.GPIO_1, PinLevel.LOW)
+        elif next_range_level == 1: # 81.920 μA ~ 16.302 mA
+            self.adapter.set_pin_level(PinID.GPIO_0, PinLevel.LOW)
+            self.adapter.set_pin_level(PinID.GPIO_1, PinLevel.HIGH)
+        elif next_range_level == 2: # 40.000 nA ~ 163.021 μA
+            self.adapter.set_pin_level(PinID.GPIO_0, PinLevel.HIGH)
+            self.adapter.set_pin_level(PinID.GPIO_1, PinLevel.HIGH)
+        
+        level0 = self.adapter.get_pin_level(PinID.GPIO_0)  # 确保设置
+        level1 = self.adapter.get_pin_level(PinID.GPIO_1)  # 确保设置
+        print(f"✓ 成功切换到量程 {next_range_level} : {level0} {level1}")
+        return True
