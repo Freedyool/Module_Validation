@@ -50,8 +50,13 @@ INA228_CONFIG_CONVDLY_MASK = 0x3FC0
 INA228_CONFIG_CONVDLY_0us = 0x0000
 INA228_CONFIG_CONVDLY_2ms = 0x0080
 INA228_CONFIG_CONVDLY_510ms = 0x3FC0
-INA228_CONFIG_TEMP_COMP = 0x0020
-INA228_CONFIG_ADC_RANGE = 0x0010
+INA228_CONFIG_TEMP_COMP_MASK = 0x0020
+INA228_CONFIG_TEMP_COMP_DISABLE = 0x0000
+INA228_CONFIG_TEMP_COMP_ENABLE = 0x0020
+INA228_CONFIG_ADC_RANGE_MASK = 0x0010
+INA228_CONFIG_ADC_RANGE_0 = 0x0000  # ±163.84mV
+INA228_CONFIG_ADC_RANGE_1 = 0x0010  # ± 40.96mV
+
 
 # ADC配置寄存器位定义
 INA228_ADC_CONFIG_MODE_MASK = 0xF000
@@ -134,7 +139,7 @@ class INA228Module(ModuleInterface):
         # 默认配置参数
         self.shunt_resistor = 1  # 分流电阻值 (欧姆) - 1Ω
         self.max_expected_current = 0.2  # 最大期望电流 (A)
-        self.current_range = 81.92  # 最大电流范围 (A)
+        self.adc_range = 0 # ADC范围 (0: ±163.84mV, 1: ±40.96mV)
         
         # 校准参数
         self.current_lsb = None  # 电流LSB (A/bit)
@@ -144,14 +149,22 @@ class INA228Module(ModuleInterface):
         self.temperature_coefficient = 0  # 温度系数 (ppm/°C)
         
         # 默认配置
-        self.default_config = INA228_CONFIG_CONVDLY_0us  # 无转换延迟
+        self.default_config = (
+            INA228_CONFIG_CONVDLY_0us |           # 无转换延迟
+            INA228_CONFIG_TEMP_COMP_DISABLE |     # 禁用温度补偿
+            INA228_CONFIG_ADC_RANGE_0             # 使用默认ADC范围 (±163.84mV)
+        )
         self.default_adc_config = (
-            INA228_ADC_CONFIG_MODE_CONT_ALL |      # 连续测量所有参数
+            INA228_ADC_CONFIG_MODE_CONT_ALL |     # 连续测量所有参数
             INA228_ADC_CONFIG_VBUSCT_1052us |     # 总线电压转换时间
             INA228_ADC_CONFIG_VSHCT_1052us |      # 分流电压转换时间
             INA228_ADC_CONFIG_VTCT_1052us |       # 温度转换时间
             INA228_ADC_CONFIG_AVG_1               # 平均1次采样
         )
+        
+        # 如果使用40.96mV范围，更新ADC范围配置
+        if self.adc_range == 1:
+            self.default_config |= INA228_CONFIG_ADC_RANGE_1
     
     def _read_register(self, reg_addr: int, bytes_count: int = 2) -> Optional[int]:
         """读取寄存器
@@ -213,12 +226,17 @@ class INA228Module(ModuleInterface):
         # SHUNT_CAL计算
         # SHUNT_CAL = 13107.2 × 10^6 × Current_LSB × R_shunt
         self.shunt_cal = int(13107.2e6 * self.current_lsb * self.shunt_resistor)
+        if self.adc_range == 1:
+            self.shunt_cal = self.shunt_cal * 4  # 如果使用40.96mV范围，校准值需要放大4倍
         
         # 确保校准值在有效范围内 (15位有效值)
         if self.shunt_cal > 0x7FFF:
             self.shunt_cal = 0x7FFF
             # 重新计算实际的Current_LSB
-            self.current_lsb = self.shunt_cal / (13107.2e6 * self.shunt_resistor)
+            if self.adc_range == 1:
+                self.current_lsb = self.shunt_cal / (13107.2e6 * self.shunt_resistor * 4)
+            else:
+                self.current_lsb = self.shunt_cal / (13107.2e6 * self.shunt_resistor)
         
         logger.info(f"INA228校准参数:")
         logger.info(f"  分流电阻: {self.shunt_resistor*1000:.3f}mΩ")
@@ -299,8 +317,12 @@ class INA228Module(ModuleInterface):
         if raw_value & 0x80000:  # 检查符号位
             raw_value = raw_value - 0x100000  # 20位补码转换
         
-        # INA228分流电压LSB = 312.5nV
-        shunt_voltage = raw_value * 312.5e-9
+        if self.adc_range == 1:
+            # 如果使用40.96mV范围，分流电压LSB = 78.125nV
+            shunt_voltage = raw_value * 78.125e-9
+        else:
+            # 默认使用163.84mV范围，INA228分流电压LSB = 312.5nV
+            shunt_voltage = raw_value * 312.5e-9
         return shunt_voltage
     
     def read_bus_voltage(self) -> Optional[float]:
